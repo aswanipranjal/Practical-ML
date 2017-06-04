@@ -22,8 +22,9 @@ forecast_col = 'adj_close'
 df.fillna(-99999, inplace=True)
 
 # here we are trying to predict out 10% of the dataframe
-forecast_out = int(math.ceil(0.1*len(df)))
+forecast_out = int(math.ceil(0.01*len(df)))
 
 # we are basically creating a space ten% days out into the future, thus the negative shift
 df['label'] = df[forecast_col].shift(-forecast_out)
+df.dropna(inplace = True)
 print(df.head())
