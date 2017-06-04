@@ -2,8 +2,9 @@ import pandas as pd
 import quandl
 import math
 import numpy as np
-from sklearn import preprocessing, cross_validation, svm
+from sklearn import preprocessing, svm
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 # didn't quite understand the difference between features and labels
 quandl.ApiConfig.api_key = 'VDxfKkzAm8MFL1fZsSat'
