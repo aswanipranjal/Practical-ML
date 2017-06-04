@@ -1,7 +1,11 @@
 import pandas as pd
 import quandl
 import math
+import numpy as np
+from sklearn import preprocessing, cross_validation, svm
+from sklearn.linear_model import LinearRegression
 
+# didn't quite understand the difference between features and labels
 quandl.ApiConfig.api_key = 'VDxfKkzAm8MFL1fZsSat'
 df = quandl.get_table('WIKI/PRICES')
 # print(df.head())
@@ -28,3 +32,18 @@ forecast_out = int(math.ceil(0.01*len(df)))
 df['label'] = df[forecast_col].shift(-forecast_out)
 df.dropna(inplace = True)
 print(df.head())
+
+# features : X
+# labels : y
+# because X contains features, we are dropping the label column
+# df.drop() returns a new dataframe which is being converted into an array by numpy
+X = np.array(df.drop(['label'], 1))
+y = np.array(df['label'])
+
+# preprocesses and normalizes all data points together
+X = preprocessing.scale(X)
+
+df.dropna(inplace = True)
+y = np.array(df['label'])
+
+print(len(X), len(y))
