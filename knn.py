@@ -23,3 +23,13 @@ clf.fit(X_train, y_train)
 # accuracy is different from confidence
 accuracy = clf.score(X_test, y_test)
 print(accuracy)
+
+# test data (eyeballs expect it to be benign)
+example_measures = np.array([4, 2, 1, 1, 1, 2, 3, 2, 1])
+# DeprecationWarning: Passing 1D arrays as data is deprecated in sklearn0.17 and will raise ValueError in sklearn0.19. 
+# Reshape your data either using X.reshape(-1, 1) if your data has a single feature or X.reshape(1, -1) if it contains a single sample
+# ^This error can be fixed by the line below
+example_measures = example_measures.reshape(1, -1)
+
+prediction = clf.predict(example_measures)
+print(prediction)
