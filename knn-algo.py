@@ -93,3 +93,14 @@ for i in train_data:
 for i in test_data:
 	test_set[i[-1]].append(i[:-1])
 
+correct = 0
+total = 0
+
+for group in test_set:
+	for data in test_set[group]:
+		vote = KNN(train_set, data, K=5)
+		if group == vote:
+			correct+=1
+		total+=1
+
+print('Accuracy: ', correct/total)
