@@ -72,6 +72,24 @@ df.replace('?', -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 # print(df.head())
 # To ensure that everything in the dataframe is an int or a float, we convert it using a pandas prebuilt function
+# (Sometimes there are quotes in the data which makes it a string)
 full_data = df.astype(float).values.tolist()
+# print(full_data[:10])
 
-print(full_data[:10])
+random.shuffle(full_data)
+
+# Our version of train_test_split
+test_size = 0.2;
+train_set = {2:[], 4:[]}
+test_set = {2:[], 4:[]}
+train_data = full_data[:-int(test_size*len(full_data))]
+test_data = full_data[-int(test_size*len(full_data)):]
+
+# populating dictionaries
+for i in train_data:
+	# i[-1] accesses the last element, i.e. to find whether it is benign or malignant
+	train_set[i[-1]].append(i[:-1])
+
+for i in test_data:
+	test_set[i[-1]].append(i[:-1])
+
