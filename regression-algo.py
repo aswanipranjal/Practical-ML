@@ -18,12 +18,12 @@ def create_dataset(size, variance, step=2, correlation=False):
 	for i in range(size):
 		y = val + random.randrange(-variance, variance)
 		ys.append(y)
-		if correlation and correlation='pos':
+		if correlation and correlation == 'pos':
 			val += step
-		elif correlation and correlation='neg':
+		elif correlation and correlation == 'neg':
 			val -= step
 	xs = [i for i in range(len(ys))]
-	return np.array(xs, dtype=np.float64), np.array(ys, dtype=float64)
+	return np.array(xs, dtype=np.float64), np.array(ys, dtype=np.float64)
 
 def regress(xs, ys):
 	m = (((mean(xs)*mean(ys)) - (mean(xs*ys))) / (((mean(xs))**2) - mean(xs**2)))
@@ -38,6 +38,8 @@ def coefficient_of_determination(ys_original, ys_line):
 	squared_error_regression_line = squared_error(ys_original, ys_line)
 	squared_error_mean_line = squared_error(ys_original, y_mean_line)
 	return 1 - (squared_error_regression_line/squared_error_mean_line)
+
+xs, ys = create_dataset(40, 1, 2, 'pos')
 
 m, b = regress(xs, ys)
 print(m, b)
