@@ -48,7 +48,7 @@ df.dropna(inplace = True)
 y = np.array(df['label'])
 
 # print(len(X), len(y))
-X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size = 0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
 # clf = svm.SVR()
 # clf = svm.SVR(kernel='poly')
