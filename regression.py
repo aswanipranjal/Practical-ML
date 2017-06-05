@@ -32,16 +32,18 @@ print(forecast_out)
 
 # we are basically creating a space ten% days out into the future, thus the negative shift
 df['label'] = df[forecast_col].shift(-forecast_out)
-df.dropna(inplace = True)
 
 # features : X
 # labels : y
 # because X contains features, we are dropping the label column
 # df.drop() returns a new dataframe which is being converted into an array by numpy
 X = np.array(df.drop(['label'], 1))
-y = np.array(df['label'])
+X = X[:-forecast_out]
+X_lately = X[-forecast_out:]
 # preprocesses and normalizes all data points together
 X = preprocessing.scale(X)
+df.dropna(inplace = True)
+y = np.array(df['label'])
 y = np.array(df['label'])
 
 # print(len(X), len(y))
