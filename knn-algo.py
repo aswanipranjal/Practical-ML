@@ -49,6 +49,14 @@ def KNN (data, predict, K=3):
 
 	# i returns ~kind of a dictionary entry. i[1] returns the second element of that 'pair' probably
 	# we sort distances in ascending order and take the first k entries into a new list called 'votes'
+	# print(sorted(distances)) # Debug line
 	votes = [i[1] for i in sorted(distances)[:K]]
+	# print(votes) # Debug line
+	# print(Counter(votes).most_common(1)) # Debug line
+	# This line will print out the first entry of the first tuple in most_common 1 instance
+	vote_result = Counter(votes).most_common(1)[0][0]
 
 	return vote_result
+
+result = KNN(dataset, new_features, K=3)
+print(result)
