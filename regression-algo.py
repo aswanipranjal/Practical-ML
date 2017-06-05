@@ -39,7 +39,7 @@ def coefficient_of_determination(ys_original, ys_line):
 	squared_error_mean_line = squared_error(ys_original, y_mean_line)
 	return 1 - (squared_error_regression_line/squared_error_mean_line)
 
-xs, ys = create_dataset(40, 1, 2, 'pos')
+xs, ys = create_dataset(40, 10, 2, 'pos')
 
 m, b = regress(xs, ys)
 print(m, b)
