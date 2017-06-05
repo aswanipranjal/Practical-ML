@@ -5,6 +5,11 @@ import numpy as np
 from sklearn import preprocessing, svm
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+import datetime
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+style.use('ggplot')
 
 # didn't quite understand the difference between features and labels
 quandl.ApiConfig.api_key = 'VDxfKkzAm8MFL1fZsSat'
@@ -65,3 +70,21 @@ accuracy = clf.score(X_test, y_test)
 # print(accuracy)
 forecast_set = clf.predict(X_lately)
 print(forecast_set, accuracy, forecast_out)
+df['forecast'] = np.nan
+
+last_date = df.iloc[-1].name
+last_unix = last_date.timestamp()
+one_day = 86400
+next_unix = last_unix + one_day
+
+for i in forecast_set:
+	next_date = datetime.datetime.fromtimestamp(next_unix)
+	next_unix += one_day
+	df.loc[next_date] = [np.nan for _ in range(len(df.columns) - 1)] + [i]
+
+df['adj_close'].plot()
+df['forecast'].plot()
+plt.legend(loc = 4)
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
