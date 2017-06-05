@@ -27,6 +27,28 @@ new_features = [5, 7]
 	# for ii in dataset[i]:
 		# plt.scatter(ii[0], ii[1], s=100, color=i)
 
-[[plt.scatter(ii[0], ii[1], s=100, color=i) for ii in dataset[i]] for i in dataset]
-plt.scatter(new_features[0], new_features[1])
-plt.show()
+# [[plt.scatter(ii[0], ii[1], s=100, color=i) for ii in dataset[i]] for i in dataset]
+# plt.scatter(new_features[0], new_features[1])
+# plt.show()
+
+def KNN (data, predict, K=3):
+	if len(data) >= K:
+		warnings.warn('K is set to a value less than total voting groups')
+
+	distances = []
+	# group refers to 'k' or 'r'
+	for group in data:
+		for features in data[group]:
+			# we will not do this:
+			# euclidean_distance = sqrt((plot1[0]-plot2[0])**2 + (plot1[1] - plot2[1])**2)
+			# instead:
+			# euclidean_distance = np.sqrt(np.sum((np.array(features) - np.array(predict))**2))
+			# this is faster:
+			euclidean_distance = np.linalg.norm(np.array(features) - np.array(predict))
+			distances.append([euclidean_distance, group])
+
+	# i returns ~kind of a dictionary entry. i[1] returns the second element of that 'pair' probably
+	# we sort distances in ascending order and take the first k entries into a new list called 'votes'
+	votes = [i[1] for i in sorted(distances)[:K]]
+
+	return vote_result
