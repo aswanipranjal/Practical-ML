@@ -1,6 +1,9 @@
 from statistics import mean
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import style
+
+style.use('fivethirtyeight')
 
 # dtype specifies the datatype. The default probably is float64 but we are being explicit
 xs = np.array([1, 2, 3, 4, 5, 6], dtype=np.float64)
@@ -16,3 +19,8 @@ def regress(xs, ys):
 
 m, b = regress(xs, ys)
 print(m, b)
+
+regression_line = [(m*x)+b for x in xs]
+plt.scatter(xs, ys)
+plt.plot(xs, regression_line)
+plt.show();
