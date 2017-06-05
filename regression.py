@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import datetime
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
 style.use('ggplot')
 
@@ -50,7 +51,6 @@ X_lately = X[-forecast_out:]
 
 df.dropna(inplace = True)
 y = np.array(df['label'])
-y = np.array(df['label'])
 
 # print(len(X), len(y))
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
@@ -65,6 +65,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 # clf = LinearRegression(n_jobs=-1)
 clf = LinearRegression()
 clf.fit(X_train, y_train)
+# at this stage, the classifier has been trained and we want to save (pickle) it
+with open('linearregression.pickle', 'wb') as f:
+	pickle.dump(clf, f) # dumps the classifier into the file f
+
+# to open the pickle
+pickle_in = open('linearregression.pickle', 'rb')
+clf = pickle.load(pickle_in);
+# the above line loads the pickle
 accuracy = clf.score(X_test, y_test)
 
 # print(accuracy)
