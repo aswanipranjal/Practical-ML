@@ -31,5 +31,15 @@ example_measures = np.array([4, 2, 1, 1, 1, 2, 3, 2, 1])
 # ^This error can be fixed by the line below
 example_measures = example_measures.reshape(1, -1)
 
+# For example, 2 predictions can be done like so:
+# example_measures = np.array([[4, 2, 1, 1, 1, 2, 3, 2, 1], [4, 2, 1, 2, 2, 2, 3, 2, 1]])
+# example_measures = example_measures.reshape(2, -1)
+
+# _any_ number of predictions can be done like so:
+# example_measures = np.array(__something__)
+# example_measures = example_measures.reshape(len(example_measures), -1)
+
+# We reshape numpy arrays so that we can feed it through scikit-learn
+
 prediction = clf.predict(example_measures)
 print(prediction)
