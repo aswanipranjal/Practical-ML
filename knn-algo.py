@@ -60,3 +60,7 @@ def KNN (data, predict, K=3):
 
 result = KNN(dataset, new_features, K=3)
 print(result)
+
+[[plt.scatter(ii[0], ii[1], s=100, color=i) for ii in dataset[i]] for i in dataset]
+plt.scatter(new_features[0], new_features[1], color=result)
+plt.show()
