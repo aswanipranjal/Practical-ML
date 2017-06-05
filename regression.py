@@ -38,10 +38,11 @@ df['label'] = df[forecast_col].shift(-forecast_out)
 # because X contains features, we are dropping the label column
 # df.drop() returns a new dataframe which is being converted into an array by numpy
 X = np.array(df.drop(['label'], 1))
-X = X[:-forecast_out]
-X_lately = X[-forecast_out:]
 # preprocesses and normalizes all data points together
 X = preprocessing.scale(X)
+X = X[:-forecast_out]
+X_lately = X[-forecast_out:]
+
 df.dropna(inplace = True)
 y = np.array(df['label'])
 y = np.array(df['label'])
@@ -61,4 +62,6 @@ clf = LinearRegression()
 clf.fit(X_train, y_train)
 accuracy = clf.score(X_test, y_test)
 
-print(accuracy)
+# print(accuracy)
+forecast_set = clf.predict(X_lately)
+print(forecast_set, accuracy, forecast_out)
