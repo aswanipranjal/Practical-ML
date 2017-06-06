@@ -57,8 +57,8 @@ def KNN (data, predict, K=3):
 	# print(Counter(votes).most_common(1)) # Debug line
 	# This line will print out the first entry of the first tuple in most_common 1 instance
 	vote_result = Counter(votes).most_common(1)[0][0]
-
-	return vote_result
+	confidence = Counter(votes).most_common(1)[0][1] / K
+	return vote_result, confidence
 
 # result = KNN(dataset, new_features, K=3)
 # print(result)
@@ -67,40 +67,47 @@ def KNN (data, predict, K=3):
 # plt.scatter(new_features[0], new_features[1], color=result)
 # plt.show()
 
-df = pd.read_csv('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\cancer_dataset.txt')
-df.replace('?', -99999, inplace=True)
-df.drop(['id'], 1, inplace=True)
-# print(df.head())
-# To ensure that everything in the dataframe is an int or a float, we convert it using a pandas prebuilt function
-# (Sometimes there are quotes in the data which makes it a string)
-full_data = df.astype(float).values.tolist()
-# print(full_data[:10])
+accuracies = []
+for i in range(25):
+	df = pd.read_csv('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\cancer_dataset.txt')
+	df.replace('?', -99999, inplace=True)
+	df.drop(['id'], 1, inplace=True)
+	# print(df.head())
+	# To ensure that everything in the dataframe is an int or a float, we convert it using a pandas prebuilt function
+	# (Sometimes there are quotes in the data which makes it a string)
+	full_data = df.astype(float).values.tolist()
+	# print(full_data[:10])
 
-random.shuffle(full_data)
+	random.shuffle(full_data)
 
-# Our version of train_test_split
-test_size = 0.2;
-train_set = {2:[], 4:[]}
-test_set = {2:[], 4:[]}
-train_data = full_data[:-int(test_size*len(full_data))]
-test_data = full_data[-int(test_size*len(full_data)):]
+	# Our version of train_test_split
+	test_size = 0.2;
+	train_set = {2:[], 4:[]}
+	test_set = {2:[], 4:[]}
+	train_data = full_data[:-int(test_size*len(full_data))]
+	test_data = full_data[-int(test_size*len(full_data)):]
 
-# populating dictionaries
-for i in train_data:
-	# i[-1] accesses the last element, i.e. to find whether it is benign or malignant
-	train_set[i[-1]].append(i[:-1])
+	# populating dictionaries
+	for i in train_data:
+		# i[-1] accesses the last element, i.e. to find whether it is benign or malignant
+		train_set[i[-1]].append(i[:-1])
 
-for i in test_data:
-	test_set[i[-1]].append(i[:-1])
+	for i in test_data:
+		test_set[i[-1]].append(i[:-1])
 
-correct = 0
-total = 0
+	correct = 0
+	total = 0
 
-for group in test_set:
-	for data in test_set[group]:
-		vote = KNN(train_set, data, K=5)
-		if group == vote:
-			correct+=1
-		total+=1
+	for group in test_set:
+		for data in test_set[group]:
+			vote, confidence = KNN(train_set, data, K=5)
+			if group == vote:
+				correct+=1
+			# else:
+				# print(confidence)
+			total+=1
 
-print('Accuracy: ', correct/total)
+	print('Accuracy: ', correct/total)
+	accuracies.append(correct/total)
+
+print(sum(accuracies)/len(accuracies))
