@@ -91,4 +91,7 @@ for epoch in range(100):
 	print('Epoch: %d, Loss: %.8f, Time: %.4fs'%(epoch, np.mean(err), time.clock() - t0))
 
 # try to predict something
-X = np.
+X = np.random.binomial(1, 0.5, n_input)
+print('XOR prediction')
+print(x)
+print(predict(x, *params))
