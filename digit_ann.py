@@ -1,6 +1,6 @@
 import input_data
 import tensorflow as tf
-mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
+mnist = input_data.read_data_sets("C:/Users/Aman Deep Singh/Documents/Python/Practical ML/", one_hot=True)
 
 learning_rate = 0.01
 training_iteration = 30
@@ -35,10 +35,41 @@ with tf.name_scope("cost_function") as scope:
 
 with tf.name_scope("train") as scope:
 	# Gradient descent
-	optimizer = tf.train.GradientDescentOptimizer(learning_rate).Minimize(cost_function)
+	optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_function)
 
 # Initializing the variables
 init = tf.initialize_all_variables()
 
 # Merge all summaries into a single operator
 merged_summary_op = tf.merge_all_summaries()
+
+# Launch the graph
+with tf.Session() as sess:
+	sess.run(init)
+
+	# Set the log writer to the folder /tmp/tensorflow_logs
+	summary_writer = tf.train.SummaryWriter('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\', graph_def=sess.graph_def)
+
+	# Training cycle
+	for iteration in range(training_iteration):
+		avg_cost = 0
+		total_batch = int(mnist.train.num_examples/batch_size)
+		# Loop over all batches
+		for i in range(total_batch):
+			batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+			# Fit training using batch data
+			sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys})/total_batch
+			# Write logs for each iteration
+			summary_str = sess.run(merged_summary_op, feed_dict={x: batch_xs, y: batch_ys})
+			summary_writer.add_summary(summary_str, iteration*total_batch + i)
+		# Display logs per iteration step
+		if iteration % display_step == 0:
+			print("Iteration: ", '%04d' %(iteration + 1), "Cost=", "{:.9f}".format(avg_cost))
+
+	print("Tuning completed!")
+
+	# Test the model
+	predictions = tf.equal(tf.argmax(model, 1), tf.argmax(y, 1))
+	# Calculate accuracy
+	accuracy = tf.reduce_mean(tf.cast(predictions, "float"))
+	print("Accuracy:", accuracy.eval({x: mnist.test.images, y: mnist.test.labels}))
