@@ -77,7 +77,7 @@ class Support_Vector_Machine:
 		# sign of (X.w + b)
 		classification = np.sign(np.dot(np.array(features), self.w) + self.b)
 		if classification != 0 and self.visualization:
-			self.ax.scatter(features[0], features[1], s=200, marker=*, c=self.colors[classification])
+			self.ax.scatter(features[0], features[1], s=200, marker='*', c=self.colors[classification])
 
 		return classification
 
@@ -115,5 +115,9 @@ class Support_Vector_Machine:
 		self.ax.plot([hyp_x_min, hyp_x_max], [db1, db2])
 
 		plt.show()
-		
+
 data_dict = {-1:np.array([[1, 7], [2, 8], [3, 8],]), 1:np.array([[5, 1], [6, -1], [7, 3]])}
+
+svm = Support_Vector_Machine()
+svm.fit(data=data_dict)
+svm.visualize()
