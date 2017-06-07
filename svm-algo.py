@@ -11,4 +11,13 @@ class Support_Vector_Machine:
 			self.fig = plt.figure()
 			self.ax = self.fig.add_subplot(1, 1, 1)
 
+	# train
+	def fit(self, data):
+		pass
+
+	def predict(self, features):
+		# sign of (X.W + b)
+		classification = np.sign(np.dot(np.array(features), self.w) + self.b)
+		return classification
+
 data_dict = {-1:np.array([[1, 7], [2, 8], [3, 8],]), 1:np.array([[5, 1], [6, -1], [7, 3]])}
