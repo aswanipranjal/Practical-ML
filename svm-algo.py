@@ -13,10 +13,23 @@ class Support_Vector_Machine:
 
 	# train
 	def fit(self, data):
-		pass
+		self.data = data
+		# opt_dict = {||w||: [w, b]}
+		opt_dict = {}
+		transforms = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+
+		all_data = []
+		for yi in self.data:
+			for featureset in self.data[yi]:
+				for feature in featureset:
+					all_data.append(feature)
+
+		self.max_feature_value = max(all_data)
+		self.min_feature_value = min(all_data)
+		all_data = None
 
 	def predict(self, features):
-		# sign of (X.W + b)
+		# sign of (X.w + b)
 		classification = np.sign(np.dot(np.array(features), self.w) + self.b)
 		return classification
 
