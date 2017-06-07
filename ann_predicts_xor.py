@@ -26,6 +26,15 @@ for j in range(60000):
 	l2_error = y - 12
 
 	if (j % 100000) == 0:
-		print "Error: " + str(np.mean(np.abs(l2_error)))
+		print("Error: " + str(np.mean(np.abs(l2_error))))
 
 	l2_delta = l2_error*nonlin(l2, deriv=True)
+	l1_error = l2_delta.dot(syn1.T)
+	l1_delta = l1_error*nonlin(l1, deriv=True)
+
+	# update weights
+	syn1 += l1.T.dot(l2_delta)
+	syn0 += l0.T.dot(l1_delta)
+
+print("Output after training")
+print(l2)
