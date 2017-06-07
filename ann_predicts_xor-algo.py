@@ -15,7 +15,7 @@ learning_rate = 0.01
 momentum = 0.9
 
 # we seed the random number generator (non-deterministic seeding)
-np.randon.seed(0);
+np.random.seed(0);
 
 # activation function
 def sigmoid(x):
@@ -78,20 +78,19 @@ for epoch in range(100):
 
 	# for each data point, we want to update our weights
 	for i in range(X.shape[0]):
-		loss, grad = train(X[i], T[i], *params
-			# update our loss
-			for j in range(len(params)):
-				params[j] -= update[j]
+		loss, grad = train(X[i], T[i], *params)
+		# update our loss
+		for j in range(len(params)):
+			params[j] -= update[j]
+		for j in range(len(params)):
+			update[j] = learning_rate * grad[j] + momentum * update[j]
 
-			for j in range(len(params)):
-				update[j] = learning_rate * grad[j] + momentum * update[j]
-
-			err.append(loss)
+		err.append(loss)
 
 	print('Epoch: %d, Loss: %.8f, Time: %.4fs'%(epoch, np.mean(err), time.clock() - t0))
 
 # try to predict something
 X = np.random.binomial(1, 0.5, n_input)
 print('XOR prediction')
-print(x)
-print(predict(x, *params))
+print(X)
+print(prediction(X, *params))
