@@ -28,6 +28,21 @@ class Support_Vector_Machine:
 		self.min_feature_value = min(all_data)
 		all_data = None
 
+		# smaller than 0.001 will be computation heavy
+		step_sizes = [self.max_feature_value * 0.1, self.max_feature_value * 0.01, self.max_feature_value * 0.001]
+		# extremely expensive
+		b_range_multiple = 5
+		# 
+		b_multiple = 5
+		latest_optimum = self.max_feature_value * 10
+
+		for step in step_sizes:
+			w = np.array([latest_optimum, latest_optimum])
+			# we can do this because this problem is convex
+			optimized = False
+			while not optimized:
+				pass
+
 	def predict(self, features):
 		# sign of (X.w + b)
 		classification = np.sign(np.dot(np.array(features), self.w) + self.b)
