@@ -76,6 +76,20 @@ class Support_Vector_Machine:
 	def predict(self, features):
 		# sign of (X.w + b)
 		classification = np.sign(np.dot(np.array(features), self.w) + self.b)
+		if classification != 0 and self.visualization:
+			self.ax.scatter(features[0], features[1], s=200, marker=*, c=self.colors[classification])
+
 		return classification
+
+	def visualize(self):
+		[[self.ax.scatter(x[0], x[1], s=100, color=self.colors[i]) for x in data_dict[i]] for i in data_dict]
+
+		# hyperplane = x.w + b
+		# v = x.w + b
+		# positive support vector, v = 1
+		# negative support vector, v = -1
+		# decision boundary = 0
+		def hyperplane(x, w, b, v):
+			return (-w[0]*x - b + v) / w[1]
 
 data_dict = {-1:np.array([[1, 7], [2, 8], [3, 8],]), 1:np.array([[5, 1], [6, -1], [7, 3]])}
