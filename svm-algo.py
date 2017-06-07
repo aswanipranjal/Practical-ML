@@ -56,6 +56,7 @@ class Support_Vector_Machine:
 								if not yi*(np.dot(w_t, xi) + b) >= 1:
 									found_option = False
 									# probably add a break, because after the found_option is False, we have no reason to keep checking
+								# print(xi, ':', yi*np.dot(w_t, xi) + b)
 
 						if found_option:
 							opt_dict[np.linalg.norm(w_t)] = [w_t, b]
@@ -120,4 +121,8 @@ data_dict = {-1:np.array([[1, 7], [2, 8], [3, 8],]), 1:np.array([[5, 1], [6, -1]
 
 svm = Support_Vector_Machine()
 svm.fit(data=data_dict)
+predict_us = [[0, 10], [1, 3], [3, 4], [3, 5], [5, 5], [5, 6], [6, -5], [5, 8]]
+for p in predict_us:
+	svm.predict(p)
+	
 svm.visualize()
