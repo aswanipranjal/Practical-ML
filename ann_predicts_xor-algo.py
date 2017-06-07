@@ -55,3 +55,40 @@ def prediction(x, V, W, bv, bw):
 	A = np.dot(x, V) + bv
 	B = np.dot(np.tanh(A), W) + bw
 	return (sigmoid(B) > 0.5).astype(int)
+
+# create layers
+# first layer
+V = np.random.normal(scale=0.1, size=(n_input, n_hidden))
+W = np.random.normal(scale=0.1, size=(n_hidden, n_output))
+
+bv = np.zeros(n_hidden)
+bw = np.zeros(n_output)
+
+params = [V, W, bv, bw]
+
+X = np.random.binomial(1, 0.5, (n_sample, n_input))
+T = X ^ 1
+
+# training step
+for epoch in range(100):
+	err = []
+	update = [0]*len(params)
+
+	t0 = time.clock()
+
+	# for each data point, we want to update our weights
+	for i in range(X.shape[0]):
+		loss, grad = train(X[i], T[i], *params
+			# update our loss
+			for j in range(len(params)):
+				params[j] -= update[j]
+
+			for j in range(len(params)):
+				update[j] = learning_rate * grad[j] + momentum * update[j]
+
+			err.append(loss)
+
+	print('Epoch: %d, Loss: %.8f, Time: %.4fs'%(epoch, np.mean(err), time.clock() - t0))
+
+# try to predict something
+X = np.
