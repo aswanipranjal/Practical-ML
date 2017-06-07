@@ -44,7 +44,7 @@ def train(x, t, V, W, bv, bw):
 	# predict our loss
 	dW = np.outer(Z, Ew)
 	dV = np.outer(x, Ev)
-
+ k
 	# this is called cross-entropy. Generally for classification problems, cross-entropy tends to give us a better result
 	loss = -np.mean(t * np.log(Y) + (1 - t) * np.log(1 - Y))
 
