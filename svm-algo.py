@@ -32,7 +32,7 @@ class Support_Vector_Machine:
 		step_sizes = [self.max_feature_value * 0.1, self.max_feature_value * 0.01, self.max_feature_value * 0.001]
 		# extremely expensive
 		b_range_multiple = 5
-		# 
+		# we don't need to take as small of steps with b as we do w
 		b_multiple = 5
 		latest_optimum = self.max_feature_value * 10
 
@@ -41,7 +41,27 @@ class Support_Vector_Machine:
 			# we can do this because this problem is convex
 			optimized = False
 			while not optimized:
-				pass
+				# arange allows us to define the size of steps we want to take and it is probably more efficient
+				for b in np.arange(-1*(self.max_feature_value*b_range_multiple), (self.max_feature_value*b_range_multiple), step*b_multiple):
+					for transformation in transforms:
+						w_t = w*transformation
+						found_option = True
+						# weakest link in the SVM fundamentally
+						# SMO attempts to fix this a bit
+						# yi(xi.w + b) >= 1
+						for i in self.data:
+							for xi in self.data[i]:
+								yi = i
+								if not yi*(np.dot(w_t, xi) + b) >= 1:
+									found_option = False
+									# probably add a break, because after the found_option is False, we have no reason to keep checking
+
+						if found_option:
+							opt_dict[np.linalg.norm(w_t)] = [w_t, b]
+
+				if w[0] < 0:
+					optimized = True
+					print('Optimized a step.')
 
 	def predict(self, features):
 		# sign of (X.w + b)
