@@ -1,8 +1,8 @@
 import numpy as np
 
 def nonlin(x, deriv=False):
-	if deriv:
-		return x*(1-x)
+	if(deriv==True):
+		return (x*(1-x))
 
 	return 1/(1 + np.exp(-x))
 
@@ -23,9 +23,9 @@ for j in range(60000):
 	l1 = nonlin(np.dot(l0, syn0))
 	l2 = nonlin(np.dot(l1, syn1))
 
-	l2_error = y - 12
+	l2_error = y - l2
 
-	if (j % 100000) == 0:
+	if (j % 10000) == 0:
 		print("Error: " + str(np.mean(np.abs(l2_error))))
 
 	l2_delta = l2_error*nonlin(l2, deriv=True)
