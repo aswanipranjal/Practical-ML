@@ -28,6 +28,7 @@ class Support_Vector_Machine:
 		self.min_feature_value = min(all_data)
 		all_data = None
 
+		# support vectors yi(xi.w + b) = 1
 		# smaller than 0.001 will be computation heavy
 		step_sizes = [self.max_feature_value * 0.1, self.max_feature_value * 0.01, self.max_feature_value * 0.001]
 		# extremely expensive
@@ -62,6 +63,15 @@ class Support_Vector_Machine:
 				if w[0] < 0:
 					optimized = True
 					print('Optimized a step.')
+				else:
+					w = w - step
+
+			norms = sorted([n for n in opt_dict])
+			# ||W||: [w, b]
+			opt_choice = opt_dict[norms[0]]
+			self.w = opt_choice[0]
+			self.b = opt_choice[1]
+			latest_optimum = opt_choice[0][0] + step*2
 
 	def predict(self, features):
 		# sign of (X.w + b)
