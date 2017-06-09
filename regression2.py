@@ -9,8 +9,22 @@ def compute_error_for_given_points(b, m, points):
 	# we divide the sum by the total number of elements in the array
 	return totalError / float(len(points))
 
+# Calculates gradient for one iteration
 def step_gradient(b_current, m_current, points, learning_rate):
 	# Gradient Descent
+	b_gradient = 0
+	m_gradient = 0
+	# The number of points
+	N = float(len(points))
+	for i in range(len(points)):
+		x = points[i, 0]
+		y = points[i, 1]
+		b_gradient += -(2 / N) * (y - ((m_current * x) + b_current))
+		m_gradient += -(2 / N) * x * (y - ((m_current * x) + b_current))
+
+	new_b = b_current - (learning_rate * b_gradient)
+	new_m = m_current - (learning_rate * m_gradient)
+	return [new_b, new_m]
 
 def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
 	b = starting_b
