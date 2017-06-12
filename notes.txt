@@ -18,3 +18,7 @@ The cost function for linear regression will always be a convex function. thus g
 Batch gradient descent: each step uses all the training examples
 Normal equations method: A method from linear algebra that directly finds the optimum, without needing to iteratively converge.
 But, it was found that gradient descent was better for large datasets.
+
+Wrong answer:
+Linear regression with one variable:
+Suppose that for some linear regression problem (say, predicting housing prices as in the lecture), we have some training set, and for our training set we managed to find some (theta)0, (theta)1 such that J(theta0, theta1) = 0. Which of the statements below must be true? (Multiple correct)
