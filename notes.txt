@@ -1,0 +1,15 @@
+Gradient descent
+
+a = a - lr * delJ/dela
+Always update terms simultaneously
+Correct:
+temp0 = a - lr*delJ/dela
+temp1 = b - lr*delJ/delb
+a = temp0
+b = temp1
+
+Incorrect:
+temp0 = a - lr*delJ/dela
+a = temp0
+temp1 = b - lr*delJ.delb
+b = temp1
