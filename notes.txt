@@ -13,3 +13,8 @@ temp0 = a - lr*delJ/dela
 a = temp0
 temp1 = b - lr*delJ.delb
 b = temp1
+
+The cost function for linear regression will always be a convex function. thus gradient descent will always converge to the local optimum
+Batch gradient descent: each step uses all the training examples
+Normal equations method: A method from linear algebra that directly finds the optimum, without needing to iteratively converge.
+But, it was found that gradient descent was better for large datasets.
