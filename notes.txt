@@ -132,3 +132,18 @@ Differences:
 % writes a comment
 xor(1, 0)
 writing a semicolon after a variable declaration prevents printing of the value of the assigned variable
+a = pi % assigns value 'pi' to a
+printing can be done using the disp() command
+disp(sprintf('2 decimals: %0.2f', a))
+format long % causes numbers to be displayed to a lot more decimal places
+format short % the default value
+A = [1 2; 3 4; 5 6] % generates a matrix
+v = 1:0.1:2 % equivalent to v = range(1, 2, 0.1), v will be a row vector and the upper limit is inclusive
+ones(2, 3) % generates a 2 by 3 matrix with all ones
+2*ones(2, 3) 5 generates a 2 by 3 matrix with all twos
+eye(n) % generates n dimensional identity matrix
+rand(1, 3) % generates a row vector with random floats (0 to 1) from uniform distribution
+randn(1, 3) % generates a row vector with random floats from gaussian distribution
+hist(w) % generates histogram for the data
+hist(w, n) % generates a histogram with n bins for the data
+help eye % brings help page
