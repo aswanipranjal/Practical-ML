@@ -1,5 +1,6 @@
 GRADIENT DESCENT
 
+Time complexity: O(kn^2)
 a = a - lr * delJ/dela
 Always update terms simultaneously
 Correct:
@@ -42,11 +43,11 @@ X = column_vector([x0, x1, x2, x3 ... xn])
 t = column_vector([t0, t1, t2, t3 ... tn])
 
 h(x) = innerProduct((theta_transpose), x)
-
 h(x) = x(theta)^T
 General gradient descent
 theta0 := theta_featureNumber - lr*(1/m) SUM(h(x^(houseNumber) - y^(houseNumber)))x_featureNumber^(houseNumber)
 
+We can speed up gradient descent by having each of our input values in roughly the same range.
 Gradient descent can work more quickly if the features are normalized or scaled
 If the ellipse is thin, the gradient descent can take time and oscillate or meander about before converging
 A scaled ellipse will be optimized earlier. GD can converge much faster
@@ -61,8 +62,73 @@ More general rule:
 replace x1 with (x1 - mean)/s1
 where s1 = range(max - min)
 or s1 = stdDeviation
+(Quizzes in the course use range, programming assignments use standard deviation)
 
 Feature scaling doesn't have to be too exact for gradient descent to work reasonably well
 
 EG: Suppose you are using a learning algorithm to estimate the price of houses in a city. You want one of your features xi to capture the age of the house. In your training set, all of your houses have an age between 30 and 50 years, with an average of 38 years. Which of the following would you use as features assuming you use feature scaling and normalization?
 Ans: x(i) = (age_of_house - 38) / 20
+
+LEARNING RATE
+
+Debugging gradient descent: Plot J(theta) vs no. of iterations. J(theta) should decrease after every iteration.
+Example automatic convergence test: Declare convergence if J(theta) decreases by less than 10e-3 in one iteration.
+If J(theta) is increasing, learning rate is probably too big.
+For sufficiently small learning rate, J(theta) should decrease on every iteration.
+Try learning rates as 0.0001, (0.0003), 0.001, (0.003), 0.01, (0.03), 0.1, (0.3), 1
+
+POLYNOMIAL REGRESSION
+
+We can create new features by ourselves
+h(x) = t0 + xt1 + (x^2)t2
+But quadratic models don't make practical sense as they have either a maxima or a minima, which might not correspond to probable values in the dataset.
+Cubics might be better.
+To fit a cubic function to a linear model, we use three features, let f be a feature, we then use f, f^2 and f^3 as three independent features and set them in a linear model
+h(x) = t0 + ft1 + f^2t2 + f^3t3.
+
+If features are chosen like this, feature scaling becomes increasingly important
+Eg: h(x) = t0 + ft1 + sqrt(f)t2
+
+Suppose you want to predict a house's price as a function of its size. Your model is
+h(x) = t0 + (size)t1 + sqrt(size)t2
+Suppose size ranges from 1 to 1000 (feet^2). You will implement this by fitting a model
+h(x) = t0 + t1x1 + t2x2
+Finally, suppose you want to use feature scaling (without mean normalization)
+Which of the following choices for x1 and x2 should you use? (Note: sqrt(1000) ~ 32)
+Ans: x1 = size/1000, x2 = sqrt(size)/32
+
+NORMAL EQUATION
+
+A method to solve for theta analytically.
+Let J(theta) = a(theta^2) + b(theta) + c
+find minima (when theta belongs to real numbers)
+When theta is a vector, we can use partial derivatives to implement a similar process
+Construct a matrix X that contains all features
+Construct a vector y that contains all 'labels'
+The value of theta that minimizes the cost function will then be:
+theta = (X^T * X)^-1 * X^T * y
+theta = inverse(transpose(X)*X)*transpose(X)*y
+Set A = X^T * X. Then find A^-1
+Octave: pinv(X'*X)*X'*y
+Imp: For this method, feature scaling isn't actually necessary
+Advantages: Normal equation doesn't need to choose learning rate and doesn't need to iterate.
+Disadvantages: Normal equation doesn't work well with large data. Slow if n is large.
+Cost of inverting a matrix is approximately O(n^3)
+Inverting a 100x100 matrix is fast enough.
+1000x1000 is also good enough
+At about n = 10000, consider switching to other methods or to gradient descent.
+Normal equations don't work for logistic regression and other sophisticated learning algorithms.
+
+Non invertibility: (happens very rarely) pinv command in octave will actually compute the value we want without throwing errors.
+Common causes of non-invertibility:
+1. Redundant features: Eg: x1 = size in feet^2, x2 = size in m^2
+2. Too many features (eg: m <= n) may cause non-invertibility
+	Delete some features or use regularization.
+
+OCTAVE
+Differences: 
+2^6 can be used
+!= corresponds to ~= in Octave
+% writes a comment
+xor(1, 0)
+writing a semicolon after a variable declaration prevents printing of the value of the assigned variable
