@@ -1,4 +1,4 @@
-Gradient descent
+GRADIENT DESCENT
 
 a = a - lr * delJ/dela
 Always update terms simultaneously
@@ -22,3 +22,47 @@ But, it was found that gradient descent was better for large datasets.
 Wrong answer:
 Linear regression with one variable:
 Suppose that for some linear regression problem (say, predicting housing prices as in the lecture), we have some training set, and for our training set we managed to find some (theta)0, (theta)1 such that J(theta0, theta1) = 0. Which of the statements below must be true? (Multiple correct)
+
+LINEAR ALGEBRA
+
+vector: an n x 1 matrix
+1-indexed vector, 0-indexed vector
+
+Matrix without an inverse is a singular or degenerate matrix
+
+MULTIVARIATE LINEAR REGRESSION
+
+x^(i) = input (features) of ith training example
+Single variable hypotheses: h(x) = t0 + xt1
+
+Multivariable hypotheses: h(x) = t0 + x,t, + x2t2 + x3t3 + x4t4
+let x0 = 1 to facilitate vectorization of the hypothesis function
+
+X = column_vector([x0, x1, x2, x3 ... xn])
+t = column_vector([t0, t1, t2, t3 ... tn])
+
+h(x) = innerProduct((theta_transpose), x)
+
+h(x) = x(theta)^T
+General gradient descent
+theta0 := theta_featureNumber - lr*(1/m) SUM(h(x^(houseNumber) - y^(houseNumber)))x_featureNumber^(houseNumber)
+
+Gradient descent can work more quickly if the features are normalized or scaled
+If the ellipse is thin, the gradient descent can take time and oscillate or meander about before converging
+A scaled ellipse will be optimized earlier. GD can converge much faster
+Get every feature to a [-1, 1] range
+[0, 3] is acceptable; values in the vicinity are acceptable
+
+Apply normalization too all features except x0
+x(i) -> x(i) - mu(i)
+i.e: replace x with (x - mean)/total
+
+More general rule: 
+replace x1 with (x1 - mean)/s1
+where s1 = range(max - min)
+or s1 = stdDeviation
+
+Feature scaling doesn't have to be too exact for gradient descent to work reasonably well
+
+EG: Suppose you are using a learning algorithm to estimate the price of houses in a city. You want one of your features xi to capture the age of the house. In your training set, all of your houses have an age between 30 and 50 years, with an average of 38 years. Which of the following would you use as features assuming you use feature scaling and normalization?
+Ans: x(i) = (age_of_house - 38) / 20
