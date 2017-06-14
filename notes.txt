@@ -216,3 +216,28 @@ A = magic(5); imagesc(A) % plots a matrix's values as hues
 imagesc(A), colorbar, colormap gray; % plots a grayscale colormatrix mapped to the values of the matirx A itself and displays a colorbar beside it as reference
 commands can be comma chained to print the results of multiple commands
 commands can be semi-colon chained to print the results of multiple commands
+Let v = zeros(10, 1);
+for i = 1: 10,
+	v(i) = 2^i;
+	end;
+	% v now stores 2^i for i = 1 to 10
+
+indices = 1:10;
+for i = indices,
+disp(i);
+end;
+% does the exact same thing
+% break and continue can be used as usual
+
+i = 1;
+while i <= 5,
+v(i) = 100;
+i = i + 1;
+end;
+% does the same thing using a while loop
+if, elseif, else % equivalent to if, elif, else
+Functions:
+function y = squareThisnumber(x)
+y = x^2
+
+% save this in a .m file to be called by octave from the wroking directory
