@@ -13,8 +13,9 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-
+% Computes the prediction using the current values of theta
 prediction = X*theta;
+% Computes the value of the cost function
 J = 1/(2*m)*sum((prediction - y).^2);
 
 

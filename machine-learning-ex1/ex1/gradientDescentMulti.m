@@ -17,9 +17,13 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+    % computes the current prediction
     prediction = X * theta;
+    % computes error
     errors = prediction - y;
+    % Calculates sum in vectorized form
     sigma_term = X' * errors;
+    % Calculates correction factor and implements it
     theta = theta - (alpha/m) * sigma_term;
 
     % ============================================================
