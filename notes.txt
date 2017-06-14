@@ -239,5 +239,7 @@ if, elseif, else % equivalent to if, elif, else
 Functions:
 function y = squareThisnumber(x)
 y = x^2
-
 % save this in a .m file to be called by octave from the wroking directory
+addpath('C:\path\to\directory') % adds the specified path to the octave functions searchpath
+Octave supports multiple return statements % check file sqcu.m to see how to define such a function
+% to obtain the return values of such a function, use [a, b] = function(x) or something like that
