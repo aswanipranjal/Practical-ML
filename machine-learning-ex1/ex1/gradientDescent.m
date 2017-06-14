@@ -16,12 +16,11 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCost) and gradient here.
     %
-    disp(computeCost(X, y, theta));
-    theta = theta - alpha * computeCost(X, y, theta);
 
-
-
-
+    prediction = X * theta;
+    errors = prediction - y;
+    sigma_term = X' * errors;
+    theta = theta - (alpha/m) * sigma_term;
 
     % ============================================================
 
