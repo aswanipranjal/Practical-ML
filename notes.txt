@@ -270,3 +270,14 @@ double prediction = theta.transpose() * x;
 // here * is a C++ overloaded operator
 
 Vectorization optimizes algorithms
+
+Q:
+v = zeros(10, 1)
+for i = 1:10,
+	for j = 1:10,
+		v(i) = v(i) + A(i, j) * x(j);
+	end;
+end;
+
+To find product Ax, how would you vectorize this code without any for loops?
+Hint: Dimension of the answer vector matters. 10x1 ~= 1x10
