@@ -196,3 +196,23 @@ sum(sum(A.*eye(9))) % sums up the major diagonal of the matrix
 B = A.*eye(9); sum(B(:)) % does the same
 sum(sum(A.*flipud(eye(9)))) % sums the minor diagonal of the matrix
 % flipud stands for flip-up-down and flips the matrix
+plot(x_axis, y_axis) % plots data
+% plotting a new plot deletes the old plot.
+hold on % preserves the plotted plot and plots the next plot on top of it.
+plot(t, y1, 'r') % changes color to red
+xlabel('time'); ylabel('value') % labels axes (equivalent to matplotlib)
+legend('sin', 'cos'); % adds a legend (equivalent to matplotlib)
+title('Interesting graph') % adds title
+print -dpng 'plot.png' % saves plot
+close % causes the open figure to go away
+figure(1); plot(t, y1) % plots first plot in a new figure
+figure(2); plot(t, y2) % specifying a different figure number opens a new plot
+subplot(1, 2, 1); % subdivides the plot into sections. The first two parameters divide the figure into a 1x2 grid. The third argument 'n' accesses the nth figure
+subplot(1, 2, 1); plot(t, y1);
+subplot(1, 2, 2); plot(t, y2); % plots two plots side by side
+axis([0.5 1 -1 1]) % sets the xrange and the yrange on the plot
+clf; % clears a figure
+A = magic(5); imagesc(A) % plots a matrix's values as hues
+imagesc(A), colorbar, colormap gray; % plots a grayscale colormatrix mapped to the values of the matirx A itself and displays a colorbar beside it as reference
+commands can be comma chained to print the results of multiple commands
+commands can be semi-colon chained to print the results of multiple commands
