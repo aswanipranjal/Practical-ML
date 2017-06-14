@@ -18,6 +18,9 @@ prediction = X*theta;
 % Computes the value of the cost function
 J = 1/(2*m)*sum((prediction - y).^2);
 
+% A more efficient way : 
+% J = (1/2m) * (X*theta - y)' * (X*theta - y)
+
 
 % =========================================================================
 
