@@ -243,3 +243,30 @@ y = x^2
 addpath('C:\path\to\directory') % adds the specified path to the octave functions searchpath
 Octave supports multiple return statements % check file sqcu.m to see how to define such a function
 % to obtain the return values of such a function, use [a, b] = function(x) or something like that
+
+VECTORIZATION
+h(x) = sum(thetai*xi);
+h(x) = theta' * x;
+
+Unvectorized implementation (MATLAB/Octave):
+prediction = 0.0;
+for j = 1:n+1,
+prediction = prediction + theta(j) * x(j)
+end;
+% IMPORTANT: Matlab and Octave are 1-indexed. Therefore, theta0 ends up having an index of 1 and so-on
+
+Vectorized implementation (MATLAB/Octave):
+prediction = theta' * x;
+
+Unvectorized implementation in C++
+double prediction = 0.0;
+for(int j = 0; j <=n; ++j) {
+	prediction == theta[j] * x[j];
+}
+
+Vectorized implementation in C++:
+// Using a library
+double prediction = theta.transpose() * x;
+// here * is a C++ overloaded operator
+
+Vectorization optimizes algorithms
