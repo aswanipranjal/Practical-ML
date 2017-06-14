@@ -147,3 +147,52 @@ randn(1, 3) % generates a row vector with random floats from gaussian distributi
 hist(w) % generates histogram for the data
 hist(w, n) % generates a histogram with n bins for the data
 help eye % brings help page for eye
+size(A) % returns a 1 by 2 matrix with the dimensions of the matrix A
+PS1('>> ') % changes default terminal carat from octave > to >>
+size(A, 1) % returns the size of the first dimension
+length(A) % returns the longer dimension. Applied usually to vectors
+load featuresX.dat % loads the file
+load('featuresX.dat') % does the same
+who % shows what variables we have in the octave workspace or in the octave memory
+whos % gives a detailed view
+clear featuresX % clears memory
+v = priceY(1:10) % returns first 10 elements
+save hello.mat v; % saves the vector v to a file called hello.mat (in a binary format)
+save hello.txt v -ascii; % saves the vector v to a file called hello.txt (in a human readable ASCII format)
+clear % deletes all variables in the workspace
+A(3, 2) % returns the element in the third row and second column of A
+A(2,:) % returns all elements in the second row
+A(:, 2) % returns all the elements in the second column
+A([1 3], :) % returns all the elements in the first and third rows
+A(:, 2) = [10; 11; 12] replaces the second column with the given new column vector
+A = [A, [100, 101, 102]] % appends the given column vector to the right
+A(:) % puts all elements of A into a single column vector (equivalent to np.ravel())
+C = [A B] % horizontally concatenates the matrices A and B into another matrix C
+C = [A;B] % vertically concatenates the matrix A and B into the new matrix C
+A*B % multiplies two matrices A and B
+A .* B % multiplies the elements of the two matrices elementwise
+A .^ 2 % squares all the elements of the matrix A
+1 ./ A % reciprocates all the elements of the matrix A
+log(A) % elementwise logarithm of A
+exp(A) % elementwise exponentiation of A
+abs(A) % elementwise magnitude of A
+A + ones(size(A)) % increments all the elements of A by one
+A + 1 % does the exact same thing
+A' % returns transpose of A
+max(A) % returns the maximum value of vector A
+[val, ind] = max(A) % returns the maximum value of the vector and its index
+A < 3 % returns a boolean matrix after doing the required logical comparison
+find(A < 3) % returns the indices of the elements that return true to the specified logical operation
+magic(n) % returns a matrix of dimension n by n in which, all the diagonals, rows, columns sum up to the same thing
+[r, c] = find(A >= 7) % returns the row numbers and column numbers of the matrices that satisfy the given condition separately
+sum(A) % adds up a vector A and columnwise adds up a matrix A
+prod(A) % multiplies the elements of a vector A and columnwise multiplies a matrix A
+floor(A), ceil(A) % do what they should
+max(rand(3), rand(3)) % returns a matrix with the max elements from the two random three dimensional matrices
+max(A, [], 1) % returns columnwise maximum of the matrix. 1 tells it to return the max along the first dimension (the row dimension). A 2 will make it return the max along the second dimension (the column dimension). A 3 will return the entire matrix for a 2-dimensional matrix
+max(max(A)) % returns the largest element of the matrix A
+max(A(:)) % (max(np.ravel(A))) returns the same
+sum(sum(A.*eye(9))) % sums up the major diagonal of the matrix
+B = A.*eye(9); sum(B(:)) % does the same
+sum(sum(A.*flipud(eye(9)))) % sums the minor diagonal of the matrix
+% flipud stands for flip-up-down and flips the matrix
