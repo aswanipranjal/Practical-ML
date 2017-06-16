@@ -281,3 +281,23 @@ end;
 
 To find product Ax, how would you vectorize this code without any for loops?
 Hint: Dimension of the answer vector matters. 10x1 ~= 1x10
+
+LOGISTIC REGRESSION
+
+For classification problems.
+Binary classification problems
+Hypotheses representation:
+We need 0 <= h(x) <= 1
+h(x) = g(theta' * x)
+where g is the sigmoid function or the logistic function
+g(z) = 1 / (1 + e^-z)
+g(z) outputs a value between 0 and 1
+It has asymptotes at y = 1 and y = 0
+Thus, h(x) must also be between 0 and 1
+When h(x) outputs a number, we will treat that number as the estimated probability that y = 1 on input x
+If h(x) = 0.7,
+We will predict that there is a 70% chance of the output being 1
+h(x) = P(y = 1|x ; theta) % read as 'probability that y = 1, given x, parameterized by theta'
+y must be 0 or 1
+P(y = 0|x ; theta) + P(y = 1|x ; theta) = 1
+P(y = 0|x ; theta) = 1 - P(y = 1|x ; theta)
