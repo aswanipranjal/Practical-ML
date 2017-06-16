@@ -360,3 +360,33 @@ Q: Vectorized implementation of gradient descent for logistic regression
 Ans: theta = theta - learning_rate*(1/m)*sum[(h(x) - y) * x]
 Vectorized implementation: theta = theta - (learning_rate/m)*X'*(g(X*theta) - y)
 The idea of feature scaling applies to gradient descent for logistic regression too
+To make logistic regression run quicker and scale much better to larger machine learning problems.
+Optimization algorithms:
+Gradient descent, Conjugate gradient, BFGS, L-BFGS; These have a clever inner loop called a line-search algorithm that automatically tries different learning rates
+Advantages of algorithms other tan gradient descent:
+no need to manually pick the learning rate alpha,
+These are often faster than gradient descent
+Disadvantages: more complex (do not implement these yourself)
+Eg for costFunction
+function [jVal, gradient] = costFunction(theta)
+jVal = (theta(1) - 5)^2 + (theta(2) - 5)^2;
+gradient = zeros(2, 1);
+gradient(1) = 2*(theta(1) - 5);
+gradient(2) = 2*(theta(2) - 5);
+% Advanced optimization function fminunc() (function minimization unconstrained)
+% options is a data structure that stores the options
+% sets gradientObjective parameter to 'on'
+options = optimset('GradObj', 'on', 'MaxIter', '100');
+initialTheta = zeros(2, 1);
+[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options)
+% Gradient descent on steroids
+% the exitFlag helps to verify whether or not the algorithm thinks it has converged
+% parameter vector initialTheta has to be at least 2 dimensional, or fminunc will give funny results
+
+Generalized costFunction:
+function [jval, gradient] = costFunction(theta)
+jVal = [code to compute J(theta)]
+gradient(1) = [code to compute the partial derivative wrt theta0]
+gradient(2) = [code to compute the partial derivative wrt theta1]
+...
+gradient(n+1) = [code to compute the partial derivative wrt thetan]
