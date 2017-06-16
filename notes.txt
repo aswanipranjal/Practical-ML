@@ -445,3 +445,10 @@ gradient(1) = [code to compute partial derivative of J(theta) wrt theta0];
 gradient(2) = [code to compute partial derivative of J(theta) wrt theta1];
 ...
 gradient(n+1) = [code to compute partial derivative of J(theta) wrt thetan];
+Q: You are training a classification model with logistic regression. Which of the following statements are true? Check all that apply
+A: Adding a new feature to the model always results in equal or better performance on the training set
+B: Adding many new features to the model helps prevent overfitting on the training set
+C: Introducing regularization to the model always results in equal or better performance on the training set
+D: Introducing regularization to the model always results in equal or better performance on examples not in the training set
+A, D is wrong
+only C is also wrong
