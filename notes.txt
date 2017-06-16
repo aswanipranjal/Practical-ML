@@ -308,14 +308,12 @@ g(z) >= 0.5 whenever z >= 0
 h(x) = g(theta' * x)
 h(x) >= 0.5 whenever (theta' * x) >= 0
 h(x) < 0.5 whenever (theta' * x) < 0
-
 Let h(x) = g(t0 + t1x1 + t2x2)
 Let t = [-3;1;1]
 Predict 'y = 1' if -3 + x1 + x2 >= 0, for some x1, x2 where x1 + x2 >= 3
 Plotting x1 + x2 = 3 on a graph where the axes are x1 and x2, gives the line known as the decision boundary
 x1 + x2 = 3 corresponds to h(x) = 0.5
 We don't need to plot a training set in order to plot the decision boundary
-
 Non-linear decision boundaries
 We can add nonlinear features, eg x1, x2, x1^2, x2^2, etc to fit our model
 Eg: if h(x) = g(t0 + t1x1 + t2x2 + t3x1^2 + t4x2^2)
@@ -331,3 +329,16 @@ h(x) < 0.5 -> y = 0
 g(z) >= 0.5, when z >= 0
 Thus, when theta' * x >= 0 => y = 1
 when theta' * x < 0 => y = 0
+Cost function:
+m examples, x belongs to [x0, x1, x2...] where x0 is always 1. For every x, the label y is either 0 or 1
+cost(h(x), y) = 1/2(h(x) - y)^2
+In logistic regression, the cost function is non-convex
+Using a squared cost function, the non-linear sigmoid term causes many local optima in the cost function. We would like te cost function to be convex. We might come up with a different cost function that is convex, so that we can apply gradient descent
+We redefine the cost function as follows
+Cost(h(x), y) = { -log(h(x)),  		if y = 1;
+				{ -log(1 - h(x)), 	if y = 0;
+This function works very well in this case as cost = 0 if y = 1, h(x) = 1
+But as h(x) -> 0, Cost -> infinity
+Captures the intuition that if h(x) = 0, (predict P(y = 1|x ; theta) = 0), but y = 1, we'll penalize the learning algorithm by a very large cost
+For y = 0, the cost function looks flipped (a mirror image along the y axis) between the x values of 0 and 1.
+Works on a similar intuition as explained above
