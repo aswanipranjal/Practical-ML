@@ -419,3 +419,16 @@ J(theta) = 1/2m[sum(h(theta) - y)^2 + lambda*sum(theta)]
 where the coefficient of lambda is summed for theta = 1 to n. We don't want to penalize theta0. (It makes very little difference, but it is the convention)
 lambda : regularization parameter
 A very high lambda causes underfitting, as most parameters become almost zero
+
+REGULARIZED LINEAR REGRESSION
+Gradient descent: thetaj = thetaj(1 - alpha*lambda/m) - alpha/m(sum(h(x) - y) * x)
+Normal form: theta = (X'X + lambda[M])*X'y
+where M is a (n+1) x (n+1) matrix where the first element is zero, all the (major) diagonal elements are 1 and everything else is 0
+Non-invertibility
+Suppoe m <= n
+(#examples), (#features)
+in this case,
+theta = pinv(X'X)*X'y, the pinv(X'X) term will be non-invertible, singular or degenerate
+% pinv gives a correct output anyway, but it won't give a very good hypothesis
+Regularization takes care of this as well
+Concretely, if lambda > 0, the matrix (X'X + lambda[M]) is invertible
