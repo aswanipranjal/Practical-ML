@@ -301,3 +301,33 @@ h(x) = P(y = 1|x ; theta) % read as 'probability that y = 1, given x, parameteri
 y must be 0 or 1
 P(y = 0|x ; theta) + P(y = 1|x ; theta) = 1
 P(y = 0|x ; theta) = 1 - P(y = 1|x ; theta)
+To normalize outputs, 
+predict 'y = 1' if h(x) >= 0.5
+predict 'y = 0' if h(x) < 0.5
+g(z) >= 0.5 whenever z >= 0
+h(x) = g(theta' * x)
+h(x) >= 0.5 whenever (theta' * x) >= 0
+h(x) < 0.5 whenever (theta' * x) < 0
+
+Let h(x) = g(t0 + t1x1 + t2x2)
+Let t = [-3;1;1]
+Predict 'y = 1' if -3 + x1 + x2 >= 0, for some x1, x2 where x1 + x2 >= 3
+Plotting x1 + x2 = 3 on a graph where the axes are x1 and x2, gives the line known as the decision boundary
+x1 + x2 = 3 corresponds to h(x) = 0.5
+We don't need to plot a training set in order to plot the decision boundary
+
+Non-linear decision boundaries
+We can add nonlinear features, eg x1, x2, x1^2, x2^2, etc to fit our model
+Eg: if h(x) = g(t0 + t1x1 + t2x2 + t3x1^2 + t4x2^2)
+if t0 = -1, t1 = 0, t2 = 0, t3 = 1, t4 = 1, we get a circle with radius 1
+theta = [-1;0;0;1;1]
+Therefore, predict 'y = 1' if -1 + x1^2 + x2^2 >= 0
+Decision boundary is a property of the hypotheses, not the training set.
+Once we have the parameter theta, that defines the decision boundary, not the training set
+Using more complicated functions as the hypotheses, we can come up with complex-shaped decision boundaries
+In retrospect:
+h(x) >= 0.5 -> y = 1
+h(x) < 0.5 -> y = 0
+g(z) >= 0.5, when z >= 0
+Thus, when theta' * x >= 0 => y = 1
+when theta' * x < 0 => y = 0
