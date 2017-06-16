@@ -421,14 +421,27 @@ lambda : regularization parameter
 A very high lambda causes underfitting, as most parameters become almost zero
 
 REGULARIZED LINEAR REGRESSION
+Theta is updated separately
 Gradient descent: thetaj = thetaj(1 - alpha*lambda/m) - alpha/m(sum(h(x) - y) * x)
 Normal form: theta = (X'X + lambda[M])*X'y
 where M is a (n+1) x (n+1) matrix where the first element is zero, all the (major) diagonal elements are 1 and everything else is 0
 Non-invertibility
-Suppoe m <= n
+Suppose m <= n
 (#examples), (#features)
 in this case,
 theta = pinv(X'X)*X'y, the pinv(X'X) term will be non-invertible, singular or degenerate
 % pinv gives a correct output anyway, but it won't give a very good hypothesis
 Regularization takes care of this as well
-Concretely, if lambda > 0, the matrix (X'X + lambda[M]) is invertible
+Concretely, if lambda > 0, the matrix (X'X + lambda.[M]) is invertible
+
+REGULARIZED LOGISTIC REGRESSION
+J(theta) = -[(1/m)*sum(y.log(h(x) + (1 - y).log(1 - h(x))))] + lambda/2m.sum(theta(j))^2
+The new cost function looks cosmetically the same as the one for the linear regression, but here, h(x) uses the sigmoid function
+
+ADVANCED OPTIMIZATION FOR LOGISTIC REGRESSION
+function [jVal, gradient] = costFunction(theta)
+jval = [code to compute J(theta)];
+gradient(1) = [code to compute partial derivative of J(theta) wrt theta0];
+gradient(2) = [code to compute partial derivative of J(theta) wrt theta1];
+...
+gradient(n+1) = [code to compute partial derivative of J(theta) wrt thetan];
