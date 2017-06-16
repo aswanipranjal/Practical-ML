@@ -376,7 +376,7 @@ gradient(2) = 2*(theta(2) - 5);
 % Advanced optimization function fminunc() (function minimization unconstrained)
 % options is a data structure that stores the options
 % sets gradientObjective parameter to 'on'
-options = optimset('GradObj', 'on', 'MaxIter', '100');
+options = optimset('GradObj', 'on', 'MaxIter', 100);
 initialTheta = zeros(2, 1);
 [optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options)
 % Gradient descent on steroids
@@ -390,3 +390,7 @@ gradient(1) = [code to compute the partial derivative wrt theta0]
 gradient(2) = [code to compute the partial derivative wrt theta1]
 ...
 gradient(n+1) = [code to compute the partial derivative wrt thetan]
+
+MULTI CLASS CLASIFICATION
+OVR type, where y can take a small number of discrete values
+Train three classifiers simultaneously and output the value of the classifier that was the most confident. If we have k classes, we have to train k classifiers
