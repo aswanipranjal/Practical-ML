@@ -394,3 +394,28 @@ gradient(n+1) = [code to compute the partial derivative wrt thetan]
 MULTI CLASS CLASIFICATION
 OVR type, where y can take a small number of discrete values
 Train three classifiers simultaneously and output the value of the classifier that was the most confident. If we have k classes, we have to train k classifiers
+Q: Suppose you have the following training set, and fit a logistic regression classifier 
+Which of the following are true? Check all that apply.
+Hint: the one that says J(theta) will be greater when the features are combined (x1x2, x2x3, x2x1^2, etc) is wrong
+
+THE PROBLEM OF OVERFITTING
+Underfit ~ high bias
+Overfit ~ high variance
+Overfitting: If we have too many features, the learned hypothesis may fit the training set very well, (J(theta) ~ 0), but fail to generalize to new examples (predict prices on new examples)
+Addressing overfitting:
+Reduce number of features
+-Manually select which features to keep
+-Model selsction algorithm
+Regularization
+-Keep all the features, but reduce the magnitude/values of parameters theta(j)
+-Works well when we have a lot of features, each of which contributes a bit to predicting y. (a lot of slightly useful features)
+
+REGULARIZATION
+Suppose we penalize and make the higher degree terms really small
+consider J(theta) = J(theta) + 1000theta_3^2 + 1000theta_4^2
+If we have small values of parameters, we will have a much simpler (and smoother) hypothesis which will be less prone to overfitting
+Therefore, we add an extra regularization term at the end to shrink our parameters, so that
+J(theta) = 1/2m[sum(h(theta) - y)^2 + lambda*sum(theta)]
+where the coefficient of lambda is summed for theta = 1 to n. We don't want to penalize theta0. (It makes very little difference, but it is the convention)
+lambda : regularization parameter
+A very high lambda causes underfitting, as most parameters become almost zero
