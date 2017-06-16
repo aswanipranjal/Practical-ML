@@ -337,8 +337,26 @@ Using a squared cost function, the non-linear sigmoid term causes many local opt
 We redefine the cost function as follows
 Cost(h(x), y) = { -log(h(x)),  		if y = 1;
 				{ -log(1 - h(x)), 	if y = 0;
+J = 1/m(sum(Cost(i)))
 This function works very well in this case as cost = 0 if y = 1, h(x) = 1
 But as h(x) -> 0, Cost -> infinity
 Captures the intuition that if h(x) = 0, (predict P(y = 1|x ; theta) = 0), but y = 1, we'll penalize the learning algorithm by a very large cost
 For y = 0, the cost function looks flipped (a mirror image along the y axis) between the x values of 0 and 1.
 Works on a similar intuition as explained above
+Simplified cost function: 
+Cost(h(x), y) = -ylog(h(x)) - (1 - y)log(1 - h(x))
+Cost(h(x), y) = -log(1 - y + (-1)^(y+1)*h(x))
+Thus, J = -1/m[sum(ylog(h(x)) + (1 - y)log(1 - h(x)))]
+Vectorized: J(theta) = (1/m)*(-y'*log(h) - (1-y)'*log(1 - h))
+this cost function is used, because it can be analysed in great detail by statistics using the principle of likelihood estimation. And this function is convex and used by most people for logistic regression.
+To fit parameters, min J(theta) wrt theta
+Gradient descent:
+Repeat {
+	thetaj = thetaj - learning_rate * sum((h(x) - y)*xj(i))
+}
+algorithm looks identical to linear regression. (h(x) is as different as can be)
+Apply same methods to monitor gradient descent as in linear regression
+Q: Vectorized implementation of gradient descent for logistic regression
+Ans: theta = theta - learning_rate*(1/m)*sum[(h(x) - y) * x]
+Vectorized implementation: theta = theta - (learning_rate/m)*X'*(g(X*theta) - y)
+The idea of feature scaling applies to gradient descent for logistic regression too
