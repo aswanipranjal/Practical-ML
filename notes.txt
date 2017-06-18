@@ -452,3 +452,40 @@ C: Introducing regularization to the model always results in equal or better per
 D: Introducing regularization to the model always results in equal or better performance on examples not in the training set
 A, D is wrong
 only C is also wrong
+
+NEURAL NETWORKS
+a_i^(j) = activation of unit i in layer j
+theta^(j) = matrix of weights controlling function mapping from layer j to layer j + 1
+If network has s_j units in layer j, s_(j+1) units in layer j + 1, then theta^(j) will be of dimension s_(j+1), then theta^(j) will be of dimension s_(j+1) x (s_j + 1)
+z_1^(2) = theta_10^(1)*x_0 + ...
+h(x) = a^(3) = g(z^(3))
+z^(2) = theta^(1)*a^(1); a^(2) = g(z^(2))
+a^(j) = g(z^(j))
+For predicting AND values, consider h(x) = g(-30 + 20x1 + 20x2)
+x1 		x2 		h(x)
+0 		0 		g(-30) ~ 0
+0 		1 		g(-10) ~ 0
+1 		0		g(-10) ~ 0
+1		1		g(+10) ~ 1
+h(x) ~ X1 AND X2
+For predicting NOT values, consider h(x) = g(10 - 20x1)
+x1 		h(x)
+0		g(+10) ~ 1
+1		g(-10) ~ 0
+The general idea of negation is to have large negative weights for the variable
+(NOT x1) AND (NOT x2) can be approximated by h(x) = 10 - 20x1 - 20x2
+Multi-class classification in neural networks is an example of one-vs-all classification
+Output will be a one-hot vector with dimensions equal to the number of classes
+Example octave code:
+% theta1 is Theta with superscript "(1)" from lecture
+% ie, the matrix of parameters for the mapping from layer1 (input) to layer2
+% Theta1 has size 3x3
+% Assume 'sigmoid' is a built-in function to compute 1 / (1 + exp(-z))
+
+a2 = zeros(3, 1);
+for i = 1:3,
+	for j = 1:3,
+		a2(i) = a2(i) + x(j) * Theta1(i, j);
+	end;
+	a2(i) = sigmoid(a2(i))
+end;
