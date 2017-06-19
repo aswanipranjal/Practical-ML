@@ -143,6 +143,13 @@ J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)))
 DELTA1 = zeros(size(Theta1));
 DELTA2 = zeros(size(Theta2));
 delta3 = a3 - y;
+z2 = [1 z2]; % try removing this line and the next-to-next one and see if outputs change
+delta2 = delta3*Theta2.*sigmoidGradient(z2);
+delta2 = delta2(:, 2:end);
+DELTA1 = DELTA1 + delta2'*a1; % same size as Theta1_grad (25 x 401)
+DELTA2 = DELTA2 + delta3'*a2; % same size as Theta2_grad (10 x 26)
+Theta1_grad = (1/m)*DELTA1;
+Theta2_grad = (1/m)*DELTA2;
 
 % -------------------------------------------------------------
 
