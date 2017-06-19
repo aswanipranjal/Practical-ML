@@ -140,9 +140,9 @@ t2 = Theta2(:, 2:end);
 J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)));
 
 % Backpropagation vectorized
-% DELTA1 = zeros(size(Theta1));
-% DELTA2 = zeros(size(Theta2));
-% delta3 = a3
+DELTA1 = zeros(size(Theta1));
+DELTA2 = zeros(size(Theta2));
+delta3 = a3 - y;
 
 % -------------------------------------------------------------
 
