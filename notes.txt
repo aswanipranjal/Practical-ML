@@ -563,6 +563,7 @@ theta belongs to R^n (eg, theta is unrolled version of theta(1), theta(2), theta
 theta = [theta1, theta2, theta3 ... thetan]
 delJ(theta)/del(theta) ~ (J(theta1 + epsilon, theta2 ... thetan) - J(theta1 - epsilon, theta2, theta3 ... thetan))/2*epsilon
 TO numerically compute the derivative, we implement the following in octave:
+EPSILON = 1e-4;
 for i = 1:n,
 	thetaPlus = theta; % the unrolled version of theta
 	thetaPlus(i) = thetaPlus(i) + EPSILON;
@@ -578,3 +579,29 @@ Make sure both of these give similar values
 Turn off gradient checking. Using backprop code for learning
 Important:
 Be sure to disable your gradient checking code before training your classifier. If you run numerical gradient computation on every classifier of gradient descent (or in the inner loop of the costFunction()) your code will be very slow.
+Random Initialization:
+Initializing all thetas to zero does not work when we are training a neural network.
+After each update, parameters corresponding to inputs going into each of two hidden units are identical.
+Therefore, the neural network cannot compute very interesting functions
+Random initialization: Symmetry breaking
+Initialize each theta to a random value in [-epsilon, epsilon] % different epsilon than the one in gradient checking
+Eg:
+Theta1 = rand(10, 11) * (2 * INIT_EPSILON) - INIT_EPSILON; % because of this piece of code, we get thetas between - and + epsilon
+Theta2 = rand(1, 11) * (2 * INIT_EPSILON) - INIT_EPSILON;
+Putting it together:
+No of input units: dimension of features x
+No of output units: number of classes
+Reasonable default; 1 hidden layer, or if > 1 hidden layer, have same no. hidden units in every layer. Very often having more hidden units is a good thing.
+Training a neural network;
+1. Rnadomly initialize the weights
+2. Implement forward propagation to get h(x) for any x^(i)
+3. Implement code to compute cost function J(theta)
+4. Implement backprop to compute partial derivatives
+for i = 1:m, (for can be gotten rid of using advanced vectorization)
+	Perform forward propagation and backpropagation using example (x^(i), y^(i))
+	(Get activations a^(l) and delta terms del^(l) for l = 2 ... L)
+5. Use gradient checking to compare partial derivatives computed using backpropagation vs using numerical estimate of gradient of J(theta)
+6. Use gradient descent or one of the more advanced optimization algorithms with backpropagation to try to minimize J(theta) as a function of parameters theta.
+For backpropagation, the cost function J(theta) is not convex. It is theoretically possible to get stuck in local optima. In practice, this doesn't turn out to be a very big problem
+Q: Suppose you are using gradient descent together with backpropagation to try to minimize J(theta) as a function of theta. Which of the following would be a useful step for verifying that the learning algorithm is running correctly?
+Ans: Plot J(theta) as a function of number of iterations and make sure it is decreasing (or at least non-increasing) with every iteration.
