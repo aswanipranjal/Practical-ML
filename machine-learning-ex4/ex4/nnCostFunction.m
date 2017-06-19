@@ -94,6 +94,31 @@ t1 = Theta1(:, 2:end);
 t2 = Theta2(:, 2:end);
 J = J + lambda/(2*m) * (sum(sumsq(t1)) + (sum(sumsq(t2))));
 
+% Backpropagation
+DELTA1 = zeros(size(Theta1));
+DELTA2 = zeros(size(Theta2));
+for t = 1 : m,
+	a1 = X(t,:);
+	z2 = a1*Theta1';
+	a2 = [1 sigmoid(z2)];
+	z3 = a2*Theta2';
+	a3 = sigmoid(z3);
+	delta3 = zeros(num_labels);
+	y_i = zeros(1, num_labels);
+	yi(y(t)) = 1;
+	delta3 = a3 - y_i;
+	delta2 = delta3*Theta2 .* sigmoidGradient([1 z2]);
+	DELTA1 = DELTA1 + delta2(2:end)' * a1;
+	DELTA2 = DELTA2 + delta3' * a2;
+end;
+
+Theta1_grad = DELTA1 / m;
+Theta2_grad = DELTA2 / m;
+
+% Regularization with cost function and gradients
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda/m * Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda/m * Theta2(:, 2:end);
+
 % -------------------------------------------------------------
 
 % =========================================================================
