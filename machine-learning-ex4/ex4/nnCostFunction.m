@@ -89,12 +89,16 @@ for i = 1:m
 end;
 J = 1 / m * J;
 
+% Regularization
+t1 = Theta1(:, 2:end);
+t2 = Theta2(:, 2:end);
+J = J + lambda/(2*m) * (sum(sumsq(t1)) + (sum(sumsq(t2))));
+
 % -------------------------------------------------------------
 
 % =========================================================================
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
