@@ -122,17 +122,17 @@ Theta2_grad = zeros(size(Theta2));
 
 % =================================================================================
 % Remade, vectorizing wherever possible
-X = [1 X];
+X = [ones(m, 1) X];
 yd = eye(num_labels);
 y = yd(y, :);
 
 a1 = X;
 z2 = X*Theta1';
-a2 = [1 sigmoid(z2)];
+a2 = [ones(m, 1) sigmoid(z2)];
 z3 = a2*Theta2';
 a3 = sigmoid(z3);
 
-singular_cost = -y.*log(a3) - (1 - y).*(1 - a3); % because y is now a matrix, use dot product
+singular_cost = (-y).*log(a3) - (1 - y).*log(1 - a3); % because y is now a matrix, use dot product
 
 % Regularization with cost function and gradients
 t1 = Theta1(:, 2:end);
@@ -143,7 +143,7 @@ J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)))
 DELTA1 = zeros(size(Theta1));
 DELTA2 = zeros(size(Theta2));
 delta3 = a3 - y;
-z2 = [1 z2]; % try removing this line and the next-to-next one and see if outputs change
+z2 = [ones(m, 1) z2];
 delta2 = delta3*Theta2.*sigmoidGradient(z2);
 delta2 = delta2(:, 2:end);
 DELTA1 = DELTA1 + delta2'*a1; % same size as Theta1_grad (25 x 401)
