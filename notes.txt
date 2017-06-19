@@ -523,6 +523,7 @@ If regularization is ignored,
 del/(del(theta))(J(theta)) = a_j^(l)*d_i^(l+1)
 Suppose training set has m examples
 Set deltas = 0
+% deltas will be used as accumulators, which we will add things to as we move through back-propagation
 for i = 1 : m,
 	set a^(1) = x^(i)
 	Perform forward propagation to compute a^(l) for l = 2, 3 ... L
@@ -533,3 +534,47 @@ D_ij^(l) = 1/m*delta_ij^(l) + lambda*theta_ij^(l) if j != 0
 D_ij^(l) = 1/m*delta_ij^(l) if j = 0
 del(J(theta))/del(theta_ij^(l)) = D_ij^(l)
 del_j^(l) = partial derivative of cost(i)
+In the cost function of a neural network, the double sum simply adds up the logistic regression costs calculated for each cell in the output layer, the triple sum simply adds up the squares of all the individual thetas in the entire network
+Implementation of backpropagation:
+We need to unroll our matrices into vectors in order to use one of the more advanced optimization routines
+These routines assume that thetas are vetors, also assumes that the cost function returns vectors too
+In ANNs, The costs are thetas, the gradients are Ds
+In Octave/MATLAB, unrolling can be done as: thetaVec = [Theta1(:); Theta2(:), Theta3(:)];
+DVec = [D1(:); D2(:); D3(:)];
+To get back our matrices after optimization, we use the following commands:
+Theta1 = reshape(thetaVec(1:110), 10, 11);
+Theta2 = reshape(thetaVec(111:220), 10, 11);
+Theta3 = reshape(thetaVec(221:231), 1, 11);
+Learning algorithm:
+Have initial parameters: Theta1, Theta2, Theta3,
+Unroll to get initialTheta to pass to
+fminunc (@costFunction, initialTheta, options)
+...
+function [jVal, gradientVec] = costFunction(thetaVec)
+	From thetaVec, get Theta1, Theta2, Theta3 (reshape)
+	Use forward propagation/backward propagation to compute D^(1), D^(2), D^(3) and J(theta).
+	Unroll D^(1), D^(2), D^(3) to get gradientVec.
+Gradient Checking (Numerical estimation of gradients)
+A method to reduce errors and prevent subtle untraceable schrodinbugs in implementations of back-propagation reasonably complex models. It pretty much eliminates bugs.
+Two-sided numerical gradient is slightly more accurate than one-sided numerical gradient for a bit larger values of epsilon.
+Implementation:
+(J(theta + EPSILON) - J(theta - EPSILON))/(2*EPSILON)
+theta belongs to R^n (eg, theta is unrolled version of theta(1), theta(2), theta(3))
+theta = [theta1, theta2, theta3 ... thetan]
+delJ(theta)/del(theta) ~ (J(theta1 + epsilon, theta2 ... thetan) - J(theta1 - epsilon, theta2, theta3 ... thetan))/2*epsilon
+TO numerically compute the derivative, we implement the following in octave:
+for i = 1:n,
+	thetaPlus = theta; % the unrolled version of theta
+	thetaPlus(i) = thetaPlus(i) + EPSILON;
+	thetaMinus = theta;
+	thetaMinus(i) = thetaMinus(i) - EPSILON;
+	gradApprox(i) = (J(thetaPlus) - J(thetaMinus))/(2*EPSILON);
+end;
+Check that gradApprox ~ DVec
+Implementation note:
+Implement backprop to compute DVec (unrolled Ds)
+Implement numerical gradient checking to compute gradApprox
+Make sure both of these give similar values
+Turn off gradient checking. Using backprop code for learning
+Important:
+Be sure to disable your gradient checking code before training your classifier. If you run numerical gradient computation on every classifier of gradient descent (or in the inner loop of the costFunction()) your code will be very slow.
