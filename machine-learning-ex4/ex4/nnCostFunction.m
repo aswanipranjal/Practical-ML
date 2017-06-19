@@ -137,7 +137,7 @@ singular_cost = -y.*log(a3) - (1 - y).*(1 - a3); % because y is now a matrix, us
 % Regularization with cost function and gradients
 t1 = Theta1(:, 2:end);
 t2 = Theta2(:, 2:end);
-J = (1/m*sum(sum()))
+J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)));
 
 % Backpropagation vectorized
 % DELTA1 = zeros(size(Theta1));
