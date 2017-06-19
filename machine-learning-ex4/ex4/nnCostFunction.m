@@ -78,46 +78,71 @@ Theta2_grad = zeros(size(Theta2));
 % Y = sum(Y, 2);
 % J = (1/m)*(-log(h)'*Y - log(1 - H)'*(1 - Y));
 
-X = [ones(m, 1) X];
-for i = 1:m
-	x_i = X(i,:);
-	h_i = sigmoid([1 sigmoid(x_i * Theta1')] * Theta2');
-	y_i = zeros(1, num_labels);
-	y_i(y(i)) = 1;
+% X = [ones(m, 1) X];
+% for i = 1:m
+% 	x_i = X(i,:);
+% 	h_i = sigmoid([1 sigmoid(x_i * Theta1')] * Theta2');
+% 	y_i = zeros(1, num_labels);
+% 	y_i(y(i)) = 1;
 
-	J = J + sum(-1 * y_i .* log(h_i) - (1 - y_i) .* log(1 - h_i));
-end;
-J = 1 / m * J;
+	% J = J + sum(-1 * y_i .* log(h_i) - (1 - y_i) .* log(1 - h_i));
+% end;
+% J = 1 / m * J;
 
 % Regularization
-t1 = Theta1(:, 2:end);
-t2 = Theta2(:, 2:end);
-J = J + lambda/(2*m) * (sum(sumsq(t1)) + (sum(sumsq(t2))));
+% t1 = Theta1(:, 2:end);
+% t2 = Theta2(:, 2:end);
+% J = J + lambda/(2*m) * (sum(sumsq(t1)) + (sum(sumsq(t2))));
 
 % Backpropagation
-DELTA1 = zeros(size(Theta1));
-DELTA2 = zeros(size(Theta2));
-for t = 1 : m,
-	a1 = X(t,:);
-	z2 = a1*Theta1';
-	a2 = [1 sigmoid(z2)];
-	z3 = a2*Theta2';
-	a3 = sigmoid(z3);
-	delta3 = zeros(num_labels);
-	y_i = zeros(1, num_labels);
-	yi(y(t)) = 1;
-	delta3 = a3 - y_i;
-	delta2 = delta3*Theta2 .* sigmoidGradient([1 z2]);
-	DELTA1 = DELTA1 + delta2(2:end)' * a1;
-	DELTA2 = DELTA2 + delta3' * a2;
-end;
+% Very confusing for loop approach
+% DELTA1 = zeros(size(Theta1));
+% DELTA2 = zeros(size(Theta2));
+% for t = 1 : m,
+% 	a1 = X(t,:);
+% 	z2 = a1*Theta1';
+% 	a2 = [1 sigmoid(z2)];
+% 	z3 = a2*Theta2';
+% 	a3 = sigmoid(z3);
+% 	delta3 = zeros(num_labels);
+% 	y_i = zeros(1, num_labels);
+% 	yi(y(t)) = 1;
+% 	delta3 = a3 - y_i;
+% 	delta2 = delta3*Theta2 .* sigmoidGradient([1 z2]);
+% 	DELTA1 = DELTA1 + delta2(2:end)' * a1;
+% 	DELTA2 = DELTA2 + delta3' * a2;
+% end;
 
-Theta1_grad = DELTA1 / m;
-Theta2_grad = DELTA2 / m;
+% Theta1_grad = DELTA1 / m;
+% Theta2_grad = DELTA2 / m;
 
 % Regularization with cost function and gradients
-Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda/m * Theta1(:, 2:end);
-Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda/m * Theta2(:, 2:end);
+% Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda/m * Theta1(:, 2:end);
+% Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda/m * Theta2(:, 2:end);
+
+% =================================================================================
+% Remade, vectorizing wherever possible
+X = [1 X];
+yd = eye(num_labels);
+y = yd(y, :);
+
+a1 = X;
+z2 = X*Theta1';
+a2 = [1 sigmoid(z2)];
+z3 = a2*Theta2';
+a3 = sigmoid(z3);
+
+singular_cost = -y.*log(a3) - (1 - y).*(1 - a3); % because y is now a matrix, use dot product
+
+% Regularization with cost function and gradients
+t1 = Theta1(:, 2:end);
+t2 = Theta2(:, 2:end);
+J = (1/m*sum(sum()))
+
+% Backpropagation vectorized
+% DELTA1 = zeros(size(Theta1));
+% DELTA2 = zeros(size(Theta2));
+% delta3 = a3
 
 % -------------------------------------------------------------
 
