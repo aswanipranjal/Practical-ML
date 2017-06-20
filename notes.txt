@@ -605,3 +605,16 @@ for i = 1:m, (for can be gotten rid of using advanced vectorization)
 For backpropagation, the cost function J(theta) is not convex. It is theoretically possible to get stuck in local optima. In practice, this doesn't turn out to be a very big problem
 Q: Suppose you are using gradient descent together with backpropagation to try to minimize J(theta) as a function of theta. Which of the following would be a useful step for verifying that the learning algorithm is running correctly?
 Ans: Plot J(theta) as a function of number of iterations and make sure it is decreasing (or at least non-increasing) with every iteration.
+
+ML IMPLEMENTATION
+Debugging a learning algorithm:
+Suppose you have implemented regularized linear regression to predict housing prices. However, when you test your hypothesis on a new set of houses, you find that it makes unacceptably large errors in its predictions. What should you try next?
+1. Get more training examples
+2. Try smaller sets of features
+3. Try getting additional features
+4. Try adding polynomial features
+5. Try decreasing lambda
+6. Try increasing lambda
+Machine learning diagnostic:
+Diagnostic: A test that you run to gain insight what is/isn't working with a learning algorithm, and gain guidance as to how best improve its performance.
+Diagnostics can take time to implement, but doing so can be a very good use of your time
