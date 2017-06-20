@@ -659,4 +659,18 @@ As training set gets larger and larger, the average training error increases. I.
 And, when m is small, cross-validation error will be very high. When m is larger, we will have lesser error on the cross-validation set. The more data we have, the better we do at generalizing on newer test samples
 High bias (underfit): cross-validation error flattens out from a high value.
 If the learning algorithm is already suffering from high bias, getting more training data will not (by itself) help much.
+The difference between the test error and the training error is pretty small for higher values of m.
+In the caseof high bias, the desired error is much lesser than both the training set error and the testing set error.
 High variance (overfit): If training set is small, training error will be small. If training set increases, the training error will be larger, but still very low. Cross-validation error will be high as we are overfitting the data. The indicative diagnostic that we have a large variance problem is the fact that we have a large difference between th training set error and the cross-validation error. If a learning algorithm is suffering from high variance, getting more training data is likely to help.
+Deciding what to do next:
+1. Get more training examples -> fixes high variance
+2. Trying a smaller set of features -> fixes high variance
+3. Try getting additional features -> fixes high bias
+4. Try adding polynomial features -> fixes high bias
+5. Try decreasing lambda -> fixes high bias
+6. Try increasing lambda -> fixes high variance
+Neural networks and overfitting:
+'Small' neural network (fewer parameters, more prone to underfitting) but they are computationally cheaper.
+'Large' neural network (more parameters; more prone to overfitting) but computationally expensive.
+Regularization is useful for addressing overfitting
+Using a single hidden layer is a reasonable default. You can train your network on a number of hidden layers using your cross-validation set. You can then select the one that performs the best.
