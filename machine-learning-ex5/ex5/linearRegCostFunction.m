@@ -18,17 +18,10 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
-
-
-
-
-
-
-
-
-
-
-
+% A column vector of ones has already been added to X
+H = X * theta;
+J = 1/(2*m)*(H - y)'*(H - y) + lambda/(2*m)*theta'*theta;
+grad = 1/m*X'*(H - y) + lambda/m*theta(2);
 
 % =========================================================================
 
