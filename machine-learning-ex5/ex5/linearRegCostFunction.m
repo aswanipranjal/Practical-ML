@@ -20,8 +20,9 @@ grad = zeros(size(theta));
 %
 % A column vector of ones has already been added to X
 H = X * theta;
-J = 1/(2*m)*(H - y)'*(H - y) + lambda/(2*m)*theta'*theta;
-grad = 1/m*X'*(H - y) + lambda/m*theta(2);
+J = 1/(2*m)*(H - y)'*(H - y) + lambda/(2*m)*theta(2:end)'*theta(2:end);
+grad = 1/m*X'*(H - y) + lambda/m*theta;
+grad(1) = grad(1) - lambda/m*theta(1);
 
 % =========================================================================
 
