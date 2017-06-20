@@ -618,3 +618,26 @@ Suppose you have implemented regularized linear regression to predict housing pr
 Machine learning diagnostic:
 Diagnostic: A test that you run to gain insight what is/isn't working with a learning algorithm, and gain guidance as to how best improve its performance.
 Diagnostics can take time to implement, but doing so can be a very good use of your time
+
+Evaluating a hypothesis:
+Split dataset into training and testing set (0.7/0.3)
+Train/test procedure for linear regression
+1. Learn parameter theta from training data (minimizing training error J)
+2. Compute test set error
+Train/test procedure for logistic regression
+1. Learn parameter theta from training data
+2. Compute test set error
+3. Misclassification error (0/1 misclassification error) (An alternate test-set metric that is a bit easier to interpret)
+error = { 1,	if h(x) >= 0.5, y = 0
+		{		or if h(x) < 0.5, y = 1 (i.e, whenever the hypothesis misclassifies)
+		{ 0, 	otherwise
+test_error = exactly the fraction of examples of the test set that the hypothesis has misclassified = error/m_test
+If we use the test set accuracy to find the degree 'd' of the hypothesis polynomial, we are fitting the model to the test set parameter 'd' and its performance on the test set is not a valid approximate anymore as it was chosen to produce overly optimized results for the test set only.
+We therefore divide our dataset into three sets, the training set (0.6), the cross-validation set (0.2) and the testing set (0.2)
+Training error, cross-validation error, test error. We will use the cross-validation set to select the model (the degree of the polynomial hypothesis)
+Diagnosing bias vs variance
+High bias (underfit)
+High variance (overfit)
+To differentiate:
+High bias: training set error is high and cross-validation error is also high
+High variance: training set error is low and cross-validation error is very high
