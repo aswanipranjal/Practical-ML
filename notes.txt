@@ -641,3 +641,22 @@ High variance (overfit)
 To differentiate:
 High bias: training set error is high and cross-validation error is also high
 High variance: training set error is low and cross-validation error is very high
+Regularization and bias/variance:
+Case 1: High lambda => high bias (underfit)
+Case 2: Small lambda => high variance (overfit)
+Case 3: Intermediate lambda => just right
+Calculate training set, cross-validation set and test set cost without using the regularization term
+Then try lambda = 0, 0.01, 0.02, 0.04, 0.08 ... 10
+Maybe we get 12 different models, then iteratively use each lambda to minimize the cost function
+and calculate the cross-validation error for each. Select the lambda which outpus the least cost and test the hypothesis on the testing set
+High bias (underfit, large lambda): High training error, high cross-validation error
+High variance (overfit, small lambda): Low training error, high cross-validation error
+Learning curves:
+Useful for debugging
+Plot error of training set and error of cross-validation set on a graph wrt m (training set size)
+Plot these for small portion of the training set
+As training set gets larger and larger, the average training error increases. I.e, when m is small, training error will be small
+And, when m is small, cross-validation error will be very high. When m is larger, we will have lesser error on the cross-validation set. The more data we have, the better we do at generalizing on newer test samples
+High bias (underfit): cross-validation error flattens out from a high value.
+If the learning algorithm is already suffering from high bias, getting more training data will not (by itself) help much.
+High variance (overfit): If training set is small, training error will be small. If training set increases, the training error will be larger, but still very low. Cross-validation error will be high as we are overfitting the data. The indicative diagnostic that we have a large variance problem is the fact that we have a large difference between th training set error and the cross-validation error. If a learning algorithm is suffering from high variance, getting more training data is likely to help.
