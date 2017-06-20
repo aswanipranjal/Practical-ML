@@ -1,4 +1,27 @@
-if __name__ = '__main__':
+from numpy import exp, array, random, dot
+
+class NeuralNetwork():
+	def __init__(self):
+		random.seed(1)
+		self.synaptic_weights = 2 * random.random((3, 1)) - 1
+
+	def sigmoid(self, x):
+		return 1/(1 + exp(-x))
+
+	def notsigmoid(self, x):
+		return x * (1 - x)
+
+	def predict(self, inputs):
+		return self.sigmoid(dot(inputs, self.synaptic_weights))
+
+	def train(self, training_set_inputs, training_set_outputs, number_of_training_iterations):
+		for i in range(number_of_training_iterations):
+			output = self.predict(training_set_inputs)
+			error = training_set_outputs - output
+			adjustment = dot(training_set_inputs.T, error * self.notsigmoid(output))
+			self.synaptic_weights += adjustment
+
+if __name__ == '__main__':
 	# Initialize a single neuron neural network
 	neural_network = NeuralNetwork()
 	print ('Random starting synaptic weights:')
