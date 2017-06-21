@@ -53,17 +53,11 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
-theta = trainLinearReg(X, y, 0);
-theta_val = trainLinearReg(Xval, yval, 0);
-for i = 1:m,
-	H_train = X(1:i, :)*theta;
-	y_train = y(1:i, :);
-	error_train(i) = 1/(2*m)*(H_train - y_train)'*(H_train - y_train);
-	% H_cv = Xval(1:i, :)*theta_val;
-	% y_cv = yval(1:i, :);
-	H_cv = Xval(1:i, :)*theta_val;
-	y_cv = yval(1:i, :);
-	error_val(i) = 1/(2*m)*(H_cv - y_cv)'*(H_cv - y_cv);
+for i = 1 : m,
+	theta = trainLinearReg(X(1:i, :), y(1:i, :), lambda);
+	% The m in the denominator is the running number of examples considered
+	error_train(i) = 1/(2*i)*(X(1:i, :)*theta - y(1:i, :))'*(X(1:i, :)*theta - y(1:i, :));
+	error_val(i) = 1/(2*(size(yval, 1)))*(Xval*theta - yval)'*(Xval*theta - yval);
 
 % -------------------------------------------------------------
 
