@@ -701,3 +701,35 @@ Ans: Try adding polynomial features.
 Try evaluating the hypothesis on a cross validation set rather than the test set.
 Use fewer training examples.
 Ans: Try decreasing the regularization parameter λ
+
+MACHINE LEARNING SYSTEM DESIGN
+Prioritizing what to spend your time on
+Building a spam claffisier
+Features x: maybe, choose 100 words indicative of spam/not spam.
+How to spend your time to make it have low error?
+1. Collect lots of data
+   Eg: honeypot project: Creating fake e-mail IDs and getting spammers to spam and then mine the data.
+2. Develop sophisticated features based on email routing information (from email header)
+3. Develop sophisticated features for message body, e.g. should 'discount' and 'discounts' be treated as the same word? How about 'deal' and 'Dealer'? Features about punctuation? Maybe spammers use more exclamation marks?
+4. Develop sophisticated algorithm to detect misspellings (e.g m0rtgage, med1cine, w4tches)
+For spam classification, algorithms to detect and correct deliberate will not make a significant improvement in accuracy.
+Because spam classification uses very high dimensional feature vectors (eg n = 50000, if the features capture the presence or absence of 50000 different words), a significant effort to collect a massive training set will not always be a good idea.
+For some learning applications, it is possible to come up with many different features (eg, email body features, etc), But it can be hard to guess in advance which features will be the most helpful.
+There are often many possible ideas for how to develop a high accuracy learning system; 'gut feeling' is not a recommended way to choose among the alternatives.
+Error analysis:
+Recommended approach
+1. Start with a simple algorithm that you can implement quickly. Implement it on and test it on your cross-validation data.
+2. Plot learning curves to decide if more data, more features, etc. are likely to help.
+3. Error analysis: Manually examine the exmaples (in cross validation set) that your algorithm made errors on. See if you spot any systematic trend in what type of examples it is making errors on.
+Avoid premature optimization, ie, let evidence guide our decisions on where to spend our time
+Error analysis: Let m_cv = 500.
+Algo misclassifies 100 emails.
+Manually examine the 100 error, and categorize them based on:
+1. What type of email it is
+2. What cues (features) you think would have helped the algorithm classify them correctly
+We need to figure what are the most diffucult examples for an algorithm to classify
+The importance of numerical evaluation
+In natural language processing, use stemming software (eg: porter stemmer)
+Need numerical evaluation (eg cross-validation error) of algorithm's performance with and without stemming (or with and without upper/lower case)
+Implement something as quickly as you can and analyse errors to see which aspect of optimization to pursue.
+It is very important to get eror results as a single numerical value. Otherwise it is difficult to asses your algorithm's performance. For example if we use stemming, which is the process of treating the same word with different forms, and get a 3% error rate instead of 5%, then we should definitely add it to our model. However, if we try to distinguish between upper case and lower case letters and end up getting a 3.2% error rate instead of 3%, then we should avoid using this new feature. Hence, we should try new things, get a numerical value for our error rate, and based on our result decide whether  we want to keep the new feature or not.
