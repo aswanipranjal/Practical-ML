@@ -47,8 +47,8 @@ fprintf('Program paused. Press enter to continue.\n');
 
 fprintf('Visualizing J(theta_0, theta_1)\n');
 
-theta0_vals = linspace(-10, 10, 100);
-theta1_vals = linspace(-1, 4, 100);
+theta0_vals = linspace(-1000, 1000, 100);
+theta1_vals = linspace(-1000, 4000, 100);
 % I couldn't guess what the third argument does.
 J_vals = zeros(length(theta0_vals), length(theta1_vals));
 
@@ -70,7 +70,7 @@ xlabel('\theta0'); ylabel('\theta1');
 % Contour plot
 figure;
 % Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100
-contour(theta0_vals, theta1_vals, J_vals, logspace(-10, 10, 20))
+contour(theta0_vals, theta1_vals, J_vals, logspace(-10000, 10000, 20))
 xlabel('\theta0'); ylabel('\theta1');
 hold on;
 plot(theta(1), theta(2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
