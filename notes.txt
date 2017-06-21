@@ -774,3 +774,7 @@ A: We train a model that doesn't use regularization
 B: We train a learning alrgorithm with a large number of parameters (that is able to learn/represent fairly complex functions)
 C: We trains a learning algorithm with a small number of parameters (that is thus unlikely to overfit)
 D: The features x contain sufficient information to predict y accurately. (For example, one way to verify this is if a huma expert in the domain can confidedntly predict y when given only x)
+
+SUPPORT VECTOR MACHINES
+Compared to both logistic regression and neural networks, SVMs sometimes give cleaner results
+Use SVMs when there is a smaller dataset
