@@ -769,3 +769,8 @@ Useful test for large data rationale: Given the input x, can a human expert conf
 Use a learning algorithm with many parameters (eg logistic regression/linear regression with many features; neural network with many hidden units) -> low bias algorithms
 If we have a huge training set, these algorithms will be unlikely to overfit
 Address bias problem by having a large number of parameters, and address high variance by using a large training set
+Q: Suppose a massive dataset is available for training a learning algorithm. Training on a lot of data is likely to give a good performance when two of the following conditions hold true. Which are the two?
+A: We train a model that doesn't use regularization
+B: We train a learning alrgorithm with a large number of parameters (that is able to learn/represent fairly complex functions)
+C: We trains a learning algorithm with a small number of parameters (that is thus unlikely to overfit)
+D: The features x contain sufficient information to predict y accurately. (For example, one way to verify this is if a huma expert in the domain can confidedntly predict y when given only x)
