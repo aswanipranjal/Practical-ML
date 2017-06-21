@@ -733,3 +733,39 @@ In natural language processing, use stemming software (eg: porter stemmer)
 Need numerical evaluation (eg cross-validation error) of algorithm's performance with and without stemming (or with and without upper/lower case)
 Implement something as quickly as you can and analyse errors to see which aspect of optimization to pursue.
 It is very important to get eror results as a single numerical value. Otherwise it is difficult to asses your algorithm's performance. For example if we use stemming, which is the process of treating the same word with different forms, and get a 3% error rate instead of 5%, then we should definitely add it to our model. However, if we try to distinguish between upper case and lower case letters and end up getting a 3.2% error rate instead of 3%, then we should avoid using this new feature. Hence, we should try new things, get a numerical value for our error rate, and based on our result decide whether  we want to keep the new feature or not.
+Error metrics for skewed classes:
+Skewed classes:
+Consider the cancer classification example, train logistic regression model h(x), and we find that we get 1% error on test set. But only 0.5% patients actually have cancer. This is not a very good model anymore. Thus, when the number of examples in one class is a lot greater than the number of examples in the other classes, we call this a skewed class. Even a small error rate isn't useful anymore as even a non-learning algorithm may outperform it.
+We need to come up with different evaluation metric for skewed classes.
+Precision/Recall:
+True positive: Predicted: 1, Actual: 1
+False positive: Predicted: 1, Actual: 0
+True negative: Predicted: 0, Actual: 0
+False negative: Predicted: 0, Actual: 1
+Precision: (Of all patients where we predicted y = 1, what fraction actually has cancer?) (A measure of accuracy out of number of our own predictions)
+=> true positives/predited positive = True positive/(True posiive + False positive)
+Recall: (Of all patients that actually have cancer, what fraction did we correctly detect as having cancer?) (A measure of accuracy out of number of truth values)
+=> true positives/actual positives = True positive/(True positive + False negative)
+By this estimate, if we have a classifier that predicts y = 0 all the time, the recall will be 0 (as there will be no true positives), and we can decide that it is not a very good model
+It is not easy for trivial algorithms to cheat and have a high precision and recall.
+For using precision/recall metrics, we use y = 1 on the more rare class (so that recall can be less for bad algorithms and true positive can be zero). y = 1 in presence of the rare class that we want to detect.
+Trading off precision and recall:
+For logistic regression: predict 1 if h(x) >= 0.5, predict 0 if h(x) < 0.5
+Suppose we want to predict y = 1 (cancer) only if very confident.
+ie: predict 1 if h(x) >= 0.7, predict 0 if h(x) < 0.7
+High precision, but lower recall (because we are going to predict y = 1 on a smaller number of patients)
+If we want to avoid false negatives, we need high recall.
+Suoopse we want to avoid missing too many cases of cancer (avoid false negatives), therefore, when in doubt, predict y = 1, so that they can atleast go treat themselves. In this case, we nee to set the value to a lower number,
+ie: predict 1 if h(x) >= 0.3, predict 0 if h(x) < 0.3
+Low precision, but high recall.
+Generally, predict 1 if h(x) >= threshold, decide threshold according to problem at hand
+How to compare precision/recall numbers:
+To get a single evaluation metric from the combined values of precision and recall, we use something caller an F_1score. The Fscore is calculated as F_1score = 2PR/(P+R).
+The F_1score gives the lower value (whichever out of P and R is lower) a lower weight and rules completely biased models.
+F_1score will always be between 0 and 1
+For different values of the threshold parameter in logistic regression, we get different values of P and R. The most reasonable way of picking the value of the threshold is to measure P and R on the cross-validation set and choose the value of the threshold which maximizes the F_1score.
+How much data to train on:
+Useful test for large data rationale: Given the input x, can a human expert confidently predict y?
+Use a learning algorithm with many parameters (eg logistic regression/linear regression with many features; neural network with many hidden units) -> low bias algorithms
+If we have a huge training set, these algorithms will be unlikely to overfit
+Address bias problem by having a large number of parameters, and address high variance by using a large training set
