@@ -132,12 +132,18 @@ a2 = [ones(m, 1) sigmoid(z2)];
 z3 = a2*Theta2';
 a3 = sigmoid(z3);
 
+% Trying mobhai's method
+% p = (log(a3)*y')+(log(1-a3)*(1-y)');
+% p1 = sum(diag(p));
+% p1 = -p1/m;
+% J = p1;
 singular_cost = (-y).*log(a3) - (1 - y).*log(1 - a3); % because y is now a matrix, use dot product
 
 % Regularization with cost function and gradients
 t1 = Theta1(:, 2:end);
 t2 = Theta2(:, 2:end);
 J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)));
+% J = J + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)));
 
 % Backpropagation vectorized
 DELTA1 = zeros(size(Theta1));

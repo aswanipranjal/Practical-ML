@@ -83,3 +83,6 @@ fprintf('\nChecking backpropagation\n');
 checkNNGradients;
 fprintf('Program has been paused. Press enter to continue\n');
 pause;
+
+% Checking gradients from backpropagation (with regularization)
+fprintf('\nChecking backpropagation (with regularization)\n');
