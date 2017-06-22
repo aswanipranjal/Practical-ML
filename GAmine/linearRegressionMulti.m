@@ -26,4 +26,5 @@ fprintf('Running gradient descent\n');
 alpha = 0.01;
 num_iters = 400;
 theta = zeros(19, 1);
-size(theta)
+% size(theta)
+% The computCost function and the computeGradient functions written in the previous linear regression example were well vectorized, so we can directly use them.

@@ -7,6 +7,6 @@ function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)
 		errors = H - y;
 		sigma_term = X' * errors; % [2x1]
 		theta = theta - (alpha / m) * sigma_term;
-		J_history = computeCost(X, y, theta);
+		J_history(iter) = computeCost(X, y, theta);
 	end;
 end;
