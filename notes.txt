@@ -778,3 +778,15 @@ D: The features x contain sufficient information to predict y accurately. (For e
 SUPPORT VECTOR MACHINES
 Compared to both logistic regression and neural networks, SVMs sometimes give cleaner results
 Use SVMs when there is a smaller dataset
+In logistic regression: A + lambdaB is minimized,
+In SVM: CA + B is minimized
+Logistic regression and SVMs both give the same value of theta, (ie, the same value of theta gives the optimal solutin to both problems) if:
+C = 1/lambda
+SVM doesn't output a probability
+Large margin classifiers
+For SVMs, Cost_1(z) = 0 only when z >= 1
+		  Cost_2(z) = 0 only when z <= -1
+If y = 1, we want theta'X >= 1 (not just >= 0)
+If y = 0, we want theta'X <= -1 (not just < 0)
+If C is very large, the SVM will change the margin to best fit the outliers too
+If C is not too large, the SVM will ignore outliers
