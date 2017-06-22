@@ -50,3 +50,15 @@ fprintf('Feed forward using neural network\n');
 lambda = 0;
 
 J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
+fprintf('Cost at parameters: %f\n', J);
+fprintf('Program has been paused. Press enter to continue\n');
+pause;
+
+% Regularization
+fprintf('Checking function with regularization\n');
+lambda = 1;
+
+J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
+fprintf('Cost at parameters: %f\n', J);
+fprintf('Program has been paused. Press enter to continue\n');
+pause;
