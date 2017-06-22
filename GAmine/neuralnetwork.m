@@ -64,13 +64,14 @@ fprintf('Cost at parameters: %f\n', J);
 fprintf('Program has been paused. Press enter to continue\n');
 pause;
 
-fprintf('Evaluating sigmoidGradient\n');
-g = sigmoidGradient([-1, -0.5, 0, 0.5, 1]);
-fprintf('Sigmoid gradient evaluated at [-1, -0.5, 0, 0.5, 1]: \n');
-fprintf('%f', g);
-fprintf('\n\n');
-fprintf('Program has been paused. Press enter to continue\n');
-pause;
+% Checking if sigmoidGradient is valid
+% fprintf('Evaluating sigmoidGradient\n');
+% g = sigmoidGradient([-1, -0.5, 0, 0.5, 1]);
+% fprintf('Sigmoid gradient evaluated at [-1, -0.5, 0, 0.5, 1]: \n');
+% fprintf('%f', g);
+% fprintf('\n\n');
+% fprintf('Program has been paused. Press enter to continue\n');
+% pause;
 
 fprintf('Initializing neural network parameters\n');
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -80,23 +81,23 @@ initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 initial_nn_params = [initial_Theta1(:); initial_Theta2(:)];
 
 % Checking gradients from backpropagation by numerical methods
-fprintf('\nChecking backpropagation\n');
-checkNNGradients;
-fprintf('Program has been paused. Press enter to continue\n');
-pause;
+% fprintf('\nChecking backpropagation\n');
+% checkNNGradients;
+% fprintf('Program has been paused. Press enter to continue\n');
+% pause;
 
 % Checking gradients from backpropagation (with regularization)
-fprintf('\nChecking backpropagation (with regularization)\n');
+% fprintf('\nChecking backpropagation (with regularization)\n');
 % Check gradients by running checkNNGradients
-lambda = 3;
-checkNNGradients(lambda);
+% lambda = 3;
+% checkNNGradients(lambda);
 
 % Output cost function debug values
-debug_J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
-fprintf('Cost at (fixed) debugging parameters (w/ lambda = %f): %f\n\n', lambda, debug_J);
+% debug_J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
+% fprintf('Cost at (fixed) debugging parameters (w/ lambda = %f): %f\n\n', lambda, debug_J);
 
-fprintf('Program has been paused. Press enter to continue.\n');
-pause;
+% fprintf('Program has been paused. Press enter to continue.\n');
+% pause;
 
 % Training Neural Network
 fprintf('Training neural network\n');
@@ -111,3 +112,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 fprintf('Program has been paused. Press enter to continue.\n');
 pause;
+
+fprintf('Predicting a value: \n');
+x_test = [0.77824,0.05768192,0.8901123,0.6041341,0.1500494,0.5331748,0.9752828,0.7247745,0.02214646,0.3577529,0.0419383,0.7006501,0.5528352,0.8018743,0.8233464,0.8771472,0.6299444,0.09685636];
+pred = predict(Theta1, Theta2, x_test);
