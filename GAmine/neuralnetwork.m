@@ -14,7 +14,10 @@
 % 90001 - 100000 -> [0 0 0 0 0 0 0 0 0 1 0 0]
 % 100001 - 110000 ->[0 0 0 0 0 0 0 0 0 0 1 0]
 % >110000 -> 		[0 0 0 0 0 0 0 0 0 0 0 1]
-% Todo: convert all labels into one-hot vectors
+
+% Pre-initialized weight matrices should be of these dimensions:
+% Theta1 = [25x19]
+% Theta2 = [12x26]
 
 % Initialization
 clear; close all; clc
