@@ -101,7 +101,7 @@ initial_nn_params = [initial_Theta1(:); initial_Theta2(:)];
 
 % Training Neural Network
 fprintf('Training neural network\n');
-options = optimset('MaxIter', 400);
+options = optimset('MaxIter', 1000);
 lambda = 0;
 
 costFunction = @(p) nnCostFunction(p, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
@@ -122,9 +122,9 @@ pred = predict(Theta1, Theta2, x_test);
 fprintf('The predicted values are: \n');
 afm = [pred y_test];
 difference = abs(afm(:, 1) - afm(:, 2));
-booldiff = difference > 10000;
+booldiff = difference > 5000;
 test_cases = size(x_test, 1);
 accuracy = (test_cases - sum(booldiff))/test_cases*100;
 % disp(afm);
 % disp(booldiff);
-fprintf('Accuracy: %f', accuracy);
+fprintf('Accuracy: %f\n', accuracy);
