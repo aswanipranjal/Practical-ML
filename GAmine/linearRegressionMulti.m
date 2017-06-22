@@ -24,7 +24,7 @@ fprintf('Added a column of ones\n');
 fprintf('Running gradient descent\n');
 % Setting hyperparameters
 alpha = 0.01;
-num_iters = 10000;
+num_iters = 2000;
 theta = zeros(19, 1);
 % size(theta)
 % The computCost function and the computeGradient functions written in the previous linear regression example were well vectorized, so we can directly use them.
@@ -60,3 +60,6 @@ x_test = [ones(size(x_test, 1), 1) x_test];
 h_test = x_test*theta;
 fprintf('Predicted		Expected\n');
 [h_test y_test]
+% Conclusion: Linear regression with multiple variables will not work. The dataset is not linearly 'regressable'
+% Multi-variable polynomial regression will not give very good results either
+% Train a neural network to do this. Convert all the labels of the datasets to one-hot vectors (through python) for the neural network to read
