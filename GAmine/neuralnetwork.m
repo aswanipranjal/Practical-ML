@@ -29,6 +29,7 @@ num_labels = 12; % 12 labels, from 0 - 120000 in multiples of 10000
 fprintf('Loading datasets\n');
 load('data_80.mat');
 % size(X)
+% loads the one-hot vectorized labelled dataset
 load('converted_fitness_80.mat');
 % size(y)
 m = size(X, 1);
@@ -44,3 +45,8 @@ nn_params = [Theta1(:); Theta2(:)];
 fprintf('Loaded saved neural network parameters\n');
 fprintf('Program has been paused. Press enter to continue\n');
 pause;
+
+fprintf('Feed forward using neural network\n');
+lambda = 0;
+
+J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
