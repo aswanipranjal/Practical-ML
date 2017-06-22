@@ -36,3 +36,11 @@ fprintf('Loaded datasets\n');
 fprintf('Program has been paused. Press enter to continue\n');
 pause;
 
+% Loading parameters
+load('preTheta1.mat');
+load('preTheta2.mat');
+nn_params = [Theta1(:); Theta2(:)];
+% Matrices are 'ravel'ed into one vector
+fprintf('Loaded saved neural network parameters\n');
+fprintf('Program has been paused. Press enter to continue\n');
+pause;
