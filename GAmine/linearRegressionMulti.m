@@ -42,3 +42,10 @@ fprintf('%f\n', theta);
 fprintf('\n');
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+fprintf('Predicting stuff\n');
+x_test = [1,0.77824,0.05768192,0.8901123,0.6041341,0.1500494,0.5331748,0.9752828,0.7247745,0.02214646,0.3577529,0.0419383,0.7006501,0.5528352,0.8018743,0.8233464,0.8771472,0.6299444,0.09685636];
+y_test = [35325];
+h_test = x_test*theta;
+fprintf('Predicted track time: %f\n', h_test);
+fprintf('Expected value: %f\n', y_test);
