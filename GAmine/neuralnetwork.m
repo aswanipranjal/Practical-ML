@@ -62,3 +62,18 @@ J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 fprintf('Cost at parameters: %f\n', J);
 fprintf('Program has been paused. Press enter to continue\n');
 pause;
+
+fprintf('Evaluating sigmoidGradient\n');
+g = sigmoidGradient([-1, -0.5, 0, 0.5, 1]);
+fprintf('Sigmoid gradient evaluated at [-1, -0.5, 0, 0.5, 1]: \n');
+fprintf('%f', g);
+fprintf('\n\n');
+fprintf('Program has been paused. Press enter to continue\n');
+pause;
+
+fprintf('Initializing neural network parameters\n');
+initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
+initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+
+% Unroll parameters
+initial_nn_params = [initial_Theta1(:); initial_Theta2(:)];
