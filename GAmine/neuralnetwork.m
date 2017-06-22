@@ -101,7 +101,7 @@ initial_nn_params = [initial_Theta1(:); initial_Theta2(:)];
 
 % Training Neural Network
 fprintf('Training neural network\n');
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 1000);
 lambda = 1;
 
 costFunction = @(p) nnCostFunction(p, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
@@ -114,5 +114,11 @@ fprintf('Program has been paused. Press enter to continue.\n');
 pause;
 
 fprintf('Predicting a value: \n');
-x_test = [0.77824,0.05768192,0.8901123,0.6041341,0.1500494,0.5331748,0.9752828,0.7247745,0.02214646,0.3577529,0.0419383,0.7006501,0.5528352,0.8018743,0.8233464,0.8771472,0.6299444,0.09685636];
+x_test = load('data.txt');
+x_test = x_test(:, 2:end);
+y_test = load('fitness.txt');
+y_test = y_test(:, 2);
 pred = predict(Theta1, Theta2, x_test);
+fprintf('The predicted values are: \n');
+afm = [pred y_test];
+disp(afm);
