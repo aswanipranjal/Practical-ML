@@ -86,3 +86,27 @@ pause;
 
 % Checking gradients from backpropagation (with regularization)
 fprintf('\nChecking backpropagation (with regularization)\n');
+% Check gradients by running checkNNGradients
+lambda = 3;
+checkNNGradients(lambda);
+
+% Output cost function debug values
+debug_J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
+fprintf('Cost at (fixed) debugging parameters (w/ lambda = %f): %f\n\n', lambda, debug_J);
+
+fprintf('Program has been paused. Press enter to continue.\n');
+pause;
+
+% Training Neural Network
+fprintf('Training neural network\n');
+options = optimset('MaxIter', 50);
+lambda = 1;
+
+costFunction = @(p) nnCostFunction(p, input_layer_size, hidden_layer_size, num_labels, X, y, lambda);
+[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
+
+Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), hidden_layer_size, (input_layer_size + 1));
+Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), num_labels, (hidden_layer_size + 1));
+
+fprintf('Program has been paused. Press enter to continue.\n');
+pause;
