@@ -77,3 +77,9 @@ initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 
 % Unroll parameters
 initial_nn_params = [initial_Theta1(:); initial_Theta2(:)];
+
+% Checking gradients from backpropagation by numerical methods
+fprintf('\nChecking backpropagation\n');
+checkNNGradients;
+fprintf('Program has been paused. Press enter to continue\n');
+pause;
