@@ -28,6 +28,7 @@ num_labels = 12; % 12 labels, from 0 - 120000 in multiples of 10000
 % Loading and visualizing the datasets
 fprintf('Loading datasets\n');
 load('data_80.mat');
+X = X(:, 2:end);
 % size(X)
 % loads the one-hot vectorized labelled dataset
 load('converted_fitness_80.mat');

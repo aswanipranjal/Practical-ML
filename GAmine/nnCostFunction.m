@@ -11,11 +11,11 @@ function [J grad] = nnCostFunction(nn_params, input_layer_size, hidden_layer_siz
 	Theta2_grad = zeros(size(Theta2));
 
 	% Eliminating the first column.
-	X = X(:, 2:end);
+	% X = X(:, 2:end);
 	X = [ones(m, 1) X];
 	% Layer 1
 	a1 = X;
-	z2 = a1*Theta1';
+	z2 = X*Theta1';
 	% Layer 2
 	a2 = [ones(m, 1) sigmoid(z2)];
 	z3 = a2*Theta2';
