@@ -13,6 +13,7 @@ function [J grad] = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer
 
 	X = [ones(m, 1) X];
 	% Layer 1
+	a1 = X;
 	z2 = X*Theta1';
 	% Layer 2
 	a2 = [ones(m, 1) sigmoid(z2)];
@@ -40,7 +41,7 @@ function [J grad] = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer
 	z3 = [ones(m, 1) z3];
 	delta3 = delta4*Theta3.*sigmoidGradient(z3);
 	delta3 = delta3(:, 2:end);
-	z2 = [ones(m, 2) z2];
+	z2 = [ones(m, 1) z2];
 	delta2 = delta3*Theta2.*sigmoidGradient(z2);
 	delta2 = delta2(:, 2:end);
 	DELTA1 = DELTA1 + delta2'*a1;
@@ -56,5 +57,5 @@ function [J grad] = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer
 	Theta3_grad(:, 2:end) = Theta3_grad(:, 2:end) + lambda / m * Theta3(:, 2:end);
 
 	% Unroll gradients
-	grad = [Theta1_grad(:), Theta2_grad(:), Theta3_grad(:)];
+	grad = [Theta1_grad(:); Theta2_grad(:); Theta3_grad(:)];
 end;
