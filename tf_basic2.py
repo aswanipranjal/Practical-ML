@@ -124,3 +124,29 @@ def print_confusion_matrix():
 	plt.yticks(tick_marks, range(num_classes))
 	plt.xlabel('Predicted')
 	plt.ylabel('True')
+
+def plot_example_errors():
+	correct, cls_pred = session.run([correct_prediction, y_pred_cls], feed_dict=feed_dict_test)
+	incorrect = (correct == False)
+	images = data.test.images[incorrect]
+	cls_pred = cls_pred[incorrect]
+	cls_true = data.test.cls[incorrect]
+	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
+
+def plot_weights():
+	w = session.run(weights)
+	w_min = np.min(w)
+	w_max = np.max(w)
+
+	fig, axes = plt.subplots(3, 4)
+	fig.subplots_adjust(hspace=0.3, wspace=0.3)
+
+	for i, ax in enumerate(axes.flat):
+		if i < 10:
+			image = w[:, i].reshape(img_reshape)
+			ax.set_xlabel("Weights: {0}".format(i))
+			ax.imshow(image, vmin=w_min, vmax=w_max, cmap='seismic')
+
+		ax.set_xticks([])
+		ax.set_yticks([])
+
