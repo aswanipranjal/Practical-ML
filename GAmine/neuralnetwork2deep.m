@@ -30,4 +30,6 @@ num_labels = 12;
 
 % Loading the datasets
 fprintf('Loading datasets\n');
-load('')
+load('data_150.mat');
+X = X(:, 2:end);
+% size(X)
