@@ -41,8 +41,8 @@ pause;
 
 % Loading parameters
 load('preTheta1_50x19.mat');
-load('preTheta1_50x51.mat');
-load('preTheta1_12x51.mat');
+load('preTheta2_50x51.mat');
+load('preTheta3_12x51.mat');
 % nn_params now has three matrices
 nn_params = [Theta1(:); Theta2(:); Theta3(:)];
 fprintf('Loaded saved neural network parameters\n');
@@ -56,4 +56,3 @@ J = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer_size, hidden_2_
 fprintf('Cost at parameters: %f\n', J);
 fprintf('Press any key to continue.\n');
 pause;
-
