@@ -25,6 +25,7 @@ def create_lexicon(pos, neg):
 		if 1000 > w_counts[w] > 50:
 			l2.append(w)
 
+	print(len(l2))
 	# l2 is the final lexicon
 	return l2
 
@@ -40,7 +41,7 @@ def sample_handling(sample, lexicon, classification):
 			for word in current_words:
 				if word.lower() in lexicon:
 					index_value = lexicon.index(word.lower())
-					features[index] += 1
+					features[index_value] += 1
 			features = list(features)
 			featureset.append([features, classification])
 
