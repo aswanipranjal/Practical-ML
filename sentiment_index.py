@@ -45,3 +45,10 @@ def sample_handling(sample, lexicon, classification):
 			featureset.append([features, classification])
 
 	return featureset
+
+def create_feature_sets_and_labels(pos, neg, test_size=0.1):
+	lexicon = create_lexicon(pos, neg)
+	features = []
+	features += sample_handling('C:/Users/Aman Deep Singh/Documents/Python/Practical ML/pos.txt', lexicon, [1, 0])
+	features += sample_handling('C:/Users/Aman Deep Singh/Documents/Python/Practical ML/neg.txt', lexicon, [0, 1])
+	random.shuffle(features)
