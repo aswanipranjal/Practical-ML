@@ -37,5 +37,24 @@ function [J grad] = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer
 	DELTA3 = zeros(size(Theta3));
 
 	delta4 = a4 - y;
-	
+	z3 = [ones(m, 1) z3];
+	delta3 = delta4*Theta3.*sigmoidGradient(z3);
+	delta3 = delta3(:, 2:end);
+	z2 = [ones(m, 2) z2];
+	delta2 = delta3*Theta2.*sigmoidGradient(z2);
+	delta2 = delta2(:, 2:end);
+	DELTA1 = DELTA1 + delta2'*a1;
+	DELTA2 = DELTA2 + delta3'*a2;
+	DELTA3 = DELTA3 + delta4'*a3;
+	Theta1_grad = (1/m)*DELTA1;
+	Theta2_grad = (1/m)*DELTA2;
+	Theta3_grad = (1/m)*DELTA3;
+
+	% Regularization
+	Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda / m * Theta1(:, 2:end);
+	Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda / m * Theta2(:, 2:end);
+	Theta3_grad(:, 2:end) = Theta3_grad(:, 2:end) + lambda / m * Theta3(:, 2:end);
+
+	% Unroll gradients
+	grad = [Theta1_grad(:), Theta2_grad(:), Theta3_grad(:)];
 end;
