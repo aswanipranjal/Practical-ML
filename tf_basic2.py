@@ -69,3 +69,58 @@ logits = tf.matmul(x, weights) + biases
 y_pred = tf.nn.softmax(logits)
 # The predicted class can be calculated from the y_pred matrix by taking the index of the largest element in each row
 y_pred_cls = tf.argmax(y_pred, dimension=1)
+
+# Cost measure gives a continuous performance measure
+cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y_true)
+# We average over all the values to give us a singular metric for how well the model is currently doing
+cost = tf.reduce_mean(cross_entropy)
+# Optimization method
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.5).minimize(cost)
+# Nothing is calculated yet, we are just building the computational graph
+# We need a few more preformance measures to display the progress to the user
+# This is a vector of booleans wheter the predicted class equals the true class of each image
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+# This calculates the classification accuracy by first type-casting the vector of booleans to floats, so that False becomes 0 
+# and True becomes 1, and then calculating the average of these numbers
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# Create TensorFlow session
+session = tf.Session()
+session.run(tf.initialize_all_variables())
+
+# It takes a long time to calculate the gradient of the model using all the 50000 images. We therefore use Stochastic Gradient Descent
+# which only uses a small batch of images in each iteration of the optimizer
+batch_size = 100
+
+def optimize(num_iterations):
+	for i in range(num_iterations):
+		x_batch, y_true_batch = data.train.next_batch(batch_size)
+		feed_dict_train = {x: x_batch, y_true; y_true_batch}
+		session.run(optimizer, feed_dict=feed_dict_train)
+
+feed_dict_test = {	x: data.test.images,
+					y_true: data.test.labels, 
+					y_true_cls: data.test.cls}
+
+# function for printing the classification accuracy on the test-set.
+def print_accuracy():
+	acc = session.run(accuracy, feed_dict=feed_dict_test)
+	print("Accuracy on the test set: {0:.1%}".format(acc))
+
+# Function for printing and plotting the confusion matrix using scikit learn
+def print_confusion_matrix():
+	cls_true = data.test.cls
+	# Get the predicted classifications for the test-set
+	cls_pred = session.run(y_pred_cls, feed_dict=feed_dict_test)
+	# Get the confusion matrix using sklearn
+	cm = confusion_matrix(y_true=cls_true, y_pred=cls_pred)
+	# Print the confusion matrix as text
+	print(cm)
+	plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+	plt.tight_layout()
+	plt.colorbar()
+	tick_marks = np.arange(num_classes)
+	plt.xticks(tick_marks, range(num_classes))
+	plt.yticks(tick_marks, range(num_classes))
+	plt.xlabel('Predicted')
+	plt.ylabel('True')
