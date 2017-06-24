@@ -58,9 +58,12 @@ fprintf('Press any key to continue.\n');
 pause;
 
 fprintf('Initializing neural network parameters\n');
-initial_Theta1 = randInitializeWeights(input_layer_size, hidden_1_layer_size);
-initial_Theta2 = randInitializeWeights(hidden_1_layer_size, hidden_2_layer_size);
-initial_Theta3 = randInitializeWeights(hidden_2_layer_size, num_labels);
+% initial_Theta1 = randInitializeWeights(input_layer_size, hidden_1_layer_size);
+% initial_Theta2 = randInitializeWeights(hidden_1_layer_size, hidden_2_layer_size);
+% initial_Theta3 = randInitializeWeights(hidden_2_layer_size, num_labels);
+initial_Theta1 = Theta1;
+initial_Theta2 = Theta2;
+initial_Theta3 = Theta3;
 
 % Unroll parameters
 initial_nn_parameters = [initial_Theta1(:); initial_Theta2(:); initial_Theta3(:)];
@@ -93,7 +96,8 @@ pred = predict2l(Theta1, Theta2, Theta3, x_test);
 fprintf('The predicted values are: \n');
 afm = [pred y_test];
 difference = abs(afm(:, 1) - afm(:, 2));
-booldiff = difference > 10000;
+booldiff = difference > 7000;
 test_cases = size(x_test, 1);
 accuracy = (test_cases - sum(booldiff))/test_cases*100;
+dsip(afm);
 fprintf('Accuracy: %f\n', accuracy);
