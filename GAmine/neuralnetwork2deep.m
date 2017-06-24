@@ -33,3 +33,27 @@ fprintf('Loading datasets\n');
 load('data_150.mat');
 X = X(:, 2:end);
 % size(X)
+load('converted_fitness_150.mat');
+m = size(X, 1);
+fprintf('Datasets loaded\n');
+fprintf('Press any key to continue\n');
+pause;
+
+% Loading parameters
+load('preTheta1_50x19.mat');
+load('preTheta1_50x51.mat');
+load('preTheta1_12x51.mat');
+% nn_params now has three matrices
+nn_params = [Theta1(:); Theta2(:); Theta3(:)];
+fprintf('Loaded saved neural network parameters\n');
+fprintf('Press any key to continue\n');
+pause;
+
+fprintf('Feed forward\n');
+lambda = 0;
+
+J = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer_size, hidden_2_layer_size, num_labels, X, y, lambda);
+fprintf('Cost at parameters: %f\n', J);
+fprintf('Press any key to continue.\n');
+pause;
+
