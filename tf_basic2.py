@@ -13,6 +13,8 @@ img_size_flat = img_size * img_size
 img_shape = (img_size, img_size)
 num_classes = 10
 
+data.test.cls = np.array([label.argmax() for label in data.test.labels])
+
 def plot_images(images, cls_true, cls_pred=None):
 	assert len(images) == len(cls_true) == 9
 
@@ -35,3 +37,7 @@ def plot_images(images, cls_true, cls_pred=None):
 		# Remove ticks from the plot
 		ax.set_xticks([])
 		ax.set_yticks([])
+
+images = data.test.images[0:9]
+cls_true = data.test.cls[0:9]
+plot_images(images=images, cls_true=cls_true)
