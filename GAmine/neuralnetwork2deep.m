@@ -56,3 +56,16 @@ J = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer_size, hidden_2_
 fprintf('Cost at parameters: %f\n', J);
 fprintf('Press any key to continue.\n');
 pause;
+
+fprintf('Initializing neural network parameters\n');
+initial_Theta1 = randInitializeWeights(input_layer_size, hidden_1_layer_size);
+initial_Theta2 = randInitializeWeights(hidden_1_layer_size, hidden_2_layer_size);
+initial_Theta3 = randInitializeWeights(hidden_2_layer_size, num_labels);
+
+% Unroll parameters
+initial_nn_parameters = [initial_Theta1(:); initial_Theta2(:); initial_Theta3(:)];
+
+% Checking gradients from backpropagation by numerical methods
+% fprintf('Checking backpropagation\n');
+% IDK if computeNumericalGradient will be similar for multiple layers
+

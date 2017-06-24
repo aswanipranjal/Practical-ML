@@ -30,4 +30,12 @@ function [J grad] = nn2lCostFunction(nn_params, input_layer_size, hidden_1_layer
 	t2 = Theta2(:, 2:end);
 	t3 = Theta3(:, 2:end);
 	J = 1/m*sum(sum(singular_cost)) + lambda/(2*m)*(sum(sumsq(t1)) + sum(sumsq(t2)) + sum(sumsq(t3)));
+
+	% Backpropagation
+	DELTA1 = zeros(size(Theta1));
+	DELTA2 = zeros(size(Theta2));
+	DELTA3 = zeros(size(Theta3));
+
+	delta4 = a4 - y;
+	
 end;
