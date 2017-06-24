@@ -126,7 +126,6 @@ def print_confusion_matrix():
 	plt.yticks(tick_marks, range(num_classes))
 	plt.xlabel('Predicted')
 	plt.ylabel('True')
-	plt.show()
 
 def plot_example_errors():
 	correct, cls_pred = session.run([correct_prediction, y_pred_cls], feed_dict=feed_dict_test)
@@ -135,7 +134,6 @@ def plot_example_errors():
 	cls_pred = cls_pred[incorrect]
 	cls_true = data.test.cls[incorrect]
 	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
-	plt.show()
 
 def plot_weights():
 	w = session.run(weights)
@@ -147,10 +145,15 @@ def plot_weights():
 
 	for i, ax in enumerate(axes.flat):
 		if i < 10:
-			image = w[:, i].reshape(img_reshape)
+			image = w[:, i].reshape(img_shape)
 			ax.set_xlabel("Weights: {0}".format(i))
 			ax.imshow(image, vmin=w_min, vmax=w_max, cmap='seismic')
 
 		ax.set_xticks([])
 		ax.set_yticks([])
-	plt.show()
+
+optimize(num_iterations=10)
+print_accuracy()
+plot_example_errors()
+plot_weights()
+plt.show()
