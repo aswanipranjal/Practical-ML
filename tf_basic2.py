@@ -38,9 +38,11 @@ def plot_images(images, cls_true, cls_pred=None):
 		ax.set_xticks([])
 		ax.set_yticks([])
 
+	plt.show();
+
 images = data.test.images[0:9]
 cls_true = data.test.cls[0:9]
-plot_images(images=images, cls_true=cls_true)
+# plot_images(images=images, cls_true=cls_true)
 
 # First we define the placeholder variable for the input images. This allows us to change the images that are input to the
 # TensorFlow graph. This is a so-called tensor, which just means that it is a multi-dimensional vector or matrix.
@@ -86,7 +88,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 # Create TensorFlow session
 session = tf.Session()
-session.run(tf.initialize_all_variables())
+session.run(tf.global_variables_initializer())
 
 # It takes a long time to calculate the gradient of the model using all the 50000 images. We therefore use Stochastic Gradient Descent
 # which only uses a small batch of images in each iteration of the optimizer
@@ -95,7 +97,7 @@ batch_size = 100
 def optimize(num_iterations):
 	for i in range(num_iterations):
 		x_batch, y_true_batch = data.train.next_batch(batch_size)
-		feed_dict_train = {x: x_batch, y_true; y_true_batch}
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
 		session.run(optimizer, feed_dict=feed_dict_train)
 
 feed_dict_test = {	x: data.test.images,
@@ -124,6 +126,7 @@ def print_confusion_matrix():
 	plt.yticks(tick_marks, range(num_classes))
 	plt.xlabel('Predicted')
 	plt.ylabel('True')
+	plt.show()
 
 def plot_example_errors():
 	correct, cls_pred = session.run([correct_prediction, y_pred_cls], feed_dict=feed_dict_test)
@@ -132,6 +135,7 @@ def plot_example_errors():
 	cls_pred = cls_pred[incorrect]
 	cls_true = data.test.cls[incorrect]
 	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
+	plt.show()
 
 def plot_weights():
 	w = session.run(weights)
@@ -149,4 +153,4 @@ def plot_weights():
 
 		ax.set_xticks([])
 		ax.set_yticks([])
-
+	plt.show()
