@@ -352,6 +352,32 @@ def plot_conv_weights(weights, input_channel=0):
 
 	plt.show()
 
+# Helper function for plotting the output of a convolutional layer
+def plot_conv_layer(layer, image):
+	# Create a feed-dict containing only one image
+	# We do not need to feed y_true because it is not used in this calculation
+	feed_dict = {x: [image]}
+	values = session.run(layer, feed_dict=feed_dict)
+	num_filters = values.shape[3]
+	num_grids = math.ceil(math.sqrt(num_filters))
+	fig, axes = plt.subplots(num_grids, num_grids)
+
+	# Plot the output images of all the filters
+	for i, ax in enumerate(axes.flat):
+		if i < num_filters:
+			# Get the output image using the i'th filter
+			# See new_conv_layer() for details on the format of this 4-dim tensor
+			img = values[0, :, :, i]
+
+			# Plot image
+			ax.imshow(img, interpolation='nearest', cmap='binary')
+
+		# Remove ticks from the plot
+		ax.set_xticks([])
+		ax.set_yticks([])
+
+	plt.show()
+
 optimize(num_iterations=1000)
 print_test_accuracy(True, True)
 # 98.8% accuracy on test set with 10000 iterations
