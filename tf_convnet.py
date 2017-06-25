@@ -383,9 +383,10 @@ def plot_image(image):
 	plt.imshow(image.reshape(img_shape), interpolation='nearest', cmap='binary')
 	plt.show()
 
-optimize(num_iterations=1000)
+optimize(num_iterations=1729)
 print_test_accuracy(True, True)
 # 98.8% accuracy on test set with 10000 iterations
+# 95.2% accuracy on test set with 1729 iterations
 image1 = data.test.images[0]
 plot_image(image1)
 image2 = data.test.images[17]
