@@ -68,3 +68,61 @@ def plot_images(images, cls_true, cls_pred=None):
 		ax.set_yticks([])
 
 	plt.show()
+
+# Helper functions to create new variables
+def new_weights(shape):
+	return tf.Variable(tf.truncated_normal(shape, stddev=0.05))
+
+def new_biases(length):
+	return tf.Variable(tf.constant(0.05, shape=[length]))
+
+# A TensorFlow graph consists of the following
+# Placeholder variables used for inputting data to the graph
+# Variables that are going to be optimized so as to make the convolutional netork perform better
+# The mathematical formulas for the convolutional network
+# A cost measure used to guide the optimization of the variables
+# An optimization method which updates the variables
+
+# Helper function for creating a new convolutional layer
+# Nothing is calculated here, we are just adding the mathematical formulas to the TensorFlow graph
+# Assumption: The input is a 4-dim tensor with the following dimensions
+# Image number
+# Y-axis of each image
+# X-axis of each image
+# Channels of each image
+# The output is anothe 4-dim tensor with the following dimensions
+# Image number (same as input)
+# Y-axis of each image. If 2x2 pooling is usedm then the width of the input images is divided by 2
+# X-axis of each image. If 2x2 pooling is usedm then the width of the input images is divided by 2
+# Channels produced by the convolutional filters
+def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pooling=True):
+	# Shape of the filter weights for the convolution.
+	# This format is determined by the TensorFlow API
+	shape = [filter_size, filter_size, num_input_channels, num_filters]
+	# Create new weights with given shape
+	weights = new_weights(shape=shape)
+	# Create new biases, one for each filter
+	biases = new_biases(length=num_filters)
+
+	# Create TensorFlow operation for convolution
+	# Note the strides are set to 1 in all dimensions
+	# The first and last strindes must always be 1
+	# The padding is set to 'SAME' which means the input image is padded with zeros so the size of the output is same
+	layer = tf.nn.conv2d(input=input, filter=weights, strides=[1, 1, 1, 1], padding='SAME')
+	# Add the biases to the results of the convolution. A bias value is added to each filter channel
+	layer += biases
+	# Use pooling to down-sample the resolution?
+	if use_pooling:
+		# This is 2x2 max-pooling, which means that we consider 2x2 windows and select the largest value in each window
+		# Then we move 2 pixels to the next window
+		layer = tf.nn.max_pool(value=layer, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+
+	# Rectified Linear Unit (ReLU)
+	# It calculates max(x, 0) for each input pixel x.
+	# This adds some non-linearity to the formula and allows us to learn more complicated functions
+	layer = tf.nn.relu(layer)
+	# ReLU is normally execute before pooling, bu since ReLU(max_pool(x)) == max_pool(ReLU(x)) we can save 75% of the ReLU operations
+	# by max-pooling first
+
+	# We return both the resulting layer and the filter-weights because we will plot the weights later.
+	return layer, weights

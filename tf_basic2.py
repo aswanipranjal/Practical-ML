@@ -77,7 +77,7 @@ cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y_
 # We average over all the values to give us a singular metric for how well the model is currently doing
 cost = tf.reduce_mean(cross_entropy)
 # Optimization method
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.07).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.0001).minimize(cost)
 # Nothing is calculated yet, we are just building the computational graph
 # We need a few more preformance measures to display the progress to the user
 # This is a vector of booleans wheter the predicted class equals the true class of each image
@@ -153,7 +153,7 @@ def plot_weights():
 		ax.set_yticks([])
 
 # for i in range(1000):
-optimize(num_iterations=10)
+optimize(num_iterations=1000)
 print_accuracy()
 plot_example_errors()
 plot_weights()
