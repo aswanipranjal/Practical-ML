@@ -248,3 +248,11 @@ def optimize(num_iterations):
 	end_time = time.time()
 	time_diff = end_time - start_time
 	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
+
+# Helper function to plot example errors
+def plot_example_errors(cls_pred, correct):
+	incorrect = (correct == False)
+	images = data.test.images[incorrect]
+	cls_pred = cls_pred[incorrect]
+	cls_true = data.test.cls[incorrect]
+	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
