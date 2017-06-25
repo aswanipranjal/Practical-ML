@@ -153,7 +153,7 @@ def plot_weights():
 		ax.set_yticks([])
 
 # for i in range(1000):
-optimize(num_iterations=1000)
+optimize(num_iterations=10)
 print_accuracy()
 plot_example_errors()
 plot_weights()
