@@ -256,3 +256,17 @@ def plot_example_errors(cls_pred, correct):
 	cls_pred = cls_pred[incorrect]
 	cls_true = data.test.cls[incorrect]
 	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
+
+# Helper function to plot confusion matrix
+def plot_confusion_matrix(cls_pred):
+	cls_true = data.test.cls
+	cm = confusion_matrix(y_true=cls_true, y_pred=cls_pred)
+	print(cm)
+	plt.matshow(cm)
+	plt.colorbar()
+	tick_marks = np.arange(num_classes)
+	plt.xticks(tick_marks, range(num_classes))
+	plt.yticks(tick_marks, range(num_classes))
+	plt.xlabel('Predicted')
+	plt.ylabel('True')
+	plt.show()
