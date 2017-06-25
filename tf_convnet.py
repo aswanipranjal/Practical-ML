@@ -344,7 +344,7 @@ def plot_conv_weights(weights, input_channel=0):
 	for i, ax in enumerate(axes.flat):
 		# Only plot the valid filter weights
 		if i < num_filters:
-			img = w[:, input_channel, i]
+			img = w[:, :, input_channel, i]
 			ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='nearest', cmap='seismic')
 
 		ax.set_xticks([])
