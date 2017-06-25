@@ -270,3 +270,55 @@ def plot_confusion_matrix(cls_pred):
 	plt.xlabel('Predicted')
 	plt.ylabel('True')
 	plt.show()
+
+# Helper function for showing the performance
+# Split the test set into smaller batches of this size
+test_batch_size = 256
+def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
+	# number of images in the test set
+	num_test = len(data.test.images)
+	# Allocate an array for the predicted classes which will be calculated in batches and filled into this array
+	cls_pred = np.zeros(shape=num_test, dtype=np.int)
+
+	# Iterate through all the batches
+	i = 0
+
+	while i < num_test:
+		# The ending index for the next batch is denoted j
+		j = min(i + test_batch_size, num_test)
+
+		# Get the images from the test-set between index i and j
+		images = data.test.images[i:j, :]
+
+		# Get the associated labels
+		labels = data.test.labels[i:j, :]
+
+		# Create a feed-dict with these images and labels
+		feed_dict = {x:images, y_true: labels}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+
+		# Set the start index of the next batch to the end index of the current batch
+		i = j
+
+	cls_true = data.test.cls
+	# Create a boolean array whether each image is corectly classified
+	correct = (cls_true == cls_pred)
+
+	# Calculate the number of correctly classified images
+	correct_sum = correct.sum()
+
+	# Classification accuracy
+	acc = float(correct_sum)/num_test
+
+	msg = "Accuracy on test-set: {0:.1%} ({1} / {2})"
+	print(msg.format(acc, correct_sum, num_test))
+
+	# Plot some mis-classifications, if desired
+	if show_example_errors:
+		print("Example errors: ")
+		plot_example_errors(cls_pred=cls_pred, correct=correct)
+
+	# Plot the confusion matrix, if desired
+	if show_confusion_matrix:
+		print("Confusion matrix: ")
+		plot_confusion_matrix(cls_pred=cls_pred)
