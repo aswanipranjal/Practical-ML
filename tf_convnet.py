@@ -378,6 +378,24 @@ def plot_conv_layer(layer, image):
 
 	plt.show()
 
+# Helper function for plotting an image
+def plot_image(image):
+	plt.imshow(image.reshape(img_shape), interpolation='nearest', cmap='binary')
+	plt.show()
+
 optimize(num_iterations=1000)
 print_test_accuracy(True, True)
 # 98.8% accuracy on test set with 10000 iterations
+image1 = data.test.images[0]
+plot_image(image1)
+image2 = data.test.images[17]
+plot_image(image2)
+# Convolutional layer 1
+plot_conv_weights(weights=weights_conv1)
+plot_conv_layer(layer=layer_conv1, image=image1)
+plot_conv_layer(layer=layer_conv1, image=image2)
+# Convolutional layer 2
+plot_conv_weights(weights=weights_conv2)
+plot_conv_layer(layer=layer_conv2, image=image1)
+plot_conv_layer(layer=layer_conv2, image=image2)
+session.close()
