@@ -182,3 +182,24 @@ layer_fc1 = new_fc_layer(input=layer_flat, num_inputs=num_features, num_outputs=
 # Add the last fully connected layer that outputs vectors of length 10 for determining which of the 10 classes the input image belongs to.
 # Note that ReLU is not used in this layer
 layer_fc2 = new_fc_layer(input=layer_fc1, num_inputs=fc_size, num_outputs=num_classes, use_relu=False)
+
+# The second fully-connected layer estimates how likely it is that the input image belongs to each of the 10 classes.
+# However, these estimates are a bit rough and difficult to interpret because the numbers may be very small of large,
+# so we want to normalize them so that each element is limited between zero and one and the 10 elements sum to one.
+# This is calculated using the softmax function and the result is stored in y_pred
+y_pred = tf.nn.softmax(layer_fc2)
+
+# The class number is the index of the largest element
+y_pred_cls = tf.argmax(y_pred, dimension=1)
+
+# Cost function to be optimized
+# TensorFlow has a built function for calculating cross-entropy. 
+# Note that the function calculates the softmax internally so we must use the output of layer_fc2 directly 
+# rather than y_pred which has already had the softmax applied.
+cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2, labels=y_true)
+# In order to use the cross-entropy to guide the optimization of the model's variables we need a single scalar value,
+# so we simply take the average of the cross-entropy for all the image clasifications
+cost = tf.reduce_mean(cross_entropy)
+
+# Define the optimizer
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(cost)
