@@ -323,6 +323,35 @@ def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
 		print("Confusion matrix: ")
 		plot_confusion_matrix(cls_pred=cls_pred)
 
+# Helper function for plotting convolutional weights
+def plot_conv_weights(weights, input_channel=0):
+	# Assume weights are TensorFlow ops for 4-dim variables
+	# eg weights_conv1 or weights_conv2
+	# Retreive the values of the weight-variables from TensorFlow
+	# A feed-dict is not necessary because nothing is calculated
+	w = session.run(weights)
+	w_min = np.min(w)
+	w_max = np.max(w)
+
+	# Number of filters used in the convolutional layer
+	num_filters = w.shape[3]
+	num_grids = math.ceil(math.sqrt(num_filters))
+
+	# Create figure with a gris of subplots
+	fig, axes = plt.subplots(num_grids, num_grids)
+
+	# Plot all the filter weights
+	for i, ax in enumerate(axes.flat):
+		# Only plot the valid filter weights
+		if i < num_filters:
+			img = w[:, input_channel, i]
+			ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='nearest', cmap='seismic')
+
+		ax.set_xticks([])
+		ax.set_yticks([])
+
+	plt.show()
+
 optimize(num_iterations=1000)
 print_test_accuracy(True, True)
 # 98.8% accuracy on test set with 10000 iterations
