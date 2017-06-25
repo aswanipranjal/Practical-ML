@@ -166,3 +166,19 @@ y_true = tf.placeholder(tf.float32, shape=[None, 10], name='y_true')
 # we could also have a placeholder variable for the class number, but we will instead calculate it using argmax.
 # Note that this is a TensorFlow operator, so nothing is calculated at this point.
 y_true_cls = tf.argmax(y_true, dimension=1)
+
+# Create the first convolutional layer
+layer_conv1, weights_conv1 = new_conv_layer(input=x_image, num_input_channels=num_channels, filter_size=filter_size1, num_filters=num_filters1, use_pooling=True)
+# Create the second convolutional layer
+layer_conv2, weights_conv2 = new_conv_layer(input=layer_conv1, num_input_channels=num_filters1, filter_size=filter_size2, num_filters=num_filters2, use_pooling=True)
+
+# Flatten layer to feed into the fully connected layers
+flatten_layer, num_features = flatten_layer(layer_conv2)
+
+# Add a fully connected layer to the network. The input is the flattened layer from the previous convolution.
+# The number of nodes in the fully connected layer is fc_size. ReLU is used so we can learn non-linear relations
+layer_fc1 = new_fc_layer(input=layer_flat, num_inputs=num_features, num_outputs=fc_size, use_relu=True)
+
+# Add the last fully connected layer that outputs vectors of length 10 for determining which of the 10 classes the input image belongs to.
+# Note that ReLU is not used in this layer
+layer_fc2 = new_fc_layer(input=layer_fc1, num_inputs=fc_size, num_outputs=num_classes, use_relu=False)
