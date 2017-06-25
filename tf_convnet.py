@@ -203,3 +203,15 @@ cost = tf.reduce_mean(cross_entropy)
 
 # Define the optimizer
 optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(cost)
+
+# Define performance measures
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+# This calculates the classification accuracy by first type-casting the vector of booleans to floats, so that False becomes 0
+# and True becomes 1, and then calculating the average of these numbers
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# TensorFlow Run
+session = tf.Session()
+
+# Initialize variables
+session.run(tf.global_variables_initializer())
