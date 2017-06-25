@@ -126,3 +126,32 @@ def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pool
 
 	# We return both the resulting layer and the filter-weights because we will plot the weights later.
 	return layer, weights
+
+# The output of a convolutional layer is four-dimensional, and in order to use a fully-connected layer, we need 2-dimensional input
+def flatten_layer(layer):
+	layer_shape = layer.get_shape()
+
+	# The shape of the layer is assumed to be 
+	# layer_shape = [num_images, img_width, img_height, num_channels]
+	num_features = np.array(layer_shape[1:4], dtype=int).prod()
+
+	# Reshape the layer to [num_images, num_features]
+	layer_flat = tf.reshape(layer, [-1, num_features])
+
+	# The shape of the flattened layer is now:
+	# [num_images, img_width * img_height * num_channels]
+	return layer_flat, num_features
+
+def new_fc_layer(input, num_inputs, num_outputs, use_relu=True):
+	weights = new_weights(shape=[num_inputs, num_outputs])
+	biases = new_biases(length=num_outputs)
+
+	# Calculate the layer as the matrix multiplication of the input and weights, and then add the biases
+	layer = tf.matmul(input, weights) + biases
+
+	# Use ReLU?
+	if use_relu:
+		layer = tf.nn.relu(layer)
+
+	return layer
+
