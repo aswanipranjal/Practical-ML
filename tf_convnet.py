@@ -162,7 +162,7 @@ x = tf.placeholder(tf.float32, shape=[None, img_size_flat], name='x')
 # Note that the similarity of the three values can be inferred automatically by using -1 for the size of the first dimension
 x_image = tf.reshape(x, [-1, img_size, img_size, num_channels])
 # The shape of this placehilder variable is: [None, num_classes], because y_true is one-hot encoded
-y_true = tf.placeholder(tf.float32, shape=[None, 10], name='y_true')
+y_true = tf.placeholder(tf.float32, shape=[None, num_classes], name='y_true')														###### HERE
 # we could also have a placeholder variable for the class number, but we will instead calculate it using argmax.
 # Note that this is a TensorFlow operator, so nothing is calculated at this point.
 y_true_cls = tf.argmax(y_true, dimension=1)
@@ -215,3 +215,36 @@ session = tf.Session()
 
 # Initialize variables
 session.run(tf.global_variables_initializer())
+
+# Helper function to perform optimization iterations
+train_batch_size = 64
+
+total_iterations = 0
+def optimize(num_iterations):
+	global total_iterations
+	start_time = time.time()
+
+	for i in range(total_iterations, total_iterations + num_iterations):
+		# Get a batch of training examples
+		# x_batch now holds a batch of images and y_true_batch are the true labels for those imagse
+		x_batch, y_true_batch = data.train.next_batch(train_batch_size)
+
+		# Put the batch into a dict with propre names for placeholder variables in the TensorFlow graph.
+		feed_dict_train = {x: x_batch, y_true:y_true_batch}
+
+		# TensorFlow assigns the variables in feed_dict_train to the placeholder variables and then runs the optimizer.
+		session.run(optimizer, feed_dict=feed_dict_train)
+
+		# Print status every 100 iterations
+		if i % 100 == 0:
+			acc = session.run(accuracy, feed_dict=feed_dict_train)
+			msg = "Optimization Iteration: {0:>6}, Training Accuracy: {1:>6.1%}"
+			print(msg.format(i + 1, acc))
+
+	# Update the total number of iterations performed
+	total_iterations += num_iterations
+
+	# Ending time
+	end_time = time.time()
+	time_diff = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
