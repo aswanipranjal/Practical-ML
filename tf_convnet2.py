@@ -44,3 +44,17 @@ def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pool
 		layer = tf.nn.max_pool(value=layer, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 	layer = tf.nn.relu(layer)
 	return layer, weights
+
+def flatten_layer(layer):
+	layer_shape = layer.get_shape()
+	num_features = np.array(layer_shape[1:4], dtype=int).prod()
+	layer_flat = tf.reshape(layer, [-1, num_features])
+	return layer_flat, num_features
+
+def new_fc_layer(input, num_inputs, num_outputs, use_relu=True):
+	weights = new_weights(shape=[num_inputs, num_outputs])
+	biases = new_biases(length=num_outputs)
+	layer = tf.matmul(input, weights) + biases
+	if use_relu:
+		layer = tf.nn.relu(layer)
+	return layer
