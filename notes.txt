@@ -660,7 +660,7 @@ And, when m is small, cross-validation error will be very high. When m is larger
 High bias (underfit): cross-validation error flattens out from a high value.
 If the learning algorithm is already suffering from high bias, getting more training data will not (by itself) help much.
 The difference between the test error and the training error is pretty small for higher values of m.
-In the caseof high bias, the desired error is much lesser than both the training set error and the testing set error.
+In the case of high bias, the desired error is much lesser than both the training set error and the testing set error.
 High variance (overfit): If training set is small, training error will be small. If training set increases, the training error will be larger, but still very low. Cross-validation error will be high as we are overfitting the data. The indicative diagnostic that we have a large variance problem is the fact that we have a large difference between th training set error and the cross-validation error. If a learning algorithm is suffering from high variance, getting more training data is likely to help.
 Deciding what to do next:
 1. Get more training examples -> fixes high variance
@@ -821,13 +821,13 @@ function f = kernel(x1, x2)
 f = exp(...)
 return
 Other choices of kernel
-Not all similarity functions similarity(x, l) make valid kernels. (Need to satisfy technical condition caller "Mercer's Theorem" to make sure SVM packages' optimizations run correctly, and do not diverge)
+Not all similarity functions similarity(x, l) make valid kernels. (Need to satisfy technical condition called "Mercer's Theorem" to make sure SVM packages' optimizations run correctly, and do not diverge)
 Eg: Polynomial kernelL k(x, l) = (X'l)^2 or (X'l + constant)^degree
 More esoteric: string kernel, chi-square kernel, histogram intersection kernel
 Use one-vs-all method. Train K SVMs, one to distinguish y = i from the rest for i = 1, 2, 3, ... K, get theta1, theta2, ...thetaK
 Pick class i with largest theta'x
 Logistic regression vs SVMs, 
-n = number of features, m = number of training examples
+n = number of features, m = number f training examples
 if n is large (relative to m):
 Use logistic regression, or SVM without a kernel ("linear kernel")
 If n is small, and m is intermediate:
