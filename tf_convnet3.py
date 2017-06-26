@@ -96,3 +96,61 @@ def define_cnn(x_image=None, num_channels=None, filter_size1=None, num_filters1=
 	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2, labels=y_true))
 
 	return y_pred, y_pred_cls, loss, weights_conv1, weights_conv2
+
+y_pred, y_pred_cls, loss, weights_conv1, weights_conv2 = define_cnn(x_image=x_image, filter_size1=filter_size1, num_filters1=num_filters1, filter_size2=filter_size2, num_filters2=num_filters2, fc_size=fc_size, num_classes=num_classes)
+# Optimization method
+# Define optimizer
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss)
+y_pred_cls = tf.argmax(y_pred, dimension=1)
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# Define saver
+saver = tf.train.Saver()
+save_dir = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\'
+if not os.path.exists(save_dir):
+	print('Path doesn\'t exist')
+save_path = os.path.join(save_dir, 'best_validation')
+
+session = tf.Session()
+session.run(tf.global_variables_initializer())
+
+def optimize(num_iterations):
+	global total_iterations
+	global best_validation_accuracy
+	global last_improvement
+
+	start_time = time.time()
+
+	for i in range(num_iterations):
+		total_iterations += 1
+		x_batch, y_true_batch = data.train.next_batch(train_batch_size)
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
+		session.run(optimizer, feed_dict=feed_dict_train)
+
+		# Print status every 50 iterations
+		if (i % 50 == 0) or (i == (num_iterations - 1)):
+			acc_train = session.run(accuracy, feed_dict=feed_dict_train)
+			acc_validation, _ = validation_accuracy()
+			# if improvement
+			if acc_validation > best_validation_accuracy:
+				best_validation_accuracy = acc_validation
+				last_improvement = total_iterations
+				saver.save(sess=session, save_path=save_path)
+				# set a mark
+				improved_str = '*'
+			else:
+				# no improvement was found
+				improved_str = ''
+
+			# Status message for log
+			msg = "Iteration: {0:>6}, Train-batch accuracy: {1:>6.1%}, Validation accuracy: {2:>6.1%} {3}"
+			print(msg.format(i + 1, acc_train, acc_validation, improved_str))
+		# If no improvement found in the required number of iterations
+		if total_iterations - last_improvement > require_improvement:
+			print("No improvement found in a while, stopping optimization")
+			break
+	end_time = time.time()
+	time_diff = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
+
