@@ -807,3 +807,32 @@ Large C: small bias, large variance
 Small C: large bias, small variance
 Large sigma^2: large bias, small variance (varies more smoothly)
 Small sigma^2: small bias, large variance (varies less smoothly)
+USING SVMs
+Use SVM software package (eg liblinear, libsvm, etc) to solve for parameters theta
+Need to specify:
+1. Choice of parameter C
+2. Choose the kernel or the similarity function
+No kernel = linear kernel
+Use no kernel, if the number of features is large and the number of examples is small
+For gaussian kernel, we need to choose sigma^2
+Use gaussian kernel if number of features is small and/or number of examples is large
+Perform feature scaling before using the Gaussian kernel
+function f = kernel(x1, x2)
+f = exp(...)
+return
+Other choices of kernel
+Not all similarity functions similarity(x, l) make valid kernels. (Need to satisfy technical condition caller "Mercer's Theorem" to make sure SVM packages' optimizations run correctly, and do not diverge)
+Eg: Polynomial kernelL k(x, l) = (X'l)^2 or (X'l + constant)^degree
+More esoteric: string kernel, chi-square kernel, histogram intersection kernel
+Use one-vs-all method. Train K SVMs, one to distinguish y = i from the rest for i = 1, 2, 3, ... K, get theta1, theta2, ...thetaK
+Pick class i with largest theta'x
+Logistic regression vs SVMs, 
+n = number of features, m = number of training examples
+if n is large (relative to m):
+Use logistic regression, or SVM without a kernel ("linear kernel")
+If n is small, and m is intermediate:
+Use SVM with Gaussian kernel
+If n is small, m is large:
+Create/add more features, then use logistic regression or SVM without a kernel. Because SVM with a gaussian kernel will be slow to run
+logistic regression or SVM without a kernel will do pretty similar things
+Neural network will most likely work pretty well for most of these settings, but may be slower to train
