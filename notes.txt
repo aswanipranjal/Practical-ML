@@ -790,3 +790,20 @@ If y = 1, we want theta'X >= 1 (not just >= 0)
 If y = 0, we want theta'X <= -1 (not just < 0)
 If C is very large, the SVM will change the margin to best fit the outliers too
 If C is not too large, the SVM will ignore outliers
+
+Kernels (Adapting SVMs for non-linear classifications)
+Higher order polynomial features become computationally expensive
+Given x, compute new feature depending on proximity to landmarks
+Kernel (Gaussian kernel) is a similarity function
+f1 = similarity(x, l^(1)) = exp((-abs(x - l)^2)/2sigma^2)
+if x is near the landmark l, f ~ 1
+if x is far from landmark l, f ~ 0
+for small sigma^2, the contour plot is closely spaced (large gradient)
+for large sigma^2, the contour plot is sparsely spaced (small gradient)
+Predict 1 when theta0 + theta1f1 + theta2f2 + theta3f3 >= 0
+SVM with kernels. Calculations are similar. Replace x's with f's
+Kernels will run very slowly with logistic regression
+Large C: small bias, large variance
+Small C: large bias, small variance
+Large sigma^2: large bias, small variance (varies more smoothly)
+Small sigma^2: small bias, large variance (varies less smoothly)
