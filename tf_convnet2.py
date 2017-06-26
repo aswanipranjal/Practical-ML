@@ -60,6 +60,7 @@ def new_fc_layer(input, num_inputs, num_outputs, use_relu=True):
 		layer = tf.nn.relu(layer)
 	return layer
 
+# Defining required variables
 x = tf.placeholder(tf.float32, shape=[None, img_size_flat], name='x')
 x_image = tf.reshape(x, [-1, img_size, img_size, num_channels])
 y_true = tf.placeholder(tf.float32, shape=[None, num_classes], name='y_true')
@@ -83,3 +84,21 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 session = tf.Session()
 session.run(tf.global_variables_initializer())
+
+train_batch_size = 64
+total_iterations = 0
+def optimize(num_iterations):
+	global total_iterations
+	start_time = time.time()
+	for i in range(total_iterations, total_iterations + num_iterations):
+		x_batch, y_true_batch = data.train.next_batch(train_batch_size)
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
+		session.run(optimizer, feed_dict=feed_dict_train)
+		if i % 100 == 0:
+			acc = session.run(accuracy, feed_dict=feed_dict_train)
+			print("Optimization Iteration: {0:>6}, Training Accuracy: {1:>6.1%}".format(i+1, acc))
+
+	total_iterations += num_iterations
+	end_time = time.time()
+	time_diff = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
