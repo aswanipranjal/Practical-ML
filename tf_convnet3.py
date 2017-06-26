@@ -1,4 +1,4 @@
-import util as util
+import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
@@ -32,6 +32,34 @@ total_iterations = 0
 # Class labels one-hot encoded
 data.tst.cls = np.argmax(data.validation.labels, axis=1)
 data.validation.cls = np.argmax(data.validation.labels, axis=1)
+
+def plot_images(images, cls_true, cls_pred=None, img_shape=None):
+    assert len(images) == len(cls_true) == 9
+    # create figure with 2x2 sub-plots
+    fig, axes = plt.subplots(3, 3)
+    fig.subplots_adjust(hspace=0.3, wspace=0.3)
+    for i, ax in enumerate(axes.flat):
+        # plot images
+        ax.imshow(images[i].reshape(img_shape), cmap='binary')
+        # true and predicted class
+        if cls_pred is None:
+            xlabel = "True: {0}".format(cls_true[i])
+        else:
+            xlabel = "True: {0}, Pred: {1}".format(cls_true[i], cls_pred[i])
+
+        ax.set_xlabel(xlabel)
+        # remove ticks from plot
+        ax.set_xticks([])
+        ax.set_yticks([])
+    plt.show()
+
+# Function to define new TF Variables in the given shape, initialized w random values
+def new_weights(shape):
+    return tf.Variable(tf.truncated_normal(shape, stddev=0.05))
+
+# same for biases
+def new_biases(length):
+    return tf.Variable(tf.constant(0.05, shape=[length]))
 
 # Define placeholder variables
 x = tf.placeholder(tf.float32, shape=[None, img_size_flat], name='x')
@@ -194,4 +222,52 @@ def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
 	if show_confusion_matrix:
 		print("Confusion matrix: ")
 		plot_confusion_matrix(cls_pred=cls_pred, data=data, num_classes=num_classes)
-		
+
+
+def plot_conv_weights(weights, input_channel=0, session=None):
+    # Assume weights are TensorFlow ops for 4-dim variables
+    # e.g. weights_conv1 or weights_conv2.
+
+    # Retrieve the values of the weight-variables from TensorFlow.
+    # A feed-dict is not necessary because nothing is calculated.
+    w = session.run(weights)
+
+    # Print mean and standard deviation.
+    print("Mean: {0:.5f}, Stdev: {1:.5f}".format(w.mean(), w.std()))
+
+    # Get the lowest and highest values for the weights.
+    # This is used to correct the colour intensity across
+    # the images so they can be compared with each other.
+    w_min = np.min(w)
+    w_max = np.max(w)
+
+    # Number of filters used in the conv. layer.
+    num_filters = w.shape[3]
+
+    # Number of grids to plot.
+    # Rounded-up, square-root of the number of filters.
+    num_grids = math.ceil(math.sqrt(num_filters))
+
+    # Create figure with a grid of sub-plots.
+    fig, axes = plt.subplots(num_grids, num_grids)
+
+    # Plot all the filter-weights.
+    for i, ax in enumerate(axes.flat):
+        # Only plot the valid filter-weights.
+        if i < num_filters:
+            # Get the weights for the i'th filter of the input channel.
+            # The format of this 4-dim tensor is determined by the
+            # TensorFlow API. See Tutorial #02 for more details.
+            img = w[:, :, input_channel, i]
+
+            # Plot image.
+            ax.imshow(img, vmin=w_min, vmax=w_max,
+                      interpolation='nearest', cmap='seismic')
+
+        # Remove ticks from the plot.
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    # Ensure the plot is shown correctly with multiple plots
+    # in a single Notebook cell.
+    plt.show()
