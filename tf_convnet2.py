@@ -85,6 +85,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 session = tf.Session()
 session.run(tf.global_variables_initializer())
 
+# Helper function to optimize
 train_batch_size = 64
 total_iterations = 0
 def optimize(num_iterations):
@@ -102,3 +103,23 @@ def optimize(num_iterations):
 	end_time = time.time()
 	time_diff = end_time - start_time
 	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
+
+# Helper function for showing the performance
+test_batch_size = 256
+def print_test_accuracy():
+	num_test = len(data.test.images)
+	cls_pred = np.zeros(shape=num_test, dtype=np.int)
+	i = 0
+	while i < num_test:
+		j = min(i + test_batch_size, num_test)
+		images = data.test.images[i:j, :]
+		labels = data.test.labels[i:j, :]
+		feed_dict = {x: images, y_true: labels}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+
+	cls_true = data.test.cls
+	corect = (cls_true == cls_pred)
+	correct_sum = correct.sum()
+	acc = float(correct_sum)/num_test
+	print("Accuracy on test set: {0:.1%} ({1} / {2})".format(acc, correct_sum, num_test))
