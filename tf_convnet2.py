@@ -78,7 +78,7 @@ y_pred_cls = tf.argmax(y_pred, dimension=1)
 # Functions for the computational graph
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2, labels=y_true)
 cost = tf.reduce_mean(cross_entropy)
-optimizer = tf.train.AdamOptimizer(learningRate=1e-4).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(cost)
 correct_prediction = tf.equal(y_pred_cls, y_true_cls)
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
@@ -119,7 +119,11 @@ def print_test_accuracy():
 		i = j
 
 	cls_true = data.test.cls
-	corect = (cls_true == cls_pred)
+	correct = (cls_true == cls_pred)
 	correct_sum = correct.sum()
 	acc = float(correct_sum)/num_test
 	print("Accuracy on test set: {0:.1%} ({1} / {2})".format(acc, correct_sum, num_test))
+
+optimize(num_iterations=1000)
+print_test_accuracy()
+session.close()
