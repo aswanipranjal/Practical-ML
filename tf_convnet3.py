@@ -154,3 +154,44 @@ def optimize(num_iterations):
 	time_diff = end_time - start_time
 	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
 
+def predict_cls(images, labels, cls_true):
+	num_images = len(images)
+	cls_pred = np.zeros(shape=num_images, dtype=np.int)
+	i = 0
+	while i < num_images:
+		j = min(i + batch_size, num_images)
+		feed_dict = {x: images[i:j, :], y_true: labels[i:j, :]}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+	correct = (cls_true == cls_pred)
+	return correct, cls_pred
+
+def predict_cls_test():
+	return predict_cls(images=data.test.images, labels=data.test.labels, cls_true=data.test.cls)
+
+def predict_cls_validation():
+	return predict_cls(images=data.validation.images, labels=data.validation.labels, cls_true=data.validation.cls)
+
+def validation_accuracy():
+	correct, _ = predict_cls_validation()
+	return cls_accuracy(correct)
+
+def cls_accuracy(correct):
+	correct_sum = correct.sum()
+	acc = float(correct_sum) / len(correct)
+	return acc, correct_sum
+
+def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
+	print('Computing accuracy on test set')
+	correct, cls_pred = predict_cls_test()
+	acc, num_correct = cls_accuracy(correct)
+	num_images = len(correct)
+	msg = "Accuracy on test-set: {0:.1%} ({1} / {2})"
+	print(msg.format(acc, num_correct, num_images))
+	if show_example_errors:
+		print("Example errors: ")
+		plot_example_errors(cls_pred=cls_pred, correct=correct, data=data, img_shape=img_shape)
+	if show_confusion_matrix:
+		print("Confusion matrix: ")
+		plot_confusion_matrix(cls_pred=cls_pred, data=data, num_classes=num_classes)
+		
