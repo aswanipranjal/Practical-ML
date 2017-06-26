@@ -161,7 +161,7 @@ x = tf.placeholder(tf.float32, shape=[None, img_size_flat], name='x')
 # The convolutional layer expects the inputs to be a four-dimensional tensor, so we reshape it
 # Note that the similarity of the three values can be inferred automatically by using -1 for the size of the first dimension
 x_image = tf.reshape(x, [-1, img_size, img_size, num_channels])
-# The shape of this placehilder variable is: [None, num_classes], because y_true is one-hot encoded
+# The shape of this placeholder variable is: [None, num_classes], because y_true is one-hot encoded
 y_true = tf.placeholder(tf.float32, shape=[None, num_classes], name='y_true')														###### HERE
 # we could also have a placeholder variable for the class number, but we will instead calculate it using argmax.
 # Note that this is a TensorFlow operator, so nothing is calculated at this point.
