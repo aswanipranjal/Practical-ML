@@ -836,3 +836,14 @@ If n is small, m is large:
 Create/add more features, then use logistic regression or SVM without a kernel. Because SVM with a gaussian kernel will be slow to run
 logistic regression or SVM without a kernel will do pretty similar things
 Neural network will most likely work pretty well for most of these settings, but may be slower to train
+
+
+UNSUPERVISED LEARNING
+Clustering
+K-means is the most popular clustering algorithm
+Randomly choose 2 points called cluster centroids
+1. Cluster assignment step
+2. Move centroid step: move the cluster centroid to the mean of the point colored in that color
+Repeat
+Tell the algorithm how many clusters we need (K)
+Training set is m-dimensional vector
