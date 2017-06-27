@@ -86,4 +86,22 @@ def optimize(num_iterations):
 			acc_train = session.run(accuracy, feed_dict=feed_dict_train)
 			acc_validation, _ = validation_accuracy()
 			# if improvement
-			
+			if acc_validation > best_validation_accuracy:
+				best_validation_accuracy = acc_validation
+				last_improvement = total_iterations
+				saver.save(sess=session, save_path=save_path)
+				improved_str = '*'
+			else:
+				improved_str = ''
+
+			msg = "Iteration: {0:>6}, Train-batch accuracy: {1:>6.1%}, Validation accuracy: {2:>6.1%} {3}"
+			print(msg.format(i + 1, acc_train, acc_validation, improved_str))
+		if total_iterations - last_improvement > require_improvement:
+			print("No improvement found in a while. Stopping optimization.")
+			break
+	end_time = time.time()
+	time_dif = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_dif)))))
+
+def predict_cls(images, labels, cls_true):
+	
