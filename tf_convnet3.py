@@ -131,4 +131,30 @@ def cls_accuracy(correct):
 	return acc, correct_sum
 
 def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
-	
+	print('Computing accuracy on test dataset...')
+	correct, cls_pred = predict_cls_test()
+	acc, num_correct = cls_accuracy(correct)
+	num_images = len(correct)
+	msg = "Accuracy on test set: {0:.1%} ({1} / {2})";
+	print(msg.format(acc, num_correct, num_images))
+	if show_example_errors:
+		print("Example errors: ")
+		util.plot_example_errors(cls_pred=cls_pred, correct=correct, data=data, img_shape=img_shape)
+	if show_confusion_matrix:
+		print("Confusion matrix: ")
+		util.plot_confusion_matrix(cls_pred=cls_pred, data=data, num_classes=num_classes)
+
+# Main
+print("TensorFlow version: ", tf.__version__)
+
+train = True
+
+if train:
+	optimize(num_iterations=1000)
+	print_test_accuracy(show_example_errors=True, show_confusion_matrix=True)
+else:
+	saver.restore(sess=session, save_path=save_path)
+	print('Weights loaded!')
+	print_test_accuracy(show_example_errors=True, show_confusion_matrix=True)
+
+session.close()
