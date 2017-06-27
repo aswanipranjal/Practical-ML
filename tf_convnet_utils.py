@@ -10,7 +10,7 @@ def plot_images(images, cls_true, cls_pred=None, img_shape=None):
 
 	# Create figure with 2x2 subplots
 	fig, axes = plt.subplots(3, 3)
-	fig_subplots_adjust(hspace=0.3, wspace=0.3)
+	fig.subplots_adjust(hspace=0.3, wspace=0.3)
 	for i, ax in enumerate(axes.flat):
 		ax.imshow(images[i].reshape(img_shape), cmap='binary')
 		if cls_pred is None:
