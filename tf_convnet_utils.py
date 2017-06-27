@@ -37,7 +37,7 @@ def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pool
 	# New weights for the fiters
 	weights = new_weights(shape=shape)
 	# New biases, one for each filter
-	biases = new _biases(length=num_filters)
+	biases = new_biases(length=num_filters)
 	# Create tensorflow  operation for convolution
 	layer = tf.nn.conv2d(input=input, fliter=weights, strides=[1, 1, 1, 1], padding='SAME')
 	# Add biases
