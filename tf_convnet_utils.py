@@ -81,7 +81,7 @@ def plot_example_errors(cls_pred, correct, data, img_shape):
 
 def plot_confusion_matrix(cls_pred, data, num_classes):
 	cls_true = data.test.cls
-	cm = confusion_matrix(y_true=y_true, y_pred=y_pred)
+	cm = confusion_matrix(y_true=cls_true, y_pred=cls_pred)
 	print(cm)
 	plt.matshow(cm)
 	plt.colorbar()
