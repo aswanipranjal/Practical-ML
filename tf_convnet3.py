@@ -43,4 +43,15 @@ def define_cnn(x_image=None, num_channels=None, filter_size1=None, num_filters1=
 
 	layer_flat, num_features = util.flatten_layer(layer_conv2)
 	print(layer_flat.shape)
-	
+	print(num_features) # 1764
+
+	layer_fc1 = util.new_fc_layer(input=layer_flat, num_inputs=num_features, num_outputs=fc_size, use_relu=True)
+	print(layer_fc1.shape)
+
+	layer_fc2 = util.new_fc_layer(input=layer_fc1, num_inputs=fc_size, num_outputs=num_classes, use_relu=False)
+	print(layer_fc2.shape)
+
+	y_pred = tf.nn.softmax(layer_fc2)
+	y_pred_cls = tf.argmax(y_pred, dimension=1)
+	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2, labels=y_true))
+	return y_pred, y_pred_cls, loss, weight_conv1, weight_conv2
