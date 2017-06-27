@@ -104,4 +104,16 @@ def optimize(num_iterations):
 	print("Time usage: " + str(timedelta(seconds=int(round(time_dif)))))
 
 def predict_cls(images, labels, cls_true):
+	num_images = len(images)
+	cls_pred = np.zeros(shape=num_images, dtype=np.int)
+	i = 0
+	while i < num_images:
+		j = min(i + batch_size, num_images)
+		feed_dict = {x: images[i:j, :], y_true: labels[i:j, :]}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+	correct = (cls_true == cls_pred)
+	return correct, cls_pred
+
+def predict_cls_test():
 	
