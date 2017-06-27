@@ -76,4 +76,69 @@ def plot_example_errors(cls_pred, correct, data, img_shape):
 	images = data.test.images[incorrect]
 	cls_pred = cls_pred[incorrect]
 	cls_true = data.test.cls[incorrect]
-	
+	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9], img_shape=img_shape)
+	plt.show()
+
+def plot_confusion_matrix(cls_pred, data, num_classes):
+	cls_true = data.test.cls
+	cm = confusion_matrix(y_true=y_true, y_pred=y_pred)
+	print(cm)
+	plt.matshow(cm)
+	plt.colorbar()
+	tick_marks = np.arange(num_classes)
+	plt.xticks(tick_marks, range(num_classes))
+	plt.yticks(tick_marks, range(num_classes))
+	plt.xlabel('Predicted')
+	plt.ylabel('True')
+	plt.show()
+
+def get_weights_variable(layer_name):
+	with tf.variable_scope(layer_name, reuse=True):
+		variable = tf.get_variable('weights')
+
+	return variable
+
+def predict_cls(images, labels, cls_true, x, y_true, session, y_pred_cls, batch_size=256):
+	num_images = len(images)
+	cls_pred = np.zeros(shape=num_images, dtype=np.int)
+	while i < num_images:
+		j = min(i + batch_size, num_images)
+		feed_dict = {x: images[i:j, :], y_true: labels[i:j, :]}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+	correct = (cls_true == cls_pred)
+	return correct, cls_pred
+
+def init_variables(session):
+	session.run(tf.global_variables_initializer())
+
+def predict_cls_test(data):
+	return predict_cls(images=data.test.images, labels=data.test.labels, cls_true=data.test.cls)
+
+def predict_cls_validation(data):
+	return predict_cls(images=data.validation.images, labels=data.validation.labels, cls_true=data.validation.cls)
+
+def cls_accuracy(correct):
+	correct_sum = correct.sum()
+	acc = float(correct_sum) / len(correct)
+	return acc, correct_sum
+
+def validation_accuracy():
+	correct, _ = predict_cls_validation()
+	return cls_accuracy(correct)
+
+def plot_conv_weights(weights, input_channel=0, session=None):
+	w = session.run(weights)
+	print("Mean: {0:.5f}, Stdev: {1:.5f}".format(w.mean(), w.std()))
+	w_min = np.min(w)
+	w_max = np.max(w)
+	num_filters = w.shape[3]
+	num_grids = math.ceil(math.sqrt(num_filters))
+	fig, axes = plt.subplots(num_grids, num_grids)
+	for i, ax in enumerate(axes.flat):
+		if i < num_filters:
+			img = w[:, :, input_channel, i]
+			ax.imshow(img, vmin=w_min, vmax=w_max, interpolation='nearest', cmap='seismic')
+		ax.set_xticks([])
+		ax.set_yticks([])
+	plt.show()
