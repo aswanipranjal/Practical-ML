@@ -847,3 +847,8 @@ Randomly choose 2 points called cluster centroids
 Repeat
 Tell the algorithm how many clusters we need (K)
 Training set is m-dimensional vector
+Training example is n-dimensional vector
+Randomly initialize K cluster centroids
+repeat {
+	
+}
