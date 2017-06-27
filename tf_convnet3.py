@@ -55,3 +55,35 @@ def define_cnn(x_image=None, num_channels=None, filter_size1=None, num_filters1=
 	y_pred_cls = tf.argmax(y_pred, dimension=1)
 	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2, labels=y_true))
 	return y_pred, y_pred_cls, loss, weight_conv1, weight_conv2
+
+y_pred, y_pred_cls, loss, weight_conv1, weight_conv2 = define_cnn(x_image=x_image, num_channels=num_channels, filter_size1=filter_size1, num_filters1=num_filters1, filter_size2=filter_size2, num_filters2=num_filters2, fc_size=fc_size, num_classes=num_classes)
+
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss)
+y_pred_cls = tf.argmax(y_pred, dimension=1)
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+saver = tf.train.Saver()
+save_dir = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\'
+if not os.path.exists(save_dir):
+	print('Save path does not exist')
+
+save_path = os.path.join(save_dir, 'best_validation')
+session = tf.Session()
+util.init_variables(session)
+
+def optimize(num_iterations):
+	global total_iterations
+	global best_validation_accuracy
+	global last_improvement
+	start_time = time.time()
+	for i in range(num_iterations):
+		total_iterations += 1
+		x_batch, y_true_batch = data.train.next_batch(train_batch_size)
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
+		session.run(optimizer, feed_dict=feed_dict_train)
+		if (i % 50 == 0) or (i == (num_iterations - 1)):
+			acc_train = session.run(accuracy, feed_dict=feed_dict_train)
+			acc_validation, _ = validation_accuracy()
+			# if improvement
+			
