@@ -116,4 +116,19 @@ def predict_cls(images, labels, cls_true):
 	return correct, cls_pred
 
 def predict_cls_test():
+	return predict_cls(images=data.test.images, labels=data.test.labels, cls_true=data.test.cls)
+
+def predict_cls_validation():
+	return predict_cls(images=data.validation.images, labels=data.validation.labels, cls_true=data.validation.cls)
+
+def validation_accuracy():
+	correct, _ = predict_cls_validation()
+	return cls_accuracy(correct)
+
+def cls_accuracy(correct):
+	correct_sum = correct.sum()
+	acc = float(correct_sum) / len(correct)
+	return acc, correct_sum
+
+def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
 	
