@@ -103,7 +103,8 @@ def get_save_path(net_number):
 # TensorFlow session
 session = tf.Session()
 def init_variables():
-	session.run(tf.gloabal_variables_initializer)
+	# Probably need to change this line
+	session.run(tf.initialize_all_variables())
 
 train_batch_size = 64
 # Function for selectign a random training-set from the given training set size
@@ -128,4 +129,18 @@ def optimize(num_iterations, x_train, y_train):
 	end_time = time.time()
 	time_diff = end_time - start_time
 	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
-	
+
+# Create ensemble of neural networks
+num_networks = 5
+num_iterations = 1000
+
+# Create the ensemble of neural networks. All netrworks use the same TensorFlow graph as defined above. The variables are all initialized randomly and then optimized. The values of the weights are saved to disk so that they can be reloaded later
+if True:
+	for i in range(num_networks):
+		print("Neural network: {0}".format(i))
+		x_train, y_train, _, _ = random_training_set()
+		session.run(tf.gloabal_variables_initializer())
+		optimize(num_iterations=num_iterations, x_train=x_train, y_train=y_train)
+		saver.save(sess=session, save_path=get_save_path(i))
+		# To print a newline
+		print()
