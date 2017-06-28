@@ -158,3 +158,21 @@ def predict_labels(images):
 		pred_labels[i:j] = session.run(y_pred, feed_dict=feed_dict)
 		i = j
 	return pred_labels
+
+# Calculate boolean array hether the predicted classes for the images are correct
+def correct_prediction(images, labels, cls_true):
+	# Calculate the predicted labels
+	pred_labels = predict_labels(images=images)
+	# Calculate the predicted class-number for each image
+	cls_pred = np.argmax(pred_labels, axis=1)
+	# Create a boolean array whether each image is correctly
+	correct = (cls_true == cls_pred)
+	return correct
+
+# Calculate a boolean array whether the images in the test-set are classified correctly
+def test_correct():
+	return correct_prediction(images=data.test.images, labels=data.test.labels, cls_true=data.test.cls)
+
+# Calculate a boolean array whether the images in the validation set are classified correctly
+def validation_correct():
+	return correct_prediction(images=data.validation.images, labels=data.validation.images, cls_true=data.validation.cls)
