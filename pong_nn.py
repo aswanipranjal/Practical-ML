@@ -52,3 +52,10 @@ def create_graph():
 	fc5 = tf.matmul(fc5, w_fc5) + b_fc5
 	return s, fc5
 
+def main():
+	sess = tf.InteractiveSession()
+	inp, out = create_graph()
+	train_graph(inp, out, sess)
+
+if __name__ == "__main__":
+	main()
