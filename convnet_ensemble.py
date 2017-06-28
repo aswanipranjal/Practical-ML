@@ -144,3 +144,17 @@ if True:
 		saver.save(sess=session, save_path=get_save_path(i))
 		# To print a newline
 		print()
+
+# Helper functions
+batch_size = 256
+def predict_labels(images):
+	num_images = len(images)
+	pred_labels = np.zeros(shape=(num_images, num_classes), dtype=np.float)
+	i = 0
+	while i < num_images:
+		j = min(i + batch_size, num_images)
+		# Create a feed-dict with the images between i and j
+		feed_dict = {x: images[i:j, :]}
+		pred_labels[i:j] = session.run(y_pred, feed_dict=feed_dict)
+		i = j
+	return pred_labels
