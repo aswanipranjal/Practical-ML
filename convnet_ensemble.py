@@ -36,3 +36,37 @@ def random_training_set():
 	y_validation = combined_labels[idx_validaiton, :]
 	return x_train, y_train, x_validation, y_validation
 
+# Data dimensions
+img_size = 28
+img_size_flat = img_size * img_size
+img_shape = (img_size, img_size)
+num_channels = 1
+num_classes = 10
+
+# Helper function for plotting images
+def plot_images(images, cls_true, ensemble_cls_pred=None, best_cls_pred=None):
+	assert len(images) == len(cls_true)
+	fig, axes = plt.subplots(3, 3)
+	if ensemble_cls_pred is None:
+		hspace = 0.3
+	else:
+		hspace = 1.0
+	fig.subplots_adjust(hspace=hspace, wspace=0.3)
+
+	for i, ax in enumerate(axes.flat):
+		# There may not be enough images for all sub-plots
+		if i < len(images):
+			# Plot image
+			ax.imshow(images[i].reshape(img_shape), cmap='binary')
+			if ensemble_cls_pred is None:
+				xlabel = "True: {0}".format(cls_true[i])
+			else:
+				msg = "True: {0}\nEnsemble: {1}\nBest net: {2}"
+				xlabel = msg.format(cls_true[i], ensemble_cls_pred[i], best_cls_pred[i])
+			# Show the classes as the labels on the x-axis
+			ax.set_xlabel(xlabel)
+		# Remove ticks from the plot
+		ax.set_xticks([])
+		ax.set_yticks([])
+
+	plt.show()
