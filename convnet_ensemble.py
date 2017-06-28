@@ -139,7 +139,7 @@ if True:
 	for i in range(num_networks):
 		print("Neural network: {0}".format(i))
 		x_train, y_train, _, _ = random_training_set()
-		session.run(tf.gloabal_variables_initializer())
+		session.run(tf.global_variables_initializer())
 		optimize(num_iterations=num_iterations, x_train=x_train, y_train=y_train)
 		saver.save(sess=session, save_path=get_save_path(i))
 		# To print a newline
