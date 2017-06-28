@@ -132,7 +132,7 @@ def optimize(num_iterations, x_train, y_train):
 
 # Create ensemble of neural networks
 num_networks = 5
-num_iterations = 1000
+num_iterations = 10
 
 # Create the ensemble of neural networks. All netrworks use the same TensorFlow graph as defined above. The variables are all initialized randomly and then optimized. The values of the weights are saved to disk so that they can be reloaded later
 if True:
@@ -184,6 +184,10 @@ def test_accuracy():
 	correct = test_correct()
 	return classification_accuracy(correct)
 
+def validation_accuracy():
+	correct = validation_correct()
+	return classification_accuracy(correct)
+
 def ensemble_predictions():
 	pred_labels = []
 	test_accuracies = []
@@ -208,6 +212,8 @@ print("Min test accuracy: {0:.4f}".format(np.min(test_accuracies)))
 print("Max test accuracy: {0:.4f}".format(np.max(test_accuracies)))
 ensemble_pred_labels = np.mean(pred_labels, axis=0)
 print(ensemble_pred_labels.shape)
+ensemble_cls_pred = np.argmax(ensemble_pred_labels, axis=1)
+print(ensemble_cls_pred.shape)
 ensemble_correct = (ensemble_cls_pred == data.test.cls)
 ensemble_incorrect = np.logical_not(ensemble_correct)
 
@@ -225,6 +231,7 @@ np.sum(ensemble_correct)
 np.sum(best_net_correct)
 ensemble_better = np.logical_and(best_net_incorrect, ensemble_correct)
 ensemble_better.sum()
+best_net_better = np.logical_and(best_net_correct, ensemble_incorrect)
 best_net_better.sum()
 
 def plot_images_comparison(idx):
