@@ -1,3 +1,4 @@
-model_checkpoint_path: "C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\network1"
+model_checkpoint_path: "C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\network2"
 all_model_checkpoint_paths: "C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\network0"
 all_model_checkpoint_paths: "C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\network1"
+all_model_checkpoint_paths: "C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\network2"
