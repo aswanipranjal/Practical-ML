@@ -96,3 +96,19 @@ def update_paddle2(action, ball_y_pos):
 		paddle1_y_pos = window_height - paddle_height
 	return paddle1_y_pos
 
+class Pong:
+	def __init__(self):
+		# random number for initial direction of ball
+		num = random.randInt(0, 9)
+		# keep score
+		self.tally = 0
+		# Initialize positions of our paddle
+		self.paddle1_y_pos = window_height / 2 - paddle_height / 2
+		self.paddle2_y_pos = window_height / 2 - paddle_height / 2
+		# Ball direction definition
+		self.ball_x_direction = 1
+		self.ball_y_direction = 1
+		# Starting point
+		self.ball_x_pos = window_height / 2 - ball_width / 2
+
+		
