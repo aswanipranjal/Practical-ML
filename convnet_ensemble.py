@@ -224,3 +224,26 @@ np.sum(best_net_correct)
 ensemble_better = np.logical_and(best_net_incorrect, ensemble_correct)
 ensemble_better.sum()
 best_net_better.sum()
+
+def plot_images_comparison(idx):
+	plot_images(images=data.test.images[idx, :], cls_true=data.test.cls[idx], ensemble_cls_pred=ensemble_cls_pred[idx], best_cls_pred=best_net_cls_pred[idx])
+
+# Function for printing predicted labels
+def print_labels(labels, idx, num=1):
+	labels = labels[idx, :]
+	labels = labels[0:num, :]
+	labels_rounded = np.round(labels, 2)
+	print(labels_rounded)
+
+def print_labels_ensemble(idx, **kwargs):
+	print_labels(labels=ensemble_pred_labels, idx=idx, **kwargs)
+
+def print_labels_best_net(idx, **kwargs):
+	print_labels(labels=best_net_pred_labels, idx=idx, **kwargs)
+
+def print_labels_all_nets(idx):
+	for i in range(num_networks):
+		print_labels(labels=pred_labels[i, :, :], idx=idx, num=1)
+
+
+plot_images_comparison(idx=ensemble_better)
