@@ -33,7 +33,7 @@ def random_training_set():
 	x_train = combined_images[idx_train, :]
 	y_train = combined_labels[idx_train, :]
 	x_validation = combined_images[idx_validation, :]
-	y_validation = combined_labels[idx_validaiton, :]
+	y_validation = combined_labels[idx_validation, :]
 	return x_train, y_train, x_validation, y_validation
 
 # Data dimensions
