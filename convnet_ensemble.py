@@ -176,3 +176,31 @@ def test_correct():
 # Calculate a boolean array whether the images in the validation set are classified correctly
 def validation_correct():
 	return correct_prediction(images=data.validation.images, labels=data.validation.images, cls_true=data.validation.cls)
+
+def classification_accuracy(correct):
+	return correct.mean()
+
+def test_accuracy():
+	correct = test_correct()
+	return classification_accuracy(correct)
+
+def ensemble_predictions():
+	pred_labels = []
+	test_accuracies = []
+	val_accuracies = []
+	for i in range(num_networks):
+		saver.restore(sess=session, save_path=get_save_path(i))
+		test_acc = test_accuracy()
+		test_accuracies.append(test_acc)
+		val_acc = validation_accuracy()
+		val_accuracies.append(val_acc)
+		msg = "Network: {0}, Accuracy on validation set: {1:.4f}, Test set: {2:.4f}"
+		print(msg.format(i, val_acc, test_acc))
+		pred = predict_labels(images=data.test.images)
+		pred_labels.append(pred)
+
+	return np.array(pred_labels), np.array(test_accuracies), np.array(val_accuracies)
+
+print("Mean test accuracy: {0:.4f}".format(np.mean(test_accuracies)))
+print("Min test accuracy: {0:.4f}".format(np.min(test_accuracies)))
+print("Max test accuracy: {0:.4f}".format(np.max(test_accuracies)))
