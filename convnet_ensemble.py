@@ -132,7 +132,7 @@ def optimize(num_iterations, x_train, y_train):
 
 # Create ensemble of neural networks
 num_networks = 5
-num_iterations = 10
+num_iterations = 1000
 
 # Create the ensemble of neural networks. All netrworks use the same TensorFlow graph as defined above. The variables are all initialized randomly and then optimized. The values of the weights are saved to disk so that they can be reloaded later
 if True:
