@@ -201,6 +201,8 @@ def ensemble_predictions():
 
 	return np.array(pred_labels), np.array(test_accuracies), np.array(val_accuracies)
 
+pred_labels, test_accuracies, val_accuracies = ensemble_predictions()
+
 print("Mean test accuracy: {0:.4f}".format(np.mean(test_accuracies)))
 print("Min test accuracy: {0:.4f}".format(np.min(test_accuracies)))
 print("Max test accuracy: {0:.4f}".format(np.max(test_accuracies)))
