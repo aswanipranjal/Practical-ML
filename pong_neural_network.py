@@ -111,4 +111,29 @@ class Pong:
 		# Starting point
 		self.ball_x_pos = window_height / 2 - ball_width / 2
 
+	def get_present_frame(self):
+		pygame.event.pump()
+		# make background black
+		screen.fill(black)
+		draw_paddle1(self.paddle1_y_pos)
+		draw_paddle2(self.paddle2_y_pos)
+		draw_ball(self.ball_x_pos, self.ball_y_pos)
+		# get pixels
+		image_data = pygame.surfarray.array3d(pygame.display.get_surface())
+		# update the window
+		pygame.display.flip()
+		# return screen data
+		return image_data
+
+	def get_next_frame(self, action):
+		pygame.event.pump()
+		screen.fill(black)
+		self.paddle1_y_pos = update_paddle1(action, self.paddle1_y_pos)
+		draw_paddle1(self.paddle1_y_pos)
+		self.paddle2_y_pos = update_paddle2(self.paddle2_y_pos, self.ball_y_pos)
+		draw_ball(self.ball_x_pos, self.ball_y_pos)
+		image_data = pygame.surfarray.array3d(pygame.display.get_surface())
+		pygame.display.flip()
+		self.tally = self.tally + score
+		return [score, image_data]
 		
