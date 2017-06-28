@@ -40,3 +40,24 @@ def draw_paddle1(paddle1_y_pos):
 def draw_paddle2(paddle2_y_pos):
 	paddle2 = pygame.rect(window_width - paddle_buffer - paddle_width, paddle2_y_pos, paddle_width, paddle_height)
 	pygame.draw.rect(screen, white, paddle2)
+
+def update_ball(paddle1_y_pos, paddle2_y_pos, ball_x_pos, ball_y_pos, ball_x_direction, ball_y_direction):
+	# Update x and y positions
+	ball_x_pos = ball_x_pos + ball_x_direction * ball_x_speed
+	ball_y_pos = ball_y_pos + ball_y_direction * ball_y_speed
+	score = 0
+
+	# Check for collision
+	if (ball_x_pos <= paddle_buffer + paddle_width and ball_y_pos + ball_height >= paddle1_y_pos and ball_y_pos - ball_height <= paddle1_y_pos + paddle_height):
+		ball_x_direction = 1
+	elif (ball_x_pos <= 0):
+		ball_x_direction = 1 # -1 ?
+		score = -1 
+		return [score, paddle1_y_pos, paddle2_y_pos, ball_x_pos, ball_y_pos, ball_x_direction, ball_y_direction]
+	if (ball_x_pos >= window_width - paddle_width - paddle_buffer and ball_y_pos + ball_height >= paddle2_y_pos and ball_y_pos - ball_height <= paddle2_y_pos + paddle_height):
+		ball_x_direction = -1
+	elif(ball_x_pos >= window_width - ball_width):
+		ball_x_direction = -1
+		score = 1
+		return [score, paddle1_y_pos, paddle2_y_pos, ball_x_pos, ball_y_pos, ball_x_direction, ball_y_direction]
+
