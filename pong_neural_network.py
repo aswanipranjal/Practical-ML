@@ -67,3 +67,17 @@ def update_ball(paddle1_y_pos, paddle2_y_pos, ball_x_pos, ball_y_pos, ball_x_dir
 		ball_y_pos = window_height - ball_height
 		ball_y_direction = -1
 		return [score, paddle1_y_pos, paddle2_y_pos, ball_x_pos, ball_y_pos, ball_x_direction, ball_y_direction]
+
+def update_paddle1(action, paddle1_y_pos):
+	# if move up
+	if(action[1] == 1):
+		paddle1_y_pos = paddle1_y_pos - paddle_speed
+	# if move down
+	if(action[2] == 1):
+		paddle1_y_pos = paddle1_y_pos + paddle_speed
+	# dont let it move off the screen
+	if(paddle1_y_pos < 0):
+		paddle1_y_pos = 0
+	if(paddle1_y_pos > window_height - paddle_height):
+		paddle1_y_pos = window_height - paddle_height
+	return paddle1_y_pos
