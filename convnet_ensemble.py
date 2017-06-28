@@ -204,3 +204,23 @@ def ensemble_predictions():
 print("Mean test accuracy: {0:.4f}".format(np.mean(test_accuracies)))
 print("Min test accuracy: {0:.4f}".format(np.min(test_accuracies)))
 print("Max test accuracy: {0:.4f}".format(np.max(test_accuracies)))
+ensemble_pred_labels = np.mean(pred_labels, axis=0)
+print(ensemble_pred_labels.shape)
+ensemble_correct = (ensemble_cls_pred == data.test.cls)
+ensemble_incorrect = np.logical_not(ensemble_correct)
+
+# Best neural network
+# We now find the single neural network that performed best on the test set
+best_net = np.argmax(test_accuracies)
+test_accuracies[best_net]
+best_net_pred_labels = pred_labels[best_net, :, :]
+best_net_cls_pred = np.argmax(best_net_pred_labels, axis=1)
+best_net_correct = (best_net_cls_pred == data.test.cls)
+best_net_incorrect = np.logical_not(best_net_correct)
+
+# Comparison of best net vs the best single network
+np.sum(ensemble_correct)
+np.sum(best_net_correct)
+ensemble_better = np.logical_and(best_net_incorrect, ensemble_correct)
+ensemble_better.sum()
+best_net_better.sum()
