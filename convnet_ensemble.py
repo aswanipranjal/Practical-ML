@@ -82,7 +82,50 @@ y_true = tf.placeholder(tf.float32, shape=[None, 10], name='y_true')
 y_true_cls = tf.argmax(y_true, dimension=1)
 
 # PrettyTensor might not work with this data yet. Use tensorflow convolutional neural network primitives instead
+# PrettyTensor gives predictions through the convolutional neural network it has built and also a loss measure that must be minimized
 x_pretty = pt.wrap(x_image)
 with pt.defaults_scope(activation_fn=tf.nn.relu):
 	y_pred, loss = x_pretty.conv2d(kernel=5, depth=16, name='layer_conv1').max_pool(kernel=2, stride=2).conv2d(kernel=5, depth=36, name='layer_conv2').max_pool(kernel=2, stride=2).flatten().fully_connected(size=128, name='layer_fc1').softmax_classifier(num_classes=num_classes, labels=y_true)
+
+# Optimization method
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss)
+y_pred_cls = tf.argmax(y_pred, dimension=1)
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+saver = tf.train.Saver(max_to_keep=100)
+save_dir = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_ensemble_checkpoints\\'
+if not os.path.exists(save_dir):
+	print("Save filepath does not exist")
+
+def get_save_path(net_number):
+	return save_dir + 'network' + str(net_number)
+
+# TensorFlow session
+session = tf.Session()
+def init_variables():
+	session.run(tf.gloabal_variables_initializer)
+
+train_batch_size = 64
+# Function for selectign a random training-set from the given training set size
+def random_batch(x_train, y_train):
+	num_images = len(x_train)
+	idx = np.random.choice(num_images, size=train_batch_size, replace=False)
+	x_batch = x_train[idx, :]
+	y_batch = y_train[idx, :]
+	return x_batch, y_batch
+
+# Helper function to perform optimization iterations
+def optimize(num_iterations, x_train, y_train):
+	start_time = time.time()
+	for i in range(num_iterations):
+		x_batch, y_true_batch = random_batch(x_train, y_train)
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
+		session.run(optimizer, feed_dict=feed_dict_train)
+		if i % 100 == 0:
+			acc = session.run(accuracy, feed_dict=feed_dict_train)
+			msg = "Optimization iteration: {0:>6}, Training batch accuracy: {1:>6.1%}"
+			print(msg.format(i + 1, acc))
+	end_time = time.time()
+	time_diff = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_diff)))))
 	
