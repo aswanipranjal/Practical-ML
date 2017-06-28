@@ -70,3 +70,19 @@ def plot_images(images, cls_true, ensemble_cls_pred=None, best_cls_pred=None):
 		ax.set_yticks([])
 
 	plt.show()
+
+images = data.test.images[0:9]
+cls_true = data.test.cls[0:9]
+plot_images(images=images, cls_true=cls_true)
+
+# TensorFLow graph
+x = tf.placeholder(tf.float32, shape=[None, img_size_flat], name='x')
+x_image = tf.placeholder(x, [-1, img_size, img_size, num_channels])
+y_true = tf.placeholder(tf.float32, shape=[None, 10], name='y_true')
+y_true_cls = tf.argmax(y_true, dimension=1)
+
+# PrettyTensor might not work with this data yet. Use tensorflow convolutional neural network primitives instead
+x_pretty = pt.wrap(x_image)
+with pt.defaults_scope(activation_fn=tf.nn.relu):
+	y_pred, loss = x_pretty.conv2d(kernel=5, depth=16, name='layer_conv1').max_pool(kernel=2, stride=2).conv2d(kernel=5, depth=36, name='layer_conv2').max_pool(kernel=2, stride=2).flatten().fully_connected(size=128, name='layer_fc1').softmax_classifier(num_classes=num_classes, labels=y_true)
+	
