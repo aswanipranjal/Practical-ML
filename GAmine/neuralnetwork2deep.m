@@ -32,7 +32,7 @@ num_labels = 12;
 fprintf('Loading datasets\n');
 load('data_150.mat');
 X = X(:, 2:end);
-% size(X)
+% size(X) 
 load('converted_fitness_150.mat');
 m = size(X, 1);
 fprintf('Datasets loaded\n');
