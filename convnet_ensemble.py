@@ -132,10 +132,10 @@ def optimize(num_iterations, x_train, y_train):
 
 # Create ensemble of neural networks
 num_networks = 5
-num_iterations = 1000
+num_iterations = 500
 
 # Create the ensemble of neural networks. All netrworks use the same TensorFlow graph as defined above. The variables are all initialized randomly and then optimized. The values of the weights are saved to disk so that they can be reloaded later
-if True:
+if False:
 	for i in range(num_networks):
 		print("Neural network: {0}".format(i))
 		x_train, y_train, _, _ = random_training_set()
@@ -254,5 +254,7 @@ def print_labels_all_nets(idx):
 	for i in range(num_networks):
 		print_labels(labels=pred_labels[i, :, :], idx=idx, num=1)
 
-
+# Images where the best network fucked up but the ensemble got its back
 plot_images_comparison(idx=ensemble_better)
+# Images where the ensemble sucked bad but the best network didn't
+plot_images_comparison(idx=best_net_better)
