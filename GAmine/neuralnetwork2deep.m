@@ -105,3 +105,4 @@ accuracy = (test_cases - sum(booldiff))/test_cases*100;
 disp(afm);
 fprintf('Accuracy: %f\n', accuracy);
 % 69% accuracy at threshold < 7000 and 98% accuracy at threshold < 10000
+% With reduced dataset, accuracy was 43% at threshold < 7000
