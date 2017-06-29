@@ -23,7 +23,7 @@
 
 % Initialization
 clear; close all; clc
-input_layer_size = 18;
+input_layer_size = 14;
 hidden_1_layer_size = 50;
 hidden_2_layer_size = 50;
 num_labels = 12;
@@ -40,7 +40,7 @@ fprintf('Press any key to continue\n');
 pause;
 
 % Loading parameters
-load('preTheta1_50x19.mat');
+load('preTheta1_50x15.mat');
 load('preTheta2_50x51.mat');
 load('preTheta3_12x51.mat');
 % nn_params now has three matrices
