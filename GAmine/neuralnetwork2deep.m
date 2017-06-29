@@ -33,7 +33,7 @@ fprintf('Loading datasets\n');
 load('data_150.mat');
 X = X(:, 2:end);
 % size(X) 
-load('converted_fitness_150.mat');
+load('converted_fitness_240.mat');
 m = size(X, 1);
 fprintf('Datasets loaded\n');
 fprintf('Press any key to continue\n');
