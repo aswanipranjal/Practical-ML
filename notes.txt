@@ -852,3 +852,17 @@ Randomly initialize K cluster centroids
 repeat {
 	
 }
+
+// Completely unrelated
+To train the neural network to predict track time, the vairables that absolutely don't matter are:
+sense()
+sensorLength
+sensorSkewAngle
+avoidMultiplier parameter
+
+Try a version without considering braking conditions
+Therefore, remove these variables too
+maxBrakingTorque
+4Wheelbrake
+brakingconditions1
+brakingconditions2
