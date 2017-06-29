@@ -89,6 +89,9 @@ pause;
 
 fprintf('Predicting a value: \n');
 x_test = load('data.txt');
+% The next step is not required if the complete test set data is required
+% Here we omit the columns that contain data bout sensors, avoid multipliers, etc
+x_test = [x_test(:, 1:7) x_test(:, 10:13) x_test(:, 15:16) x_test(:, 18:end)];
 x_test = x_test(:, 2:end);
 y_test = load('fitness.txt');
 y_test = y_test(:, 2);
