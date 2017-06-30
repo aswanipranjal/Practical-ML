@@ -4,7 +4,7 @@ from collections import Counter
 from random import shuffle
 import cv2
 
-train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data_first_try.npy')
+train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data.npy')
 
 for data in train_data:
 	img = data[0]
