@@ -67,3 +67,8 @@ images = images_test[0:9]
 cls_true = cls_test[0:9]
 plot_images(images=images, cls_true=cls_true, smooth=False)
 plot_images(images=images, cls_true=cls_true, smooth=True)
+
+# Define TensorFlow graph
+x = tf.placeholder(tf.float32, shape=[None, img_size, img_size, num_channels], name='x')
+y_true = tf.placeholder(tf.float32, shape=[None, num_channels], name='y_true')
+y_true_cls = tf.argmax(y_true, dimension=1)
