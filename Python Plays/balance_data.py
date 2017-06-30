@@ -5,7 +5,7 @@ from random import shuffle
 import cv2
 
 train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data.npy')
-
+print(len(train_data))
 # Loop to show training data
 # for data in train_data:
 # 	img = data[0]
@@ -40,3 +40,13 @@ for data in train_data:
 		rights.append([img, choice])
 	else:
 		print("No matches!")
+
+# To make sure they are all of the same length
+forwards = forwards[:len(lefts)][:len(rights)]
+lefts = lefts[:len(forwards)]
+rights = rights[:len(forwards)]
+
+final_data = forwards + lefts + rights
+shuffle(final_data)
+print(len(final_data))
+np.save('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data_v2.npy')
