@@ -4,7 +4,7 @@ from collections import Counter
 from random import shuffle
 import cv2
 
-train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data.npy')
+train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\final_training_data.npy')
 print(len(train_data))
 # Loop to show training data
 # for data in train_data:

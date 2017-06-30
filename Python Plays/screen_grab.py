@@ -8,14 +8,16 @@ import os
 from get_keys import key_check
 
 def keys_to_output(keys):
-	# [A, W, D]
-	output = [0, 0, 0]
+	# [A, W, D, S] clockwise
+	output = [0, 0, 0, 0]
 	if 'A' in keys:
 		output[0] = 1
 	elif 'D' in keys:
 		output[2] = 1
-	else:
+	elif 'W' in keys:
 		output[1] = 1
+	else:
+		output[3] = 1
 	return output
 
 # def draw_lines(image, lines):
@@ -50,7 +52,7 @@ def keys_to_output(keys):
 # 	print(i+1)
 # 	time.sleep(1)
 
-file_name = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data.npy'
+file_name = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\final_training_data.npy'
 if os.path.isfile(file_name):
 	print('File exists, loading previous data')
 	training_data = list(np.load(file_name))
@@ -88,7 +90,7 @@ def main():
 		keys = key_check()
 		output = keys_to_output(keys)
 		training_data.append([screen, output])
-		print('Frame took {} seconds'.format(time.time() - last_time))
+		# print('Frame took {} seconds'.format(time.time() - last_time))
 		last_time = time.time()
 		if len(training_data) % 500 == 0:
 			print(len(training_data))
