@@ -52,7 +52,7 @@ def keys_to_output(keys):
 # 	print(i+1)
 # 	time.sleep(1)
 
-file_name = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\final_training_data.npy'
+file_name = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data.npy'
 if os.path.isfile(file_name):
 	print('File exists, loading previous data')
 	training_data = list(np.load(file_name))
