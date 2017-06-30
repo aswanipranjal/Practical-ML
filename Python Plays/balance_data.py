@@ -49,4 +49,4 @@ rights = rights[:len(forwards)]
 final_data = forwards + lefts + rights
 shuffle(final_data)
 print(len(final_data))
-np.save('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data_v2.npy')
+np.save('C:\\Users\\aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\training_data_v2.npy', final_data)
