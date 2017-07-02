@@ -16,4 +16,7 @@ def convolutional_neural_network(data):
 			   'w_fc': tf.Variable(tf.random_normal([7*7*64, 1024])),
 			   'out': tf.Variable(tf.random_normal([1024, n_classes]))}
 
-	
+	biases = {'b_conv1': tf.Variable(tf.random_normal([32])),
+			   'b_conv2': tf.Variable(tf.random_normal([64])),
+			   'b_fc': tf.Variable(tf.random_normal([1024])),
+			   'out': tf.Variable(tf.random_normal([n_classes]))}
