@@ -22,3 +22,7 @@ test_x = np.array([i[0] for i in test]).reshape(-1, width, height, 1)
 test_y = [i[1] for i in test]
 
 model.fit({'input': X}, {'targets': Y}, n_epochs=epochs, validation_set=({'input': test_x}, {'targets': test_y}), snapshot_step=500, show_metric=True, run_id=model_name)
+
+# tensorboard --logdir=foo:C:/Users/Aman Deep Singh/Documents/Python/Practical ML/Python Plays/log
+
+model.save(model_name)
