@@ -6,7 +6,7 @@ from tflearn.layers.estimator import regression
 
 # Alexnet with reduced sizes of fully connected layers
 # Network architecture: input -> conv -> max_pool -> conv -> max_pool -> conv -> conv -> conv -> max_pool -> fc -> fc -> fc(softmax) -> output
-def convnet1(width, height, lr, output=3):
+def convnet1(width, height, lr, output=4):
 	network = input_data(shape=[None, width, height, 1], name='input')
 	network = conv_2d(network, 96, 11, strides=4, activation='relu')
 	network = max_pool_2d(network, 3, strides=2)
