@@ -23,6 +23,6 @@ test_y = [i[1] for i in test]
 
 model.fit({'input': X}, {'targets': Y}, n_epoch=epochs, validation_set=({'input': test_x}, {'targets': test_y}), snapshot_step=500, show_metric=True, run_id=model_name)
 
-# tensorboard --logdir=foo:C:/Users/Aman Deep Singh/Documents/Python/Practical ML/Python Plays/log
+# tensorboard --logdir=foo:C:/Users/Aman Deep Singh/Anaconda3/log
 
 model.save(model_name)
