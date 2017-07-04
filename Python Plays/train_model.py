@@ -1,15 +1,16 @@
 # train_model.py
 
 import numpy as np
-from convnets import convnet1
+from convnets import convnet1, convnet2
 
 width = 80
 height = 60
 lr = 1e-3
-epochs = 8
-model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.01', epochs)
+epochs = 3
+# model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.01', epochs)
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'testnetv0.01', epochs)
 
-model = convnet1(width, height, lr)
+model = convnet2(width, height, lr)
 
 train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data.npy')
 train = train_data[:-500]
