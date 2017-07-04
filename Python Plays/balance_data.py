@@ -53,4 +53,4 @@ backwards = backwards[:len(forwards)]
 final_data = forwards + lefts + rights + backwards
 shuffle(final_data)
 print(len(final_data))
-np.save('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\final_training_data_v2.npy', final_data)
+np.save('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data_v2.npy', final_data)
