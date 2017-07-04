@@ -51,4 +51,18 @@ def convnet3(width, height, lr, output=4):
 	network = conv_2d(network, 96, 11, strides=4, activation='relu')
 	network = max_pool_2d(network, 3, strides=2)
 	network = local_response_normalization(network)
-	network = conv_2d()
+	network = conv_2d(network, 128, 5, activation='relu')
+	network = max_pool_2d(network, 3, strides=2)
+	# Tertiary convolutional layers
+	network = conv_2d(network, 384, 3, activation='relu')
+	network = max_pool_2d(network, 3, strides=2)
+	network = local_response_normalization(network)
+	# Fully connected layers
+	network = fully_connected(network, 256, activation='tanh')
+	# Not using dropout yet as it might deactivate necessary neurons. And the convolutional layers are pretty small and the neural network is not deep enough
+	network = fully_connected(network, output, activation='softmax')
+	network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=lr, name='tagrets')
+	model = tflearn.DNN(network, checkpoint_path='C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\Checkpoints\\convnets_convnet3', max_checkpoints=1, tensorboard_verbose=2, tensorboard_dir='log')
+	return model
+
+# TODO: Try using a smaller image, eg 25% of the original
