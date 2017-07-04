@@ -9,6 +9,10 @@ from datetime import timedelta
 import math
 import os
 import prettytensor as pt
+import tflearn
+from tflearn.nn.core import input_data, regression, local_response_normalization
+from tflearn.nn.conv import conv_2d, max_pool_2d 
+from tflearn.layers.conv import fully_connected
 
 print("TensorFlow version: {}".format(tf.__version__))
 print("PrettyTensor version: {}".format(pt.__version__))
@@ -72,3 +76,10 @@ plot_images(images=images, cls_true=cls_true, smooth=True)
 x = tf.placeholder(tf.float32, shape=[None, img_size, img_size, num_channels], name='x')
 y_true = tf.placeholder(tf.float32, shape=[None, num_channels], name='y_true')
 y_true_cls = tf.argmax(y_true, dimension=1)
+
+# Preprocessing the image for feeding into the convolutional neural network
+def process_image(image, training):
+	if training:
+		image = tf.random_crop(image, size=[img_size_cropped, img_size_cropped, num_channels])
+		image = tf.image.random_flip_left_right(image)
+		image = tf.image.random_hue()
