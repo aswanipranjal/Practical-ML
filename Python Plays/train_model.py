@@ -6,7 +6,7 @@ from convnets import convnet1, convnet2
 width = 80
 height = 60
 lr = 1e-3
-epochs = 3
+epochs = 6
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.01', epochs)
 model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'testnetv0.01', epochs)
 
@@ -24,6 +24,6 @@ test_y = [i[1] for i in test]
 
 model.fit({'input': X}, {'targets': Y}, n_epoch=epochs, validation_set=({'input': test_x}, {'targets': test_y}), snapshot_step=500, show_metric=True, run_id=model_name)
 
-# tensorboard --logdir=foo:C:/Users/Aman Deep Singh/Anaconda3/log
+# tensorboard --logdir=foo:"C:/Users/Aman Deep Singh/Anaconda3/log"
 
 model.save(model_name)
