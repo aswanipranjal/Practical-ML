@@ -154,3 +154,14 @@ def get_weights_variable(layer_name):
 
 weights_conv1 = get_weights_variable(layer_name='layer_conv1')
 weights_conv2 = get_weights_variable(layer_name='layer_conv2')
+
+# getting the layer outputs
+def get_layer_output(layer_name):
+	# this assumes you are using ReLU as the activation function
+	tensor_name = "network/" + layer_name + "/Relu:0"
+	# Get the tensor with this name
+	tensor = tf.get_default_graph().get_tensor_by_name(tensor_name)
+	return tensor
+
+output_conv1 = get_layer_output(layer_name='layer_conv1')
+output_conv2 = get_layer_output(layer_name='layer_conv2')
