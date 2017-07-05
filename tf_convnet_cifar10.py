@@ -165,3 +165,23 @@ def get_layer_output(layer_name):
 
 output_conv1 = get_layer_output(layer_name='layer_conv1')
 output_conv2 = get_layer_output(layer_name='layer_conv2')
+
+# TensorFlow run
+session = tf.Session()
+
+save_dir = 'C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\convnet_cifar10_checkpoints\\'
+if not os.path.exists(save_dir):
+	print("Checkpoint directory not found. Press Ctrl + C quick because this program doesn\'t handle errors")
+
+save_path = os.path.join(save_dir, 'cifar10_cnn')
+
+# First try to restore the saved checkpoint. This may fail and arise an exception
+try:
+	print("Trying to restore last checkpoint...")
+	last_chk_path = tf.train.latest_checkpoint(checkpoint_dir=save_dir)
+	saver.restore(session, save_path=last_chk_path)
+	print("Restored checkpoint from: ", last_chk_path)
+except:
+	print("Failed to restore checkpoint. Initializing variables instead.")
+	session.run(tf.global_variables_initializer())
+
