@@ -9,10 +9,6 @@ from datetime import timedelta
 import math
 import os
 import prettytensor as pt
-import tflearn
-from tflearn.nn.core import input_data, regression, local_response_normalization
-from tflearn.nn.conv import conv_2d, max_pool_2d 
-from tflearn.layers.conv import fully_connected
 
 print("TensorFlow version: {}".format(tf.__version__))
 print("PrettyTensor version: {}".format(pt.__version__))
@@ -103,3 +99,22 @@ def pre_process(images, training):
 	# Use tensorflow to loop over all the input images and call the function above which takes a single image as input
 	images = tf.map_fn(lambda image: pre_process_image(image, training), images)
 	return images
+
+# In order to plot the distorted images, we create the pre-processsing graph for tensorflow so that we may execute it later
+distorted_images = pre_process(images=x, training=True)
+
+# Helper function for creating main processing
+def main_network(images, training):
+	x_pretty = pt.wrap(images)
+
+	# Pretty tensor uses special numbers to distinguish between the training and the testing phases
+	if training:
+		phase = pt.Phase.train
+	else:
+		phase = pt.Phase.infer
+
+	# Create the convolutional neural network using pretty tansor and batch-normalization in the first layer
+	with pt.defaults_scope(activation_fn=tf.nn.relu, phase=phase):
+		y_pred, loss = x_pretty.conv2d(kernel=5, depth=64, name='layer_conv1', batch_normalize=True).max_pool(kernel=2, stride=2).conv2d(kernel=5, depth=64, name='layer_conv2').max_pool(kernel=2, stride=2).flatten().fully_connected(size=256, name='layer_fc1').fully_connected(size=128, name='layer_fc2').softmax_classifier(num_classes=num_classes, labels=y_true)
+
+	return y_pred, loss			
