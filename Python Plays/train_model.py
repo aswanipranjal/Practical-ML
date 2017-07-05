@@ -8,7 +8,7 @@ height = 60
 lr = 1e-3
 epochs = 6
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.01', epochs)
-model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'testnetv0.01', epochs)
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'testnetv0.02', epochs)
 
 model = convnet2(width, height, lr)
 

@@ -117,4 +117,22 @@ def main_network(images, training):
 	with pt.defaults_scope(activation_fn=tf.nn.relu, phase=phase):
 		y_pred, loss = x_pretty.conv2d(kernel=5, depth=64, name='layer_conv1', batch_normalize=True).max_pool(kernel=2, stride=2).conv2d(kernel=5, depth=64, name='layer_conv2').max_pool(kernel=2, stride=2).flatten().fully_connected(size=256, name='layer_fc1').fully_connected(size=128, name='layer_fc2').softmax_classifier(num_classes=num_classes, labels=y_true)
 
-	return y_pred, loss			
+	return y_pred, loss
+
+# Helper function for creating a neural network instance
+def create_network(training):
+	# wrap the neural network in the scope named 'network'
+	# create new variables during training, and reuse during testing
+	with tf.variable_scope('network', reuse=not training):
+		# Just rename the input placeholder variable for convenience
+		images = x
+		images = pre_process(images=images, training=training)
+		y_pred, loss = main_network(images=images, training=training)
+
+	return y_pred, loss
+
+# Create neural network for training phase
+# trainable=False means thath tensorflow will not try to optimize that variable
+global_step = tf.Variable(initial_value=0, name='global_step', trainable=False)
+_, loss = create_network(training=True)
+optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss, global_step=global_step)
