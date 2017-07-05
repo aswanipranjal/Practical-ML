@@ -233,3 +233,13 @@ def plot_example_errors(cls_pred, correct):
 	cls_pred = cls_pred[incorrect]
 	cls_true = cls_test[incorrect]
 	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
+
+def plot_confusion_matrix(cls_pred):
+	cm = confusion_matrix(y_true=cls_test, y_pred=cls_pred)
+	for i in range(num_classes):
+		# Append class name to ech line
+		class_name = "({}) {}".format(i, class_names[i])
+		print(cm[i, :], class_name)
+
+	class_numbers = ["({0})".format(i) for i in range(num_classes)]
+	print("".join(class_numbers))
