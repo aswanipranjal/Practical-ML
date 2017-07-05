@@ -78,7 +78,7 @@ y_true = tf.placeholder(tf.float32, shape=[None, num_channels], name='y_true')
 y_true_cls = tf.argmax(y_true, dimension=1)
 
 # Preprocessing the image for feeding into the convolutional neural network
-def process_image(image, training):
+def pre_process_image(image, training):
 	if training:
 		# Randomly crop the input image
 		image = tf.random_crop(image, size=[img_size_cropped, img_size_cropped, num_channels])
@@ -98,3 +98,8 @@ def process_image(image, training):
 		image = tf.image.resize_image_with_crop_or_pad(image, target_height=img_size_cropped, target_width=img_size_cropped)
 
 	return image
+
+def pre_process(images, training):
+	# Use tensorflow to loop over all the input images and call the function above which takes a single image as input
+	images = tf.map_fn(lambda image: pre_process_image(image, training), images)
+	return images
