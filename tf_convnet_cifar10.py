@@ -185,3 +185,43 @@ except:
 	print("Failed to restore checkpoint. Initializing variables instead.")
 	session.run(tf.global_variables_initializer())
 
+# Helper function to get a random training batch
+train_batch_size = 64
+
+def random_batch():
+	# Number of images in the trainin set
+	num_images = len(images_train)
+
+	idx = np.random.choice(num_imagesm, size=train_batch_size, replace=False)
+
+	x_batch = images_train[idx, :, :, :]
+	y_batch = labels_train[idx, :]
+
+	return x_batch, y_batch
+
+# Helper function to perform optimization
+def optimize(num_iterations):
+	start_time = time.time()
+
+	for i in range(num_iterations):
+		x_batch, y_true_batch = random_batch()
+		feed_dict_train = {x: x_batch, y_true: y_true_batch}
+		# run the optimizer using this batch of training data.
+		# TensorFlow assigns the variables in feed_dict_train
+		# to the placeholder variables and then runs the optimizer
+		# We also want to retrieve the global_step counter
+		i_global, _ = session.run([global_step, optimizer], feed_dict=feed_dict_train)
+
+		if(i_global % 100 == 0) or (i == num_iterations - 1):
+			batch_acc = session.run(accuracy, feed_dict=feed_dict_train)
+			msg = "Global Step: {0:>6}, Training batch accuracy: {1:>6.1%}"
+			print(msg.format(i_global, batch_acc))
+
+		# Save a checkpoint to disk every 1000 iterations (and last)
+		if(i_global % 1000 == 0) or (i == num_iterations - 1):
+			saver.save(session, save_path=save_path, global_step=global_step)
+			print("Saved checkpoint.")
+
+	end_time = time.time()
+	time_dif = end_time - start_time
+	print("Time usage: " + str(timedelta(seconds=int(round(time_dif)))))
