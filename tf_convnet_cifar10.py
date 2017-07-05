@@ -192,7 +192,7 @@ def random_batch():
 	# Number of images in the trainin set
 	num_images = len(images_train)
 
-	idx = np.random.choice(num_imagesm, size=train_batch_size, replace=False)
+	idx = np.random.choice(num_images, size=train_batch_size, replace=False)
 
 	x_batch = images_train[idx, :, :, :]
 	y_batch = labels_train[idx, :]
@@ -234,6 +234,7 @@ def plot_example_errors(cls_pred, correct):
 	cls_true = cls_test[incorrect]
 	plot_images(images=images[0:9], cls_true=cls_true[0:9], cls_pred=cls_pred[0:9])
 
+# Helper function for plotting the confusion matrix
 def plot_confusion_matrix(cls_pred):
 	cm = confusion_matrix(y_true=cls_test, y_pred=cls_pred)
 	for i in range(num_classes):
@@ -243,3 +244,20 @@ def plot_confusion_matrix(cls_pred):
 
 	class_numbers = ["({0})".format(i) for i in range(num_classes)]
 	print("".join(class_numbers))
+
+# Helper function for calculating classifications
+batch_size = 256
+def predict_cls(images, labels, cls_true):
+	num_images = len(images)
+	cls_pred = np.zeros(shape=num_images, dtype=np.int)
+	i = 0
+	while i < num_images:
+		# The ending index of the next batch is denoted with j
+		j = min(i + batch_size, num_images)
+		feed_dict = {x:images[i:j, :], y_true: labels[i:j, :]}
+		# Calculate the predicted class
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+
+	correct = (cls_true == cls_pred)
+	return correct, cls_pred
