@@ -136,3 +136,21 @@ def create_network(training):
 global_step = tf.Variable(initial_value=0, name='global_step', trainable=False)
 _, loss = create_network(training=True)
 optimizer = tf.train.AdamOptimizer(learning_rate=1e-4).minimize(loss, global_step=global_step)
+
+# Create neural network for test phase/inference
+y_pred, _ = create_network(training=False)
+y_pred_cls = tf.argmax(y_pred, dimension=1)
+correct_prediction = tf.equal(y_pred_cls, y_true_cls)
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# define saver object
+saver = tf.train.Saver()
+
+# Get weights to plot (as they were indirectly created by prettytensor)
+def get_weights_variable(layer_name):
+	with tf.variable_scope("network/" + layer_name, reuse=True):
+		variable = tf.get_variable('weights')
+	return variable
+
+weights_conv1 = get_weights_variable(layer_name='layer_conv1')
+weights_conv2 = get_weights_variable(layer_name='layer_conv2')
