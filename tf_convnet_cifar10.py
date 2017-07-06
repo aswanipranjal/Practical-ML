@@ -350,3 +350,28 @@ def get_test_image(i):
 # Get an image and its true class from the test-set
 img, cls = get_test_image(16)
 plot_distorted_image(img, cls)
+
+# Perform optimization
+if False:
+	optimize(num_iterations=1000)
+
+print_test_accuracy(show_example_errors=True, show_confusion_matrix=True)
+plot_conv_weights(weights=weights_conv1, input_channel=0)
+plot_conv_weights(weights=weights_conv2, input_channel=1)
+
+# Helper function for plotting the output of a convolutional layer
+def plot_image(image):
+	fig, axes = plt.subplots(1, 2)
+	ax0 = axes.flat[0]
+	ax1 = axes.flat[1]
+
+	ax0.imshow(image, interpolation='nearest')
+	ax1.imshow(image, interpolation='spline16')
+	# Set labels
+	ax0.set_xlabel('Raw')
+	ax1.set_xlabel('Smooth')
+	plt.show()
+
+# Plot an image from the test-set. The raw pixelated image is used as input to the neural network
+img, cls = get_test_image(16)
+plot_image(img)
