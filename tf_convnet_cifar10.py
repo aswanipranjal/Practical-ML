@@ -287,7 +287,7 @@ def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
 		plot_confusion_matrix(cls_pred=cls_pred)
 
 # Helper function for plotting convolutional weights
-def plot_conv_weights(weights, input_channel=0)
+def plot_conv_weights(weights, input_channel=0):
 	# Retrieve the values of the weight-variables from TensorFlow.
 	# A feed-dict is not necessary because nothing is calculated yet
 	w = session.run(weights)
