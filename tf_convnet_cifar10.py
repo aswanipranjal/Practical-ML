@@ -312,3 +312,26 @@ def plot_conv_weights(weights, input_channel=0)
 		ax.set_yticks([])
 
 	plt.show()
+
+# Helper function for plotting the output of covolutional layers
+def plot_layer_output(layer_output, image):
+	# Assume layer input is a 4-dimensional tensor
+	# Create a feed-dict which holds the one single input image
+	# Tensorflow needs a list of images, so we just create a list with this one image
+	feed_dict = {x: [image]}
+	values = session.run(layer_output, feed_dict=feed_dict)
+
+	values_min = np.min(values)
+	values_max = np.max(values)
+
+	num_images = values.shape[3]
+	num_grids = math.ceil(math.sqrt(num_images))
+	fig, axes = plt.subplots(num_grids, num_grids)
+	for i, ax in enumerate(axes.flat):
+		if i < num_images:
+			img = values[0, :, :, i]
+			ax.imshow(img, vmin=values_min, vmax=values_max, interpolation='nearest', cmap='binary')
+
+		ax.set_xticks([])
+		ax.set_yticks([])
+	plt.show()
