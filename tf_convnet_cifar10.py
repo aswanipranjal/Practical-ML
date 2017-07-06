@@ -261,3 +261,28 @@ def predict_cls(images, labels, cls_true):
 
 	correct = (cls_true == cls_pred)
 	return correct, cls_pred
+
+def predict_cls_test():
+	return predict_cls(images=images_test, labels=labels_test, cls_true=cls_test)
+
+# Helper function to plot classification accuracy of the convolutional neural network
+def classification_accuracy(correct):
+	return correct.mean(), correct.sum()
+
+def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
+	# For all images in the test-set, calculate the predicted classes and whether they are correct
+	correct, cls_pred = predict_cls_test()
+	acc, num_correct = classification_accuracy(correct)
+	num_images = len(correct)
+
+	msg = "Accuracy on test-set: {0:.1%} ({1}/{2})"
+	print(msg.format(acc, num_correct, num_images))
+
+	if show_example_errors:
+		print("Example errors: ")
+		plot_example_errors(cls_pred=cls_pred, correct=correct)
+
+	if show_confusion_matrix:
+		print("Confusion matrix: ")
+		plot_confusion_matrix(cls_pred=cls_pred)
+	
