@@ -375,3 +375,12 @@ def plot_image(image):
 # Plot an image from the test-set. The raw pixelated image is used as input to the neural network
 img, cls = get_test_image(16)
 plot_image(img)
+plot_layer_output(output_conv1, image=img)
+plot_layer_output(output_conv2, image=img)
+
+# Get the predicted class-label and the class-number for this image
+label_pred, cls_pred = session.run([y_pred, y_pred_cls], feed_dict={x: [img]})
+# Set the rounding options for numpy
+np.set_printoptions(precision=3, suppress=True)
+print(label_pred[0])
+session.close()
