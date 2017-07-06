@@ -285,4 +285,30 @@ def print_test_accuracy(show_example_errors=False, show_confusion_matrix=False):
 	if show_confusion_matrix:
 		print("Confusion matrix: ")
 		plot_confusion_matrix(cls_pred=cls_pred)
-	
+
+# Helper function for plotting convolutional weights
+def plot_conv_weights(weights, input_channel=0)
+	# Retrieve the values of the weight-variables from TensorFlow.
+	# A feed-dict is not necessary because nothing is calculated yet
+	w = session.run(weights)
+	print("Min: {0:.5f}, Max: {1:.5f}".format(w.min(), w.max()))
+	print("Mean: {0:.5f}, Stdev: {1:.5f}".format(w.mean(), w.std()))
+
+	w_min = np.min(w)
+	w_max = np.max(w)
+	abs_max = max(abs(w_min), abs(w_max))
+
+	num_filters = w.shape[3]
+	num_grids = math.ceil(math.sqrt(num_filters))
+	fig, axes = plt.subplots(num_grids, num_grids)
+
+	for i, ax in enumerate(axes.flat):
+		if i < num_filters:
+			img = w[:, :, input_channel, i]
+			ax.imshow(img, vmin=-abs_max, vmax=abs_max, interpolation='nearest', cmap='seismic')
+
+		# Remove ticks from the plot
+		ax.set_xticks([])
+		ax.set_yticks([])
+
+	plt.show()

@@ -383,7 +383,7 @@ def plot_image(image):
 	plt.imshow(image.reshape(img_shape), interpolation='nearest', cmap='binary')
 	plt.show()
 
-optimize(num_iterations=1729)
+optimize(num_iterations=8000)
 print_test_accuracy(True, True)
 # 98.8% accuracy on test set with 10000 iterations
 # 95.2% accuracy on test set with 1729 iterations
