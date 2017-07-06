@@ -335,3 +335,18 @@ def plot_layer_output(layer_output, image):
 		ax.set_xticks([])
 		ax.set_yticks([])
 	plt.show()
+
+# Examples of distorted images
+def plot_distorted_image(image, cls_true):
+	image_duplicates = np.repeat(image[np.newaxis, :, :, :], 9, axis=0)
+	# Create a feed-dict for tensorflow
+	feed_dict = {x: image_duplicates}
+	result = session.run(distorted_images, feed_dict=feed_dict)
+	plot_images(images=result, cls_true=np.repeat(cls_true, 9))
+
+def get_test_image(i):
+	return images_test[i, :, :, :], cls_test[i]
+
+# Get an image and its true class from the test-set
+img, cls = get_test_image(16)
+plot_distorted_image(img, cls)
