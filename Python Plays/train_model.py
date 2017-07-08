@@ -7,8 +7,9 @@ width = 80
 height = 60
 lr = 1e-3
 epochs = 7
-# model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.01', epochs)
-model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
+# Removing dropouts
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.02', epochs)
+# model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
 
 model = convnet3(width, height, lr)
 

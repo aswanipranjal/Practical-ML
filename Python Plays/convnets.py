@@ -24,9 +24,9 @@ def convnet1(width, height, lr, output=4):
 	network = local_response_normalization(network)
 	# Fully connected layers
 	network = fully_connected(network, 256, activation='tanh')
-	network = dropout(network, 0.5)
+	# network = dropout(network, 0.5)
 	network = fully_connected(network, 256, activation='tanh')
-	network = dropout(network, 0.5)
+	# network = dropout(network, 0.5)
 	network = fully_connected(network, output, activation='softmax')
 	network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=lr, name='targets')
 	model = tflearn.DNN(network, checkpoint_path='C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\Checkpoints\\convnets_convnet1', max_checkpoints=1, tensorboard_verbose=2, tensorboard_dir='log')
