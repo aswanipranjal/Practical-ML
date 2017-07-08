@@ -12,7 +12,7 @@ model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'testnetv0.02', epo
 
 model = convnet2(width, height, lr)
 
-train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data.npy')
+train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data_v2.npy')
 train = train_data[:-500]
 test = train_data[-500:]
 
