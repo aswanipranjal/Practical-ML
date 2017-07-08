@@ -61,7 +61,7 @@ def convnet3(width, height, lr, output=4):
 	network = fully_connected(network, 256, activation='tanh')
 	# Not using dropout yet as it might deactivate necessary neurons. And the convolutional layers are pretty small and the neural network is not deep enough
 	network = fully_connected(network, output, activation='softmax')
-	network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=lr, name='tagrets')
+	network = regression(network, optimizer='momentum', loss='categorical_crossentropy', learning_rate=lr, name='targets')
 	model = tflearn.DNN(network, checkpoint_path='C:\\Users\\Aman Deep Singh\\Documents\\Python\\Practical ML\\Python Plays\\Checkpoints\\convnets_convnet3', max_checkpoints=1, tensorboard_verbose=2, tensorboard_dir='log')
 	return model
 
