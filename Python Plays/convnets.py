@@ -71,8 +71,9 @@ def convnet4(width, height, lr, output=4):
 	network = conv_2d(network, 96, 11, strides=4, activation='relu')
 	network = max_pool_2d(network, 3, strides=2)
 	network = local_response_normalization(network)
-	network = conv_2d(network, 128, 5, activation='relu')
+	network = conv_2d(network, 256, 5, activation='relu')
 	network = max_pool_2d(network, 3, strides=2)
+	network = local_response_normalization(network)
 	# Tertiary convolutional layers
 	network = conv_2d(network, 384, 3, activation='relu')
 	network = conv_2d(network, 384, 3, activation='relu')
