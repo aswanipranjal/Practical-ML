@@ -11,7 +11,7 @@ epochs = 7
 model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.02', epochs)
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
 
-model = convnet3(width, height, lr)
+model = convnet1(width, height, lr)
 
 train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data_v2.npy')
 train = train_data[:-500]
