@@ -396,7 +396,7 @@ OVR type, where y can take a small number of discrete values
 Train three classifiers simultaneously and output the value of the classifier that was the most confident. If we have k classes, we have to train k classifiers
 Q: Suppose you have the following training set, and fit a logistic regression classifier 
 Which of the following are true? Check all that apply.
-Hint: the one that says J(theta) will be greater when the features are combined (x1x2, x2x3, x2x1^2, etc) is wrong
+Hint: the one that says J(theta) will be greater when the features are combined (x1x2, x2x3, x2x1^2, etc) is wrong (Thanks)
 
 THE PROBLEM OF OVERFITTING
 Underfit ~ high bias
