@@ -12,6 +12,7 @@ J = 0;
 grad = zeros(size(theta));
 
 % ====================== YOUR CODE HERE ======================
+% done twice
 % Instructions: Compute the cost of a particular choice of theta.
 %               You should set J to the cost.
 %               Compute the partial derivatives and set grad to the partial
