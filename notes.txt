@@ -452,6 +452,7 @@ C: Introducing regularization to the model always results in equal or better per
 D: Introducing regularization to the model always results in equal or better performance on examples not in the training set
 A, D is wrong
 only C is also wrong
+only D is also wrong
 
 NEURAL NETWORKS
 a_i^(j) = activation of unit i in layer j
