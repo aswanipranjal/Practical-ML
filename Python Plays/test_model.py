@@ -17,16 +17,28 @@ model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.10', ep
 
 def straight():
 	pyautogui.keyDown('w')
+	pyautogui.keyUp('a')
+	pyautogui.keyUp('s')
+	pyautogui.keyUp('d')
 	# I don't know if we want to go straight even when we are turning
 
 def left():
+	pyautogui.keyUp('w')
 	pyautogui.keyDown('a')
+	pyautogui.keyUp('s')
+	pyautogui.keyUp('d')
 
 def right():
+	pyautogui.keyUp('w')
+	pyautogui.keyUp('a')
+	pyautogui.keyUp('s')
 	pyautogui.keyDown('d')
 
 def brake():
+	pyautogui.keyUp('w')
+	pyautogui.keyUp('a')
 	pyautogui.keyDown('s')
+	pyautogui.keyUp('d')
 
 def main():
 	for i in list(range(4))[::-1]:
