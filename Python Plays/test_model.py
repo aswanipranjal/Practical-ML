@@ -1,6 +1,9 @@
 import numpy as np
+import cv2
+import time
 import os
 from screen_grab_faster import grab_screen
+from get_keys import key_check
 
 def main():
 	for i in list(range(4))[::-1]:
@@ -9,12 +12,10 @@ def main():
 	last_time = time.time()
 
 	while True:
+		# get the input for the trained convolutional neural network
 		screen = grab_screen(region=(0, 40, 800, 640))
 		screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
 		screen = cv2.resize(screen, (80, 60))
-		keys = key_check()
-		output = keys_to_output(keys)
-		training_data.append([screen, output])
 		# print('Frame took {} seconds'.format(time.time() - last_time))
 		last_time = time.time()
 
