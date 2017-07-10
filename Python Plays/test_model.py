@@ -49,17 +49,48 @@ def main():
 		time.sleep(1)
 	last_time = time.time()
 
+	paused = False
 	while True:
-		# get the input for the trained convolutional neural network
-		screen = grab_screen(region=(0, 40, 800, 640))
-		screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
-		screen = cv2.resize(screen, (80, 60))
 
-		print('Frame took {} seconds'.format(time.time() - last_time))
-		last_time = time.time()
+		if not paused:
+			# get the input for the trained convolutional neural network
+			screen = grab_screen(region=(0, 40, 800, 640))
+			screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
+			screen = cv2.resize(screen, (80, 60))
 
-		prediction = model.predict([screen.reshape(width, height, 1)])[0]
-		moves = list(np.around(prediction))
-		print(moves, prediction)
-		
+			print('Frame took {} seconds'.format(time.time() - last_time))
+			last_time = time.time()
+
+			prediction = model.predict([screen.reshape(width, height, 1)])[0]
+			moves = list(np.around(prediction))
+			print(moves, prediction)
+
+			if moves == [1, 0, 0, 0]:
+				left()
+
+			elif moves == [0, 1, 0, 0]:
+				straight()
+
+			elif moves == [0, 0, 1, 0]:
+				right()
+
+			elif moves == [0, 0, 0, 1]:
+				brake()
+
+		keys = key_check()
+
+		# using 'T' to pause the game
+		if 'T' in keys:
+			if paused:
+				paused = False
+				time.sleep(1)
+
+			else:
+				paused = True
+				pyautogui.keyUp('a')
+				pyautogui.keyUp('w')
+				pyautogui.keyUp('s')
+				pyautogui.keyUp('d')
+				time.sleep(1)
+				
 main()
