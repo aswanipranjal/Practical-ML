@@ -4,6 +4,14 @@ import time
 import os
 from screen_grab_faster import grab_screen
 from get_keys import key_check
+import pyautogui
+from convnets import convnet4
+
+width = 80
+height = 60
+lr = 1e-3
+epochs = 20
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.10', epochs)
 
 def main():
 	for i in list(range(4))[::-1]:
