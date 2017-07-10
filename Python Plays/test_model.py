@@ -40,6 +40,9 @@ def brake():
 	pyautogui.keyDown('s')
 	pyautogui.keyUp('d')
 
+model = convnet4(width, height, lr)
+model.load(model_name)
+
 def main():
 	for i in list(range(4))[::-1]:
 		print(i+1)
@@ -51,7 +54,12 @@ def main():
 		screen = grab_screen(region=(0, 40, 800, 640))
 		screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
 		screen = cv2.resize(screen, (80, 60))
-		# print('Frame took {} seconds'.format(time.time() - last_time))
+
+		print('Frame took {} seconds'.format(time.time() - last_time))
 		last_time = time.time()
 
+		prediction = model.predict([screen.reshape(width, height, 1)])[0]
+		moves = list(np.around(prediction))
+		print(moves, prediction)
+		
 main()
