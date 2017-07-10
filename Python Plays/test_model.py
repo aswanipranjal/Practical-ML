@@ -7,11 +7,26 @@ from get_keys import key_check
 import pyautogui
 from convnets import convnet4
 
+# use pyautogui.keyDown('_character_') and pyautogui.keyUp('_character_') to press keys
+
 width = 80
 height = 60
 lr = 1e-3
 epochs = 20
 model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.10', epochs)
+
+def straight():
+	pyautogui.keyDown('w')
+	# I don't know if we want to go straight even when we are turning
+
+def left():
+	pyautogui.keyDown('a')
+
+def right():
+	pyautogui.keyDown('d')
+
+def brake():
+	pyautogui.keyDown('s')
 
 def main():
 	for i in list(range(4))[::-1]:
