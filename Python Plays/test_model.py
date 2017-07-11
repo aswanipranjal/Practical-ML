@@ -23,13 +23,13 @@ def straight():
 	# I don't know if we want to go straight even when we are turning
 
 def left():
-	pyautogui.keyUp('w')
+	pyautogui.keyDown('w')
 	pyautogui.keyDown('a')
 	pyautogui.keyUp('s')
 	pyautogui.keyUp('d')
 
 def right():
-	pyautogui.keyUp('w')
+	pyautogui.keyDown('w')
 	pyautogui.keyUp('a')
 	pyautogui.keyUp('s')
 	pyautogui.keyDown('d')
