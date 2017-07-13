@@ -594,7 +594,7 @@ No of input units: dimension of features x
 No of output units: number of classes
 Reasonable default; 1 hidden layer, or if > 1 hidden layer, have same no. hidden units in every layer. Very often having more hidden units is a good thing.
 Training a neural network;
-1. Rnadomly initialize the weights
+1. Randomly initialize the weights
 2. Implement forward propagation to get h(x) for any x^(i)
 3. Implement code to compute cost function J(theta)
 4. Implement backprop to compute partial derivatives
