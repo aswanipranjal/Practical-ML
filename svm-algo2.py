@@ -12,7 +12,17 @@ class svm:
 			self.ax = self.fig.add_subplot(1, 1, 1)
 
 	def fit(self, data):
-		pass
+		self.data = data
+		opt_dict = {}
+		transforms = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+
+		all_data = []
+		for yi in self.data:
+			for featureset in self.data[yi]:
+				for feature in featureset:
+					all_data.append(feature)		
+
+		self.maxfeaturevalue = 
 
 	def predict(self, features):
 		# sign(w*x + b)
