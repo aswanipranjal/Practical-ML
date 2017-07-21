@@ -4,7 +4,8 @@ from collections import Counter
 from random import shuffle
 import cv2
 
-train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data.npy')
+# Loading low resolution training data
+train_data = np.load('C:\\Users\\aman Deep Singh\\Documents\\Python\\Car CNN\\training_data_36x27.npy')
 print(len(train_data))
 # Loop to show training data
 for data in train_data:
