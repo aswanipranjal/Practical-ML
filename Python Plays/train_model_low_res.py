@@ -14,7 +14,7 @@ model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, '2deepCNN_low_res',
 
 model = convnet4(width, height, lr)
 
-train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\final_training_data_v2.npy')
+train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\training_data_36x27.npy')
 train = train_data[:-500]
 test = train_data[-500:]
 
