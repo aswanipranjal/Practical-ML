@@ -12,7 +12,7 @@ epochs = 20
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
 model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, '2deepCNN_low_res', epochs)
 
-model = convnet4(width, height, lr)
+model = convnet2(width, height, lr)
 
 train_data = np.load('C:\\Users\\Aman Deep Singh\\Documents\\Python\\Car CNN\\training_data_36x27.npy')
 train = train_data[:-500]
