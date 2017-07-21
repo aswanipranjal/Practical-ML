@@ -25,3 +25,23 @@ if os.path.isfile(file_name):
 else:
 	print('File does not exist, starting fresh')
 	training_data = []
+
+def main():
+	for i in list(range(4))[::-1]:
+		print(i+1)
+		time.sleep(1)
+	last_time = time.time()
+
+	while True:
+		screen = grab_screen(region=(0, 40, 800, 640))
+		screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
+		screen = cv2.resize(screen, (36, 27))
+		keys = key_check()
+		output = keys_to_output(keys)
+		training_data.append([screen, output])
+		last_time = time.time()
+		if len(training_data) % 500 == 0:
+			print(len(training_data))
+			np.save(file_name, training_data)
+
+main()
