@@ -51,3 +51,27 @@ def new_fc_layer(input, num_inputs, num_outputs, use_relu=True):
 
 	return layer
 
+def get_weights_variable(layer_name):
+	with tf.variable_scope(layer_name, reuse=True):
+		variable = tf.get_variable('weights')
+
+	return variable
+
+def predict_cls(images, labels, cls_true, x, y_true, session, y_pred_cls, batch_size=256):
+	num_images =len(images)
+	cls_pred = np.zeros(shape=num_images, dtype=np.int)
+	while i < num_images:
+		j = min(i + batch_size, num_images)
+		feed_dict = {x: images[i:j, :], y_true: labels[i:j, :]}
+		cls_pred[i:j] = session.run(y_pred_cls, feed_dict=feed_dict)
+		i = j
+	correct = (cls_true == cls_pred)
+	return correct, cls_pred
+
+def init_variables(session):
+	session.run(tf.global_variables_initializer())
+
+def cls_accuracy(correct):
+	correct_sum = correct.sum()
+	acc = float(correct_sum) / len(correct)
+	return acc, correct_sum
