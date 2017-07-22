@@ -53,7 +53,7 @@ def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pool
 # Helper function for flattening the layer
 def flatten_layer(layer):
 	layer_shape = layer.get_shape()
-	# Assumed layer shape = [n_images, img_height, img_width, n_chanels]
+	# Assumed layer shape = [n_images, img_height, img_width, n_channels]
 	# The number of features is img_height * img_width * n_channels
 	num_features = layer_shape[1:4].num_elements()
 	layer_flat = tf.reshape(layer, [-1, num_features])

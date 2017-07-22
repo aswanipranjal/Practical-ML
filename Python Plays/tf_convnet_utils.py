@@ -33,4 +33,5 @@ def new_conv_layer(input, num_input_channels, filter_size, num_filters, use_pool
 	return layer, weights
 
 def flatten_layer(layer):
-	
+	layer_shape = layer.get_shape()
+	# Assumed layer shape = [n_images, img_height, img_width, n_channels]
