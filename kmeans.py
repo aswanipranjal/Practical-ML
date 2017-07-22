@@ -14,7 +14,7 @@ clf.fit(X)
 centroids = clf.cluster_centers_
 labels = clf.labels_
 
-colors = ["g.", "r.", "c.", "b.", "k.", "o."]
+colors = ["g.", "r.", "c.", "b.", "k.", "m."]
 
 for i in range(len(X)):
 	plt.plot(X[i][0], X[i][1], colors[labels[i]], markersize=10)
