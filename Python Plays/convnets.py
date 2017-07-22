@@ -36,7 +36,7 @@ def convnet1(width, height, lr, output=4):
 def convnet2(width, height, lr, output=4):
 	network = input_data(shape=[None, width, height, 1], name='input')
 	network = conv_2d(network, 64, 5, strides=2, activation='relu')
-	network = max_pool_2d(network, 2, strides=2)
+	# network = max_pool_2d(network, 2, strides=2)
 	# No local response normalization
 	network = conv_2d(network, 128, 5, activation='relu')
 	network = max_pool_2d(network, 2, strides=2)

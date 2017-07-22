@@ -10,7 +10,7 @@ epochs = 20
 # Removing dropouts
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.02', epochs)
 # model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
-model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, '2deepCNN_low_resv0.02', epochs)
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, '2deepCNN_low_resv0.03', epochs)
 
 model = convnet2(width, height, lr)
 
