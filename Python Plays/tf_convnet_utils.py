@@ -75,3 +75,19 @@ def cls_accuracy(correct):
 	correct_sum = correct.sum()
 	acc = float(correct_sum) / len(correct)
 	return acc, correct_sum
+
+def plot_conv_weights(weights, input_channel=0, session=None):
+	w = session.run(weights)
+	print("Mean: {0:.5f}, Stdev: {1:.5f}".format(w.mean(), w.std()))
+	w_min = np.min(w)
+	w_max = np.max(w)
+	num_filters = w.shape[3]
+	num_grids = math.ceil(math.sqrt(num_filters))
+	fig, axes = plt.subplots(num_grids, num_grids)
+	for i, ax in enumerate(axes.flat):
+		if i < num_filters:
+			img = w[:, :, input_channel, i]
+			ax.imshow(img, vmin=w_min, vmax=w_max,interpolation='nearest', cmap='seismic')
+		ax.set_xticks([])
+		ax.set_yticks([])
+	plt.show()
