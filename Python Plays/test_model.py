@@ -5,18 +5,15 @@ import os
 from screen_grab_faster import grab_screen
 from get_keys import key_check
 import pyautogui
-from convnets import convnet2, convnet4
+from convnets import convnet4
 
 # use pyautogui.keyDown('_character_') and pyautogui.keyUp('_character_') to press keys
 
-width = 36
-height = 27
+width = 80
+height = 60
 lr = 1e-3
 epochs = 20
-# Removing dropouts
-# model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'alexnetv0.02', epochs)
-# model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.01', epochs)
-model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, '2deepCNN_low_resv0.02', epochs)
+model_name = 'pythondrives-{}-{}-{}-epochs.model'.format(lr, 'thinalexv0.10', epochs)
 
 def straight():
 	pyautogui.keyDown('w')
@@ -43,7 +40,7 @@ def brake():
 	pyautogui.keyDown('s')
 	pyautogui.keyUp('d')
 
-model = convnet2(width, height, lr) 							# Change here
+model = convnet4(width, height, lr)
 model.load(model_name)
 
 def main():
@@ -59,7 +56,7 @@ def main():
 			# get the input for the trained convolutional neural network
 			screen = grab_screen(region=(0, 40, 800, 640))
 			screen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
-			screen = cv2.resize(screen, (width, height))
+			screen = cv2.resize(screen, (80, 60))
 
 			print('Frame took {} seconds'.format(time.time() - last_time))
 			last_time = time.time()
