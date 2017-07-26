@@ -2,13 +2,13 @@
 # Traditional neural networks can not recognize sequences or orders
 # RNNs are used for speech data or sequential data
 # LSTM cells are used in RNNs
-# LSTM cell has a keep/forget gate, sees wha it wants to add from the input and decides what to output
+# LSTM cell has a keep/forget gate, sees what it wants to add from the input and decides what to output
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 from tensorflow.python.ops import rnn, rnn_cell
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
-hm_epochs = 10
+hm_epochs = 5
 n_classes = 10
 batch_size = 128
 
