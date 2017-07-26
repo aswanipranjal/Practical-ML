@@ -16,7 +16,7 @@ chunk_size = 28
 n_chunks = 28
 rnn_size = 128
 
-x = tf.placeholder('float', [None, 784])
+x = tf.placeholder('float', [None, n_chunks, chunk_size])
 y = tf.placeholder('float')
 
 def recurrent_neural_network(x):
@@ -53,3 +53,5 @@ def train_neural_network(x):
 		correct = tf.equal(tf.argmax(prediction, 1), tf.argmax(y, 1))
 		accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 		print('Accuracy: ', accuracy.eval({x: mnist.test.images.reshape((-1, n_chunks, chunk_size)), y: mnist.test.labels}))
+
+train_neural_network(x)
