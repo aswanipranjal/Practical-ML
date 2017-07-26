@@ -26,4 +26,7 @@ def recurrent_neural_network(x):
 	x = tf.transpose(x, [1, 0, 2])
 	x = tf.reshape(x, [-1, chunk_size])
 	x = tf.split(0, n_chunks, x)
-	output = tf.matmul(???, layer['weights']) + layer['biases']
+	lstm_cell = rnn_cell.BasicLSTMCell(rnn_size)
+	outputs, states = rnn.rnn(lstm_cell, x, dtype=tf.float32)
+	output = tf.matmul(outputs[-1], layer['weights']) + layer['biases']
+	return output
