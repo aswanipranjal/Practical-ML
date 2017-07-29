@@ -877,7 +877,7 @@ repeat {
 
 Recommender systems quiz
 1, marked:
-first and second options
+Got it wrong thrice
 
 2, marked: 
 You own a clothing store that sells many styles and brands of jeans. You have collected reviews of the different styles and brands from frequent shoppers, and you want to use these reviews to offer those shoppers discounts on the jeans you think they are most likely to purchase
