@@ -352,8 +352,8 @@ img, cls = get_test_image(16)
 plot_distorted_image(img, cls)
 
 # Perform optimization
-if False:
-	optimize(num_iterations=1000)
+if True:
+	optimize(num_iterations=10000)
 
 print_test_accuracy(show_example_errors=True, show_confusion_matrix=True)
 plot_conv_weights(weights=weights_conv1, input_channel=0)
