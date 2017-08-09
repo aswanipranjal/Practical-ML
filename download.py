@@ -188,11 +188,3 @@ def maybe_download_and_extract(url, download_dir):
 
         print("Data has apparently already been downloaded and unpacked.")
 
-
-
-
-
-########################################################################
-Contact GitHub API Training Shop Blog About 
-
-© 2017 GitHub, Inc. Terms Privacy Security Status Help 
