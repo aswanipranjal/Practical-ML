@@ -21,6 +21,6 @@ Defines a few simple CNN models to try. All are modifications or simplifications
 7.  [train_model](https://github.com/ad71/Practical-ML/blob/master/Python%20Plays/train_model.py):
 Trains a model and saves a checkpoint.
 8.  [test_model](https://github.com/ad71/Practical-ML/blob/master/Python%20Plays/test_model.py):
-Loads a trained model from a checkpoint and tests agains a currently running instance of the game.
+Loads a trained model from a checkpoint and tests against a currently running instance of the game.
 9.  [tf_convnet_utils](https://github.com/ad71/Practical-ML/blob/master/Python%20Plays/tf_convnet_utils.py):
 Helper functions for TensorFlow CNN models.
